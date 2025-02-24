@@ -1,0 +1,100 @@
+@font-face {
+    font-family: "Inter";
+    src: url("../assets/fonts/Inter-VariableFont_opsz\,wght.ttf");
+}
+
+/* Light-mode */
+:root {
+    --color-background: #F4F1EB;
+    --color-text: #2F4F4F;
+
+    --color-button-text: #F4F1EB;
+    --color-button-background: #7B8B8B;
+    --color-button-border: #5F6E6E;
+
+    --color-button-2-text: #2F4F4F;
+    --color-button-2-background: #d1cec7;
+    --color-button-2-border: #2F4F4F;
+}
+
+/* Dark-mode */
+:root.dark-mode {
+    --color-background: #121212;
+    --color-text: #E0E0E0;
+
+    --color-button-text: #F4F1EB;
+    --color-button-background: #3A4747;
+    --color-button-border: #4A5757;
+
+    --color-button-2-text: #2F4F4F;
+    --color-button-2-background: #d1cec7;
+    --color-button-2-border: #2F4F4F;
+}
+
+* {
+    font-family: "Inter";
+    color: var(--color-text);
+}
+
+body {
+    background-color: var(--color-background);
+}
+
+main {
+    /* Center content */
+    margin-left: auto;
+    margin-right: auto;
+    max-width: fit-content;
+}
+
+button {
+    padding: 0.5rem;
+    background-color: var(--color-button-2-background);
+    color: var(--color-button-2-text);
+
+    border: solid;
+    border-width: 1px;
+    border-radius: 8px;
+    border-color: var(--color-button-2-border);
+
+    cursor: pointer;
+}
+
+header{
+    width: auto;
+}
+
+#header-container {
+    display: flex;
+}
+
+#header-button-container {
+    /* Align to the right, center vertically */
+    align-items: flex-end;
+    margin-left: auto;
+    margin-right: 0px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+
+#menu-button-container {
+    display: grid;
+    text-align: center;
+    gap: 1rem;
+}
+
+.link-button {
+    text-decoration: none;
+    background-color: var(--color-button-background);
+    border-radius: 20px;
+    color: var(--color-button-text);
+
+    border-color: var(--color-button-border);
+    border-style: solid;
+    border-width: 1px;
+
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 1rem;    
+    
+}
