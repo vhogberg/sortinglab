@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,22 +13,46 @@
     <!-- Update numbers for caching err -->
     <link rel="stylesheet" href="styles/base.css?rnd=12345">
 </head>
+
 <body>
     <header>
         <div id="header-container">
             <h1>SortingLab</h1>
             <div id="header-button-container">
-                <button>About</button>
-                <button id="theme-toggle-button">Theme</button>
+                <button><span>About</span></button>
+                <button id="theme-toggle-button"><span>Theme</span></button>
             </div>
         </div>
     </header>
     <main>
+        <h1>Bubble sort</h1>
+
+        
+        <div id="theory-view">
+            <div id="hide-theory-container">
+                <h3>How it works</h3>
+                <button><span>Hide theory</span></button>
+            </div>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos vero, quo voluptate ipsam aspernatur est
+                ea quis ut sunt exercitationem commodi rerum illum at? Repellat distinctio in quia architecto dicta.</p>
+            <h3>Video</h3>
+        </div>
+        <div id="game-view">
+            <h2>Try it yourself</h2>
+            
+            <button><span>Start</span></button>
+
+        </div>
 
     </main>
 
     <footer>
 
     </footer>
+
+    <script src="scripts/base.js"></script>
+    <script src="scripts/bubble-sort.js"></script>
 </body>
+
 </html>
