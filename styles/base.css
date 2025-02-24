@@ -7,35 +7,57 @@
 
 /* Light-mode */
 :root {
-    --color-background: #F4F1EB;
-    --color-text: #2F4F4F;
+    --color-header-background: #eceaf2;
+    --color-background: #f8f8fc;
+    --color-text: #2c2b38;
+    --color-logo-text: #ffac26;
 
-    --color-button-text: #F4F1EB;
-    --color-button-background: #7B8B8B;
-    --color-button-border: #5F6E6E;
+    --color-button-text: #ffffff;
+    --color-button-background: #5e5479;
+    --color-button-border: #4e4564;
 
-    --color-button-2-text: #2F4F4F;
-    --color-button-2-background: #d1cec7;
-    --color-button-2-border: #2F4F4F;
+    --color-button-2-text: #ffffff;
+    --color-button-2-background: #2c2b38;
+    --color-button-2-border: #1f1f27;
 }
 
 /* Dark-mode */
 :root.dark-mode {
-    --color-background: #121212;
-    --color-text: #E0E0E0;
+    --color-header-background: #272430;
+    --color-background: #18161f;
+    --color-text: #e4e3e9;
+    --color-logo-text: #ffb641;
 
-    --color-button-text: #F4F1EB;
-    --color-button-background: #3A4747;
-    --color-button-border: #4A5757;
+    --color-button-text: #ffffff;
+    --color-button-background: #6e658c;
+    --color-button-border: #83799e;
 
-    --color-button-2-text: #2F4F4F;
-    --color-button-2-background: #d1cec7;
-    --color-button-2-border: #2F4F4F;
+    --color-button-2-text: #18161f;
+    --color-button-2-background: #e4e3e9;
+    --color-button-2-border: #b3b2b9;
 }
+
+
 
 * {
     font-family: "Inter";
     color: var(--color-text);
+}
+
+#logo {
+    width: 45px;
+    height: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+#logo-span {
+    color: var(--color-logo-text);
+}
+
+#logo-container {
+    display: flex;
+    gap: 0.4rem;
 }
 
 body {
@@ -47,6 +69,10 @@ main {
     margin-left: auto;
     margin-right: auto;
     max-width: fit-content;
+}
+
+h1 {
+    margin: 0.5rem;
 }
 
 h3 {
@@ -70,8 +96,11 @@ button span {
     color: var(--color-button-2-text);
 }
 
-header{
+header {
     width: auto;
+    padding: 0 1rem 0 1rem;
+    border-radius: 16px;
+    background-color: var(--color-header-background);
 }
 
 #header-container {
@@ -87,6 +116,10 @@ header{
     margin-bottom: auto;
 }
 
+footer {
+    padding: 1rem;
+    margin-top: 3rem;
+}
 
 #menu-button-container {
     display: grid;
@@ -105,11 +138,9 @@ header{
     border-width: 1px;
 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    padding: 1rem;    
-    
+    padding: 1rem;
+
 }
-
-
 
 /* SORTING THEORY */
 #hide-theory-container {
