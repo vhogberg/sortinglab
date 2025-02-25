@@ -11,13 +11,17 @@
     <title>SortingLab - Bubble Sort</title>
 
     <!-- Update numbers for caching err -->
-    <link rel="stylesheet" href="styles/base.css?rnd=12345">
+    <link rel="stylesheet" href="styles/base.css?rnd=12355">
+    <link rel="stylesheet" href="styles/game.css?rnd=12355">
 </head>
 
 <body>
     <header>
         <div id="header-container">
-            <h1>SortingLab</h1>
+            <div id="logo-container">
+                <h1>Sorting<span id="logo-span">Lab</span></h1>
+                <img src="assets/icons/neural.png" alt="" id="logo">
+            </div>
             <div id="header-button-container">
                 <button><span>About</span></button>
                 <button id="theme-toggle-button"><span>Theme</span></button>
@@ -25,10 +29,10 @@
         </div>
     </header>
     <main>
-        <h1>Bubble sort</h1>
+        <h2 id="bubble-sort-title">Bubble sort</h2>
 
-        
-        <div id="theory-view">
+
+        <section id="theory-view">
             <div id="hide-theory-container">
                 <h3>How it works</h3>
                 <button><span>Hide theory</span></button>
@@ -37,13 +41,31 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos vero, quo voluptate ipsam aspernatur est
                 ea quis ut sunt exercitationem commodi rerum illum at? Repellat distinctio in quia architecto dicta.</p>
             <h3>Video</h3>
-        </div>
-        <div id="game-view">
+        </section>
+        <section id="game-view">
             <h2>Try it yourself</h2>
-            
-            <button><span>Start</span></button>
 
-        </div>
+            <button id="start-button"><span>Start</span></button>
+
+            <div id="game-element-container">
+                <div class="game-element" ><span class="game-element-text">1</span></div>
+                <div class="game-element" ><span class="game-element-text">2</span></div>
+                <div class="game-element" ><span class="game-element-text">3</span></div>
+                <div class="game-element" ><span class="game-element-text">4</span></div>
+                <div class="game-element" ><span class="game-element-text">5</span></div>
+                <div class="game-element" ><span class="game-element-text">6</span></div>
+                <div class="game-element" ><span class="game-element-text">7</span></div>
+                <div class="game-element" ><span class="game-element-text">8</span></div>
+                <div class="game-element" ><span class="game-element-text">9</span></div>
+                <div class="game-element" ><span class="game-element-text">10</span></div>
+            </div>
+
+            <button id="skip-button"><span>Skip</span></button>
+            <button id="swap-button"><span>Swap</span></button>
+            <button id="submit-button"><span>Submit</span></button>
+
+
+        </section>
 
     </main>
 

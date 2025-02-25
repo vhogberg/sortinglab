@@ -1,0 +1,77 @@
+/* Light-mode */
+:root {
+    --color-header-background: #eceaf2;
+    --color-background: #f8f8fc;
+    --color-text: #2c2b38;
+    --color-logo-text: #ffac26;
+
+    --color-button-text: #ffffff;
+    --color-button-background: #5e5479;
+    --color-button-border: #4e4564;
+
+    --color-button-2-text: #ffffff;
+    --color-button-2-background: #2c2b38;
+    --color-button-2-border: #1f1f27;
+
+    --color-element-background: #eceaf2;
+    --color-element-background-hover: #d8d6df;
+    --color-element-highlighted: #9c93b9;
+    --color-element-highlighted-hover: #9088aa;
+}
+
+/* Dark-mode */
+:root.dark-mode {
+    --color-header-background: #272430;
+    --color-background: #18161f;
+    --color-text: #e4e3e9;
+    --color-logo-text: #ffb641;
+
+    --color-button-text: #ffffff;
+    --color-button-background: #6e658c;
+    --color-button-border: #83799e;
+
+    --color-button-2-text: #18161f;
+    --color-button-2-background: #e4e3e9;
+    --color-button-2-border: #b3b2b9;
+
+    --color-element-background: #272430;
+    --color-element-background-hover: #302c3b;
+    --color-element-highlighted: #67617c;
+    --color-element-highlighted-hover: #706a88;
+}
+
+#game-element-container {
+    display: grid;
+    /* 10 columns, 1 item per column*/
+    grid-template-columns: repeat(10, 1fr);
+    gap: 1rem;
+
+    margin: 2rem 0 2rem 0;
+}
+
+.game-element {
+    padding: 1rem;
+    margin: 0.2rem;
+    background-color: var(--color-element-background);
+
+    border-radius: 8px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+
+    cursor: grab;
+}
+
+.game-element:hover {
+    background-color: var(--color-element-background-hover);
+}
+
+.game-element-highlighted {
+    background-color: var(--color-element-highlighted);
+}
+
+.game-element-highlighted:hover {
+    background-color: var(--color-element-highlighted-hover);;
+}
+
+.game-element-text {}

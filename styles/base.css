@@ -19,6 +19,8 @@
     --color-button-2-text: #ffffff;
     --color-button-2-background: #2c2b38;
     --color-button-2-border: #1f1f27;
+
+    --color-element-background: #eceaf2;
 }
 
 /* Dark-mode */
@@ -35,9 +37,9 @@
     --color-button-2-text: #18161f;
     --color-button-2-background: #e4e3e9;
     --color-button-2-border: #b3b2b9;
+
+    --color-element-background: #272430;
 }
-
-
 
 * {
     font-family: "Inter";
@@ -56,11 +58,16 @@
 }
 
 #logo-container {
+    cursor: pointer;
     display: flex;
     gap: 0.4rem;
 }
 
 body {
+    padding: 1rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
     background-color: var(--color-background);
 }
 
@@ -73,6 +80,11 @@ main {
 
 h1 {
     margin: 0.5rem;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2.5em;
 }
 
 h3 {
