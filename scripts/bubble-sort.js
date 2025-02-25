@@ -1,6 +1,18 @@
 // Start button
 const startButton = document.getElementById("start-button");
+const swapButton = document.getElementById("swap-button");
+const skipButton = document.getElementById("skip-button");
+const submitButton = document.getElementById("submit-button");
+const theoryView = document.getElementById("theory-view");
+
+submitButton.addEventListener("click", checkIfSorted);
 startButton.addEventListener("click", startGame);
+
+submitButton.classList.add("disabled");
+swapButton.classList.add("disabled");
+skipButton.classList.add("disabled");
+
+let moveExplanationText = document.getElementById("move-explanation");
 
 // Initial sorted list of all elements
 let elementList = document.querySelectorAll(".game-element");
@@ -12,16 +24,22 @@ let element2;
 // Boolean for while loop running the game
 let gameRunning = true;
 
+let correctMoves = 0;
+let wrongMoves = 0;
+
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
     for (const element of elementList) {
-        element.innerHTML = Math.floor(Math.random() * 100); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+        element.innerHTML = Math.floor(Math.random() * 10); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
     }
-    startButton.disabled = true; // disable start button so user can't reshuffle
-    startButton.style.cursor = 'default';
 }
 
 function startGame() {
+    swapButton.classList.remove("disabled");
+    skipButton.classList.remove("disabled");
+    submitButton.classList.remove("disabled");
+    startButton.classList.add("hidden");
+    theoryView.classList.add("hidden");
     scrambleElements();
     gameLoop();
 }
@@ -53,9 +71,6 @@ async function gameLoop() {
 async function waitForButtonPress() {
     return new Promise(resolve => {
 
-        const skipButton = document.getElementById("skip-button");
-        const swapButton = document.getElementById("swap-button");
-
         function handleClick(event) {
             skipButton.removeEventListener("click", handleClick);
             swapButton.removeEventListener("click", handleClick);
@@ -72,29 +87,91 @@ async function waitForButtonPress() {
     })
 }
 
-
 //swaps the two marked elements
 function swapElements() {
-    console.log("swapped!");
+    if (element1.textContent > element2.textContent) {
+        moveExplanationText.textContent = "Correct! " + element1.textContent + " is bigger than " + element2.textContent + " so they should be swapped!";
+        correctMoves++;
+    } else if (element1.textContent === element2.textContent) {
+        moveExplanationText.textContent = "Wrong! " + element1.textContent + " is equal to " + element2.textContent + " so they should not be swapped!";
+        wrongMoves++;
+    }
+    else {
+        moveExplanationText.textContent = "Wrong! " + element1.textContent + " is smaller than " + element2.textContent + " so they should not be swapped!";
+        wrongMoves++;
+    }
+
     //gets the parentElement of the first element, ie the game-element-container that contains all elements
     let parentElement = element1.parentElement;
 
-    //moves element
+    //moves element2 to be before element1, ie swapping them
     parentElement.insertBefore(element2, element1);
 
     //since the index of the elements gets shuffled around by swapping them, we reasign all elements to the nodeList to ensure they are in the correct order.
     elementList = document.querySelectorAll(".game-element");
-
 }
 
+// skip function
 function skip() {
-    console.log("skipped!")
+    // check if move is correct (i.e whether user should've skipped)
+    if (element1.textContent < element2.textContent) {
+        moveExplanationText.textContent = "Correct! " + element1.textContent + " is smaller than " + element2.textContent + " so they should not be swapped!";
+        correctMoves++;
+    } else if (element1.textContent === element2.textContent) {
+        moveExplanationText.textContent = "Correct! " + element1.textContent + " is equal to " + element2.textContent + " so they should not be swapped!";
+        wrongMoves++;
+    }
+    else {
+        moveExplanationText.textContent = "Wrong! " + element1.textContent + " is bigger than " + element2.textContent + " so they should be swapped!";
+        wrongMoves++;
+    }
 }
 
+// Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
+    elementList = document.querySelectorAll(".game-element");
 
+    // Made a new array containing the values (numbers or letters)
+    const valueArray = [];
+    for (let index = 0; index < elementList.length; index++) {
+        console.log(valueArray[index] = elementList[index].textContent);
+    }
+
+    // For number-mode
+    const isSorted = valueArray.every((value, index, array) =>
+        index === 0 || value >= array[index - 1]);
+
+    if (isSorted) {
+        gameOver()
+    }
+    else {
+        alert("Not sorted yet, continue!");
+    }
 }
 
+// Function called if user clicks submit and the array is sorted
 function gameOver() {
-    startButton.disabled = false;
+    if (wrongMoves > correctMoves * 0.4) {
+        alert("Game over!\nCorrect moves: " + correctMoves + "\nWrong moves: " + wrongMoves + "\nTry again to improve your result!");
+    } else {
+        alert("Congrats!\nCorrect moves: " + correctMoves + "\nWrong moves: " + wrongMoves);
+    }
+    // enable startButton again for new round
+    startButton.classList.remove("hidden");
+    theoryView.classList.remove("hidden");
+    swapButton.classList.add("disabled");
+    skipButton.classList.add("disabled");
+    submitButton.classList.add("disabled");
+
+
+    // reset the indexes in list
+    elementList = document.querySelectorAll(".game-element");
+
+    // Reset points for next round
+    wrongMoves = 0;
+    correctMoves = 0;
+
+    for (let index = 0; index < elementList.length; index++) {
+        elementList[index].classList.remove("game-element-highlighted");
+    }
 }

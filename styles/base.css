@@ -166,3 +166,12 @@ footer {
     margin-top: auto;
     margin-bottom: auto;
 }
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
+.hidden {
+    display: none;
+}
