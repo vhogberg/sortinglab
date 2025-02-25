@@ -78,18 +78,10 @@ function swapElements() {
     console.log("swapped!");
     //gets the parentElement of the first element, ie the game-element-container that contains all elements
     let parentElement = element1.parentElement;
-    //checks if element1 is next sibling of element2
-    if (element2.nextSibling === element1) {
-        //moves element1 to be fefore element2
-        parentElement.insertBefore(element1, element2);
-        console.log("element1 before element2")
-    }
-    else {
-        //else moves element2 to be before element1
-        parentElement.insertBefore(element2, element1);
-        console.log("element2 before element1")
 
-    }
+    //moves element
+    parentElement.insertBefore(element2, element1);
+
     //since the index of the elements gets shuffled around by swapping them, we reasign all elements to the nodeList to ensure they are in the correct order.
     elementList = document.querySelectorAll(".game-element");
 
@@ -100,7 +92,7 @@ function skip() {
 }
 
 function checkIfSorted() {
-    
+
 }
 
 function gameOver() {
