@@ -2,6 +2,7 @@
 const startButton = document.getElementById("start-button");
 const leftButton = document.getElementById("left-button");
 const skipButton = document.getElementById("skip-button");
+const explainButton = document.getElementById("explain-button");
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
 const skipButtonDiv = document.getElementById("skip-button-div");
@@ -12,6 +13,9 @@ startButton.addEventListener("click", startGame);
 submitButton.classList.add("disabled");
 leftButton.classList.add("disabled");
 skipButton.classList.add("disabled");
+
+// ////
+explainButton.classList.add("hidden");
 
 let moveExplanationText = document.getElementById("move-explanation");
 
@@ -38,6 +42,7 @@ function startGame() {
     submitButton.classList.remove("disabled");
     startButton.classList.add("hidden");
     theoryView.classList.add("hidden");
+
     scrambleElements();
     gameLoop();
 }
@@ -60,12 +65,13 @@ async function gameLoop() {
         selectedElement.classList.add("game-element-highlighted");
 
         if (index !== 0 && element2 != null && parseInt(element2.textContent) > parseInt(selectedElement.textContent)) {
-            skipButton.disabled = true;
+            skipButton.classList.add("hidden");
+            explainButton.classList.remove("hidden");
         }
         else {
-            skipButton.disabled = false;
+            skipButton.classList.remove("hidden");
+            explainButton.classList.add("hidden");
         }
-
         // wait for SKIP-button press
         await waitForSkipButtonPress();
 
@@ -80,6 +86,7 @@ async function gameLoop() {
 // Function that stops the for loop, waiting for a SKIP-button press
 async function waitForSkipButtonPress() {
     return new Promise(resolve => {
+
         function handleClick(event) {
             skipButton.removeEventListener("click", handleClick);
             resolve(event.target.id);
@@ -88,9 +95,60 @@ async function waitForSkipButtonPress() {
         // SKIP ONLY
         skipButton.addEventListener("click", skip);
         skipButton.addEventListener("click", handleClick);
-    }
-    )
+    })
 }
+
+function skip() {
+
+    // Convert selectedElement.textContent to a number
+    let selectedValue = parseInt(selectedElement.textContent);
+
+    // Check if element2 exists before accessing its textContent
+    let element2Value = element2 ? parseInt(element2.textContent) : undefined;
+
+    //since the index of the elements gets shuffled around by swapping them, we reasign all elements to the nodeList to ensure they are in the correct order.
+    elementList = document.querySelectorAll(".game-element");
+
+    if (!element2) {
+        moveExplanationText.textContent = "Correct! You should always skip when the selected element is furthest to the left!";
+        correctMoves++;
+        return;
+    }
+    else if (selectedValue > element2Value) {
+        moveExplanationText.textContent = "Correct! " + selectedValue + " is bigger than " + element2Value + " so it should be skipped!";
+        correctMoves++;
+        return;
+    }
+    else if (selectedValue < element2Value) {
+        moveExplanationText.textContent = "Wrong! " + selectedValue + " is smaller than " + element2Value + " so it should be swapped!";
+        wrongMoves++;
+        return;
+    }
+    else {
+        moveExplanationText.textContent = "Correct! " + selectedValue + " is equal to " + element2Value + " so they should be skipped!";
+        correctMoves++;
+        return;
+    }
+}
+
+
+document.getElementById("explain-button").addEventListener("click", () => {
+    elementList = document.querySelectorAll(".game-element");
+    if (skipButton.classList.contains("hidden")) {
+        // Convert selectedElement.textContent to a number
+        let selectedValue = parseInt(selectedElement.textContent);
+
+        // Check if element2 exists before accessing its textContent
+        let element2Value = element2 ? parseInt(element2.textContent) : undefined;
+
+        if (element2 && selectedValue < element2Value) {
+            moveExplanationText.textContent = "EXPLANATION: " + selectedValue + " is smaller than " + element2Value + " so they should be swapped!";
+            return;
+        }
+    }
+})
+
+
 
 // Swaps the SELECTED element with element to the left of selected element
 function swapElements() {
@@ -135,7 +193,7 @@ function swapElements() {
 
     let selectedElementIndex = elementArray.indexOf(selectedElement);
 
-    //updates the element to the left of selectedElement to the new element present after swap 
+    //updates the element to the left of selectedElement to the new element present after swap
     element2 = elementList[selectedElementIndex - 1];
 
     // Should not be able to skip when element2 is bigger
@@ -148,56 +206,6 @@ function swapElements() {
     elementList = document.querySelectorAll(".game-element");
 }
 
-function skip() {
-    // Convert selectedElement.textContent to a number
-    let selectedValue = parseInt(selectedElement.textContent);
-
-    // Check if element2 exists before accessing its textContent
-    let element2Value = element2 ? parseInt(element2.textContent) : undefined;
-
-    console.log("element1VALUE: " + selectedValue);
-    console.log("element2VALUE: " + element2Value);
-
-    //since the index of the elements gets shuffled around by swapping them, we reasign all elements to the nodeList to ensure they are in the correct order.
-    elementList = document.querySelectorAll(".game-element");
-
-    //convert nodeList to array in order to be able to run indexOf
-    let elementArray = Array.from(elementList);
-
-    let selectedElementIndex = elementArray.indexOf(selectedElement);
-    let element2Index = elementArray.indexOf(element2);
-
-    console.log("element1INDEX: " + selectedElementIndex);
-    console.log("element2INDEX: " + element2Index);
-
-    if (!element2) {
-        moveExplanationText.textContent = "Correct! You should always skip when the selected element is furthest to the left!";
-        wrongMoves++;
-        return;
-    }
-    else if (selectedValue > element2Value) {
-        moveExplanationText.textContent = "Correct! " + selectedValue + " is bigger than " + element2Value + " so it should be skipped!";
-        correctMoves++;
-        return;
-    }
-    else if (selectedValue < element2Value) {
-        moveExplanationText.textContent = "Wrong! " + selectedValue + " is smaller than " + element2Value + " so it should be swapped!";
-        wrongMoves++;
-        return;
-    }
-    else {
-        moveExplanationText.textContent = "Correct! " + selectedValue + " is equal to " + element2Value + " so they should be skipped!";
-        wrongMoves++;
-        return;
-    }
-}
-
-skipButtonDiv.addEventListener("click", () => {
-    if (skipButton.disabled) {
-        console.log("skipdiv");
-        moveExplanationText.textContent = "Wrong! " + selectedElement.textContent + " is smaller than " + element2.textContent + " so it should be swapped!";
-    }
-})
 
 
 // Function to check if a given set of elements is sorted correctly
@@ -207,12 +215,12 @@ function checkIfSorted() {
     // Made a new array containing the values (numbers or letters)
     const valueArray = [];
     for (let index = 0; index < elementList.length; index++) {
-        console.log(valueArray[index] = elementList[index].textContent);
+        console.log(valueArray[index] = parseInt(elementList[index].textContent));
     }
 
     // For number-mode
     const isSorted = valueArray.every((value, index, array) =>
-        index === 0 || value >= array[index]);
+        index === 0 || value >= array[index - 1]);
 
     if (isSorted) {
         gameOver()
@@ -235,7 +243,6 @@ function gameOver() {
     leftButton.classList.add("disabled");
     skipButton.classList.add("disabled");
     submitButton.classList.add("disabled");
-
 
     // reset the indexes in list
     elementList = document.querySelectorAll(".game-element");
