@@ -75,3 +75,15 @@
 }
 
 .game-element-text {}
+
+#skip-button-div {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0;
+    background-color: lightblue;
+    border-radius: 5px;
+}
+
+#skip-button:disabled {
+    pointer-events: none;
+}

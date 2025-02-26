@@ -4,6 +4,7 @@ const leftButton = document.getElementById("left-button");
 const skipButton = document.getElementById("skip-button");
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
+const skipButtonDiv = document.getElementById("skip-button-div");
 
 submitButton.addEventListener("click", checkIfSorted);
 startButton.addEventListener("click", startGame);
@@ -41,7 +42,6 @@ function startGame() {
     gameLoop();
 }
 
-
 // async loop so that it waits for button presses
 async function gameLoop() {
     // for loop, using list length
@@ -49,60 +49,78 @@ async function gameLoop() {
         console.log("CURRENT LOOP = " + index);
         // grab current indexed element and the one to the left of it
         selectedElement = elementList[index];
-        console.log("SELECTED ELEMENT = " + selectedElement.textContent);
         if (index != 0) {
             element2 = elementList[index - 1];
-            console.log("ELEMENT2 = " + element2.textContent);
         }
 
+        // add eventlistener to left (swap) button here, button can be pressed multiple times until listener is removed
         leftButton.addEventListener("click", swapElements);
 
-        // add visualisation for selected elements
+        // add visualisation for selected element
         selectedElement.classList.add("game-element-highlighted");
 
-        // wait for button press
-        await waitForButtonPress();
+        if (index !== 0 && element2 != null && parseInt(element2.textContent) > parseInt(selectedElement.textContent)) {
+            skipButton.disabled = true;
+        }
+        else {
+            skipButton.disabled = false;
+        }
+
+        // wait for SKIP-button press
+        await waitForSkipButtonPress();
 
         // remove visualisation for selected elements after button press
         selectedElement.classList.remove("game-element-highlighted");
+
+        // remove button event listener for left (swap) button after skip is pressed.
         leftButton.removeEventListener("click", swapElements)
     }
 }
 
-// Function that stops the for loop, waiting for a button press
-async function waitForButtonPress() {
-
+// Function that stops the for loop, waiting for a SKIP-button press
+async function waitForSkipButtonPress() {
     return new Promise(resolve => {
-
         function handleClick(event) {
             skipButton.removeEventListener("click", handleClick);
             resolve(event.target.id);
         }
 
-        // skip
+        // SKIP ONLY
         skipButton.addEventListener("click", skip);
         skipButton.addEventListener("click", handleClick);
     }
     )
 }
 
-//swaps the two marked elements
+// Swaps the SELECTED element with element to the left of selected element
 function swapElements() {
-    /*
-    if (element1.textContent > element2.textContent) {
-        moveExplanationText.textContent = "Correct! " + element1.textContent + " is bigger than " + element2.textContent + " so they should be swapped!";
-        correctMoves++;
-    } else if (element1.textContent === element2.textContent) {
-        moveExplanationText.textContent = "Wrong! " + element1.textContent + " is equal to " + element2.textContent + " so they should not be swapped!";
+
+    let selectedValue = parseInt(selectedElement.textContent);
+
+    // Check if element2 exists before accessing its textContent
+    let element2Value = element2 ? parseInt(element2.textContent) : undefined;
+
+    if (element2 === undefined) {
+        moveExplanationText.textContent = "Wrong! You can't move this further to the left!";
+        // TODO("Update to selection sort theory");
         wrongMoves++;
+        return;
+    }
+    else if (selectedValue > element2Value) {
+        moveExplanationText.textContent = "Wrong! " + selectedValue + " is bigger than " + element2Value + " so they should not be swapped!";
+        wrongMoves++;
+        return;
+    }
+    else if (selectedValue === element2Value) {
+        moveExplanationText.textContent = "Wrong! " + selectedValue + " is equal to " + element2Value + " so they should not be swapped!";
+        wrongMoves++;
+        return;
     }
     else {
-        moveExplanationText.textContent = "Wrong! " + element1.textContent + " is smaller than " + element2.textContent + " so they should not be swapped!";
-        wrongMoves++;
+        moveExplanationText.textContent = "Correct! " + selectedValue + " is smaller than " + element2Value + " so they should be swapped!";
+        correctMoves++;
     }
-    */
 
-    console.log("swapping")
     // gets the parentElement of the first element, ie the container that contains all elements
     let parentElement = selectedElement.parentElement;
 
@@ -112,31 +130,75 @@ function swapElements() {
     //since the index of the elements gets shuffled around by swapping them, we reasign all elements to the nodeList to ensure they are in the correct order.
     elementList = document.querySelectorAll(".game-element");
 
+    //convert nodeList to array in order to be able to run indexOf
     let elementArray = Array.from(elementList);
 
     let selectedElementIndex = elementArray.indexOf(selectedElement);
-    console.log(selectedElementIndex);
 
+    //updates the element to the left of selectedElement to the new element present after swap 
     element2 = elementList[selectedElementIndex - 1];
-}
 
-// skip function
-function skip() {
-    // check if move is correct (i.e whether user should've skipped)
-    /*
-    if (element1.textContent < element2.textContent) {
-        moveExplanationText.textContent = "Correct! " + element1.textContent + " is smaller than " + element2.textContent + " so they should not be swapped!";
-        correctMoves++;
-    } else if (element1.textContent === element2.textContent) {
-        moveExplanationText.textContent = "Correct! " + element1.textContent + " is equal to " + element2.textContent + " so they should not be swapped!";
-        wrongMoves++;
+    // Should not be able to skip when element2 is bigger
+    if (element2 !== undefined && element2.textContent > selectedElement.textContent) {
+        skipButton.disabled = true;
     }
     else {
-        moveExplanationText.textContent = "Wrong! " + element1.textContent + " is bigger than " + element2.textContent + " so they should be swapped!";
-        wrongMoves++;
+        skipButton.disabled = false;
     }
-        */
+    elementList = document.querySelectorAll(".game-element");
 }
+
+function skip() {
+    // Convert selectedElement.textContent to a number
+    let selectedValue = parseInt(selectedElement.textContent);
+
+    // Check if element2 exists before accessing its textContent
+    let element2Value = element2 ? parseInt(element2.textContent) : undefined;
+
+    console.log("element1VALUE: " + selectedValue);
+    console.log("element2VALUE: " + element2Value);
+
+    //since the index of the elements gets shuffled around by swapping them, we reasign all elements to the nodeList to ensure they are in the correct order.
+    elementList = document.querySelectorAll(".game-element");
+
+    //convert nodeList to array in order to be able to run indexOf
+    let elementArray = Array.from(elementList);
+
+    let selectedElementIndex = elementArray.indexOf(selectedElement);
+    let element2Index = elementArray.indexOf(element2);
+
+    console.log("element1INDEX: " + selectedElementIndex);
+    console.log("element2INDEX: " + element2Index);
+
+    if (!element2) {
+        moveExplanationText.textContent = "Correct! You should always skip when the selected element is furthest to the left!";
+        wrongMoves++;
+        return;
+    }
+    else if (selectedValue > element2Value) {
+        moveExplanationText.textContent = "Correct! " + selectedValue + " is bigger than " + element2Value + " so it should be skipped!";
+        correctMoves++;
+        return;
+    }
+    else if (selectedValue < element2Value) {
+        moveExplanationText.textContent = "Wrong! " + selectedValue + " is smaller than " + element2Value + " so it should be swapped!";
+        wrongMoves++;
+        return;
+    }
+    else {
+        moveExplanationText.textContent = "Correct! " + selectedValue + " is equal to " + element2Value + " so they should be skipped!";
+        wrongMoves++;
+        return;
+    }
+}
+
+skipButtonDiv.addEventListener("click", () => {
+    if (skipButton.disabled) {
+        console.log("skipdiv");
+        moveExplanationText.textContent = "Wrong! " + selectedElement.textContent + " is smaller than " + element2.textContent + " so it should be swapped!";
+    }
+})
+
 
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
@@ -150,7 +212,7 @@ function checkIfSorted() {
 
     // For number-mode
     const isSorted = valueArray.every((value, index, array) =>
-        index === 0 || value >= array[index - 1]);
+        index === 0 || value >= array[index]);
 
     if (isSorted) {
         gameOver()

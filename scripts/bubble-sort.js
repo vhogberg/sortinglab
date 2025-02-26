@@ -28,7 +28,7 @@ let wrongMoves = 0;
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
     for (const element of elementList) {
-        element.innerHTML = Math.floor(Math.random() * 10); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+        element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
     }
 }
 
@@ -87,15 +87,19 @@ async function waitForButtonPress() {
 
 //swaps the two marked elements
 function swapElements() {
-    if (element1.textContent > element2.textContent) {
-        moveExplanationText.textContent = "Correct! " + element1.textContent + " is bigger than " + element2.textContent + " so they should be swapped!";
+
+    let element1Value = parseInt(element1.textContent);
+    let element2Value = parseInt(element2.textContent);
+
+    if (element1Value > element2Value) {
+        moveExplanationText.textContent = "Correct! " + element1Value + " is bigger than " + element2Value + " so they should be swapped!";
         correctMoves++;
-    } else if (element1.textContent === element2.textContent) {
-        moveExplanationText.textContent = "Wrong! " + element1.textContent + " is equal to " + element2.textContent + " so they should not be swapped!";
+    } else if (element1Value === element2Value) {
+        moveExplanationText.textContent = "Wrong! " + element1Value + " is equal to " + element2Value + " so they should not be swapped!";
         wrongMoves++;
     }
     else {
-        moveExplanationText.textContent = "Wrong! " + element1.textContent + " is smaller than " + element2.textContent + " so they should not be swapped!";
+        moveExplanationText.textContent = "Wrong! " + element1Value + " is smaller than " + element2Value + " so they should not be swapped!";
         wrongMoves++;
     }
 
@@ -111,16 +115,20 @@ function swapElements() {
 
 // skip function
 function skip() {
+    
+    let element1Value = parseInt(element1.textContent);
+    let element2Value = parseInt(element2.textContent);
+    
     // check if move is correct (i.e whether user should've skipped)
-    if (element1.textContent < element2.textContent) {
-        moveExplanationText.textContent = "Correct! " + element1.textContent + " is smaller than " + element2.textContent + " so they should not be swapped!";
+    if (element1Value < element2Value) {
+        moveExplanationText.textContent = "Correct! " + element1Value + " is smaller than " + element2Value + " so they should not be swapped!";
         correctMoves++;
-    } else if (element1.textContent === element2.textContent) {
-        moveExplanationText.textContent = "Correct! " + element1.textContent + " is equal to " + element2.textContent + " so they should not be swapped!";
+    } else if (element1Value === element2Value) {
+        moveExplanationText.textContent = "Correct! " + element1Value + " is equal to " + element2Value + " so they should not be swapped!";
         wrongMoves++;
     }
     else {
-        moveExplanationText.textContent = "Wrong! " + element1.textContent + " is bigger than " + element2.textContent + " so they should be swapped!";
+        moveExplanationText.textContent = "Wrong! " + element1Value + " is bigger than " + element2Value + " so they should be swapped!";
         wrongMoves++;
     }
 }
