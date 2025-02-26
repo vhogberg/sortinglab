@@ -74,16 +74,17 @@
     background-color: var(--color-element-highlighted-hover);;
 }
 
-.game-element-text {}
-
-#skip-button-div {
-    display: inline-block;
-    cursor: pointer;
-    padding: 10px;
-    background-color: lightblue;
-    border-radius: 5px;
+#skip-button-container {
+    position: relative;
 }
 
-#skip-button:disabled {
-    pointer-events: none;
+#skip-button-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0); /* Transparent */
+    cursor: pointer;
+    display: none; /* Hidden by default */
 }
