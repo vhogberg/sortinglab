@@ -88,3 +88,14 @@
     cursor: pointer;
     display: none; /* Hidden by default */
 }
+
+
+/* SELECTION SORT */
+.smallest-game-element {
+    
+    border-bottom: solid;
+    
+    border-width: 10px;
+    
+    border-color: yellow;
+}

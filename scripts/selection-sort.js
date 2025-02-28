@@ -1,7 +1,7 @@
 // Start button
 const startButton = document.getElementById("start-button");
-const leftButton = document.getElementById("left-button");
-const skipButton = document.getElementById("skip-button");
+const selectButton = document.getElementById("select-button");
+const nextButton = document.getElementById("next-button");
 
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
@@ -10,8 +10,8 @@ submitButton.addEventListener("click", checkIfSorted);
 startButton.addEventListener("click", startGame);
 
 submitButton.classList.add("disabled");
-leftButton.classList.add("disabled");
-skipButton.classList.add("disabled");
+selectButton.classList.add("disabled");
+nextButton.classList.add("disabled");
 
 let moveExplanationText = document.getElementById("move-explanation");
 
@@ -20,7 +20,7 @@ let elementList;
 
 // Global variables of the current two elements
 let selectedElement;
-let element2;
+let smallestElement;
 
 let correctMoves = 0;
 let wrongMoves = 0;
@@ -34,8 +34,8 @@ function scrambleElements() {
 }
 
 function startGame() {
-    leftButton.classList.remove("disabled");
-    skipButton.classList.remove("disabled");
+    selectButton.classList.remove("disabled");
+    nextButton.classList.remove("disabled");
     submitButton.classList.remove("disabled");
     startButton.classList.add("hidden");
     theoryView.classList.add("hidden");
@@ -45,30 +45,36 @@ function startGame() {
 }
 
 let allowedMoveMade = false;
+let skipIndex;
+
 
 async function gameLoop() {
     let index = 0;
     while (index < elementList.length) {
+        console.log("loop:" + index);
 
         selectedElement = elementList[index];
+        smallestElement = elementList[index];
 
-        if (index != 0) {
-            element2 = elementList[index - 1];
-        }
-        // add eventlistener to left (swap) button here, button can be pressed multiple times until listener is removed
-        leftButton.addEventListener("click", swapElements);
+        skipIndex = index;
+
         // add visualisation for selected element
         selectedElement.classList.add("game-element-highlighted");
+        smallestElement.classList.add("smallest-game-element");
 
-        skipButton.addEventListener("click", skip);
+        selectButton.addEventListener("click", selectSmallestElement);
+        nextButton.addEventListener("click", () => {
+            skip();
+        });
 
         await waitForValidMove();
 
-        leftButton.removeEventListener("click", swapElements);
-        skipButton.removeEventListener("click", skip);
+        selectButton.removeEventListener("click", selectSmallestElement);
+        nextButton.removeEventListener("click", skip);
 
         selectedElement.classList.remove("game-element-highlighted");
         index++;
+        skipIndex++;
     }
     moveExplanationText.textContent = "No further elements to sort, click submit!";
 }
@@ -83,42 +89,43 @@ function waitForValidMove() {
         }
 
         function removeEventListeners() {
-            leftButton.removeEventListener("click", checkValidMove);
-            skipButton.removeEventListener("click", checkValidMove);
+            selectButton.removeEventListener("click", checkValidMove);
+            nextButton.removeEventListener("click", checkValidMove);
         }
 
-        leftButton.addEventListener("click", checkValidMove);
-        skipButton.addEventListener("click", checkValidMove)
+        selectButton.addEventListener("click", checkValidMove);
+        nextButton.addEventListener("click", checkValidMove)
     })
 }
 
-function skip() {
+
+async function skip() {
+
+    if (skipIndex >= elementList.length - 1) {
+        return;
+    }
+
     let selectedValue = parseInt(selectedElement.textContent);
-    let element2Value = element2 ? parseInt(element2.textContent) : undefined;
+    let smallestElementValue = parseInt(smallestElement.textContent);
+
+    selectedElement.classList.remove("game-element-highlighted");
+
+    selectedElement = elementList[skipIndex + 1];
+    selectedElement.classList.add("game-element-highlighted");
+    skipIndex++;
+
 
     // Ensure the element list is updated after possible swaps
     elementList = document.querySelectorAll(".game-element");
+}
 
-    if (!element2) {
-        moveExplanationText.textContent = "Correct! You should always skip when the selected element is furthest to the left!";
-        correctMoves++;
-        allowedMoveMade = true;
-        return;
-    }
-    if (selectedValue < element2Value) {
-        moveExplanationText.textContent = "Wrong! " + selectedValue + " is smaller than " + element2Value + " so it should be swapped!";
-        wrongMoves++;
-        allowedMoveMade = false;
-        return;
-    }
-    if (selectedValue > element2Value) {
-        moveExplanationText.textContent = "Correct! " + selectedValue + " is bigger than " + element2Value + " so it should be skipped!";
-        correctMoves++;
-        allowedMoveMade = true;
-    } else {
-        moveExplanationText.textContent = "Correct! " + selectedValue + " is equal to " + element2Value + " so they should be skipped!";
-        correctMoves++;
-        allowedMoveMade = true;
+function selectSmallestElement() {
+    if (parseInt(selectedElement.textContent) < parseInt(smallestElement.textContent)) {
+        smallestElement.classList.remove("smallest-game-element");
+        smallestElement = selectedElement;
+        smallestElement.classList.add("smallest-game-element");
+    }else{
+        moveExplanationText.textContent = "not smallest element!";
     }
 }
 
@@ -210,8 +217,8 @@ function gameOver() {
     // enable startButton again for new round
     startButton.classList.remove("hidden");
     theoryView.classList.remove("hidden");
-    leftButton.classList.add("disabled");
-    skipButton.classList.add("disabled");
+    selectButton.classList.add("disabled");
+    nextButton.classList.add("disabled");
     submitButton.classList.add("disabled");
 
     // reset the indexes in list
