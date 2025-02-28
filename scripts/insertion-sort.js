@@ -72,6 +72,7 @@ async function gameLoop() {
         selectedElement.classList.remove("game-element-highlighted");
         index++;
     }
+    moveExplanationText.textContent = "No further elements to sort, click submit!";
 }
 
 function waitForValidMove() {
