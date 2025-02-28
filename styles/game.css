@@ -17,6 +17,11 @@
     --color-element-background-hover: #d8d6df;
     --color-element-highlighted: #9c93b9;
     --color-element-highlighted-hover: #9088aa;
+
+    --color-element-smallest: #7b7491;
+    --color-element-sorted: #77ad77;
+    --color-element-sorted-hover: #6d9e6d;
+    
 }
 
 /* Dark-mode */
@@ -38,6 +43,10 @@
     --color-element-background-hover: #302c3b;
     --color-element-highlighted: #67617c;
     --color-element-highlighted-hover: #706a88;
+
+    --color-element-smallest: #8d85ac;
+    --color-element-sorted: #5d885d;
+    --color-element-sorted-hover: #679667;
 }
 
 #game-element-container {
@@ -91,11 +100,17 @@
 
 
 /* SELECTION SORT */
+/*TODO() list ut hur border-bottom kan flyttas ner*/
 .smallest-game-element {
-    
     border-bottom: solid;
-    
     border-width: 10px;
-    
-    border-color: yellow;
+    border-color: var(--color-element-smallest);
+}
+
+.sorted-element {
+    background-color: var(--color-element-sorted);
+}
+
+.sorted-element:hover {
+    background-color: var(--color-element-sorted-hover);
 }

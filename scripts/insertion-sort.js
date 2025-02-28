@@ -187,6 +187,9 @@ function checkIfSorted() {
 
     // Made a new array containing the values (numbers or letters)
     const valueArray = [];
+    for (let index = 0; index < elementList.length; index++) {
+        valueArray[index] = elementList[index].textContent;
+    }
 
     // For number-mode
     const isSorted = valueArray.every((value, index, array) =>
