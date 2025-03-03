@@ -3,7 +3,7 @@
 const startButton = document.getElementById("start-button");
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
-const gameContainer = document.getElementById("game-element-container");
+const gameElementList = document.getElementById("game-element-list");
 
 submitButton.addEventListener("click", checkIfSorted);
 startButton.addEventListener("click", startGame);
@@ -14,42 +14,6 @@ submitButton.classList.add("disabled");
 
 // Initial sorted list of all elements
 let elementList;
-
-var dragging = null;
-
-gameContainer.addEventListener("dragstart", (event) => {
-    var target = getTarget(event.target);
-})
-
-gameContainer.addEventListener('dragenter', (event) => {
-    event.target.style['border-right'] = 'solid 4px yellow';
-})
-
-gameContainer.addEventListener('dragleave', (event) => {
-    event.target.style['border-right'] = '';
-
-})
-
-gameContainer.addEventListener("dragover", (event) => {
-    event.preventDefault();
-})
-
-gameContainer.addEventListener("drop", (event) => {
-    event.preventDefault();
-    alert("dropped something!");
-
-})
-
-function getTarget(target) {
-    
-}
-
-
-
-
-
-// The element you are currently "holding"
-let selectedElement;
 
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
@@ -68,6 +32,32 @@ function startGame() {
     scrambleElements();
 }
 
+var dragging = null;
+
+gameElementList.addEventListener("dragstart", (event) => {
+    dragging = event.target.closest("li"); // just grab li's
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData('text/plain', ""); // Needed for Firefox to allow dragging
+    
+})
+
+gameElementList.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    var target = event.target.closest("li"); // just grab li's
+    if (!target || target === dragging) return; // return if target does not exist or target is target (dont drop on itself)
+    const bounding = target.getBoundingClientRect();
+    const offset = event.clientX - bounding.left;
+    
+    if (offset > bounding.width / 2) {
+        target.parentNode.insertBefore(dragging, target.nextSibling);
+    } else {
+        target.parentNode.insertBefore(dragging, target);
+    }
+})
+
+gameElementList.addEventListener("drop", (event) => {
+    event.preventDefault();
+});
 
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
@@ -98,7 +88,8 @@ function gameOver() {
     theoryView.classList.remove("hidden");
 
     submitButton.classList.add("disabled");
-
+    
+    alert("Sorted!");
 
     // reset ordering on theoryview
     for (let index = 0; index < elementList.length; index++) {

@@ -6,3 +6,36 @@
 .game-element-text {
     border: none !important;
 }
+
+#game-element-list {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    list-style: none;
+    gap: 1rem;
+    margin: 2rem 0 2rem 0;
+    
+}
+
+
+/*
+#game-element-list li {
+    cursor: grab !important;
+    display: flex;
+    user-select: none;
+}
+
+#game-element-list:active li:active {
+    cursor: grabbing !important;
+    display: flex;
+    user-select: none;
+}
+    */
+
+.can-be-grabbed {
+    cursor: grab !important;
+}
+
+.grabbing {
+    cursor: move !important;
+}
