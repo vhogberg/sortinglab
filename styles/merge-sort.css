@@ -1,0 +1,62 @@
+:root {
+    --color-container-border-color: rgb(94, 94, 94) ;
+    --color-element-marked-right: rgb(182, 86, 86);
+    --color-element-marked-left: rgb(145, 224, 100);
+}
+
+:root.dark-mode {
+    --color-container-border-color: rgb(189, 189, 189) ;
+    --color-element-marked-right: rgb(180, 52, 52);
+    --color-element-marked-left: rgb(99, 180, 52);
+}
+
+#merge-sort-game-element-container {
+    margin: 1rem 0;
+    padding: 0.3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border: 2px solid black;
+}
+
+/* Top array of 8 elements */
+.game-element-container-merge-sort {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 7.8px;
+}
+
+/* Container containing the sets of arrays */
+.div-container-merge-sort {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 4px;
+    margin: 4px;
+}
+
+.game-element-container-1 {
+    border: 2px solid var(--color-container-border-color);
+}
+
+.game-element-container-2 {
+    border: 2px solid var(--color-container-border-color);
+}
+
+.game-element-container-4 {
+    border: 2px solid var(--color-container-border-color);
+    
+}
+
+.game-element-container-8 {
+    border: 2px solid var(--color-container-border-color);
+}
+
+.marked-left {
+    background-color: var(--color-element-marked-left);
+}
+
+.marked-right {
+    background-color: var(--color-element-marked-right);
+}

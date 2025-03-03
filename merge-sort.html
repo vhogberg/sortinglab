@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Viktor Högberg, Léo Tuomenoksa Texier">
-    <meta name="description" content="Learn how the Insertion Sort algorithm works through interactive visualization 🔄">
+    <meta name="description"
+        content="Learn how the Insertion Sort algorithm works through interactive visualization 🔄">
     <meta name="generator" content="Visual Studio Code">
     <meta name="keywords" content="Merge Sort, Sorting algorithm, Learning, Visualization, Computer science">
     <title>SortingLab - Merge sort</title>
@@ -13,6 +14,7 @@
     <!-- Update numbers for caching err -->
     <link rel="stylesheet" href="styles/base.css?rnd=12355">
     <link rel="stylesheet" href="styles/game.css?rnd=12355">
+    <link rel="stylesheet" href="styles/merge-sort.css?rnd=12355">
 </head>
 
 <body>
@@ -29,7 +31,7 @@
         </div>
     </header>
     <main>
-        <h2>Selection sort</h2>
+        <h2>Merge sort</h2>
 
         <section id="theory-view">
             <div id="hide-theory-container">
@@ -42,25 +44,86 @@
             <h2>Try it yourself</h2>
         </section>
         <section id="game-view">
-            
+
             <button id="start-button"><span>Start</span></button>
 
-            <div id="game-element-container">
-                <div class="game-element" ><span class="game-element-text">1</span></div>
-                <div class="game-element" ><span class="game-element-text">2</span></div>
-                <div class="game-element" ><span class="game-element-text">3</span></div>
-                <div class="game-element" ><span class="game-element-text">4</span></div>
-                <div class="game-element" ><span class="game-element-text">5</span></div>
-                <div class="game-element" ><span class="game-element-text">6</span></div>
-                <div class="game-element" ><span class="game-element-text">7</span></div>
-                <div class="game-element" ><span class="game-element-text">8</span></div>
-                <div class="game-element" ><span class="game-element-text">9</span></div>
-                <div class="game-element" ><span class="game-element-text">10</span></div>
+            <div class="div-container-merge-sort">
+                <div class="game-element-container-1 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-1"><span class="game-element-text">1</span></div>
+                </div>
+                <div class="game-element-container-1 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-1"><span class="game-element-text">2</span></div>
+                </div>
+                <div class="game-element-container-1 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-1"><span class="game-element-text">3</span></div>
+                </div>
+                <div class="game-element-container-1 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-1"><span class="game-element-text">4</span></div>
+                </div>
+                <div class="game-element-container-1 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-1"><span class="game-element-text">5</span></div>
+                </div>
+                <div class="game-element-container-1 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-1"><span class="game-element-text">6</span></div>
+                </div>
+                <div class="game-element-container-1 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-1"><span class="game-element-text">7</span></div>
+                </div>
+                <div class="game-element-container-1 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-1"><span class="game-element-text">8</span></div>
+                </div>
             </div>
 
-            <button id="next-button"><span>Next</span></button>
-            <button id="move-button"><span>Move</span></button>
-            <button id="select-button"><span>Select</span></button>
+            <div class="div-container-merge-sort">
+                <div class="game-element-container-2 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-2"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-2"><span class="game-element-text"></span></div>
+                </div>
+                <div class="game-element-container-2 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-2"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-2"><span class="game-element-text"></span></div>
+                </div>
+                <div class="game-element-container-2 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-2"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-2"><span class="game-element-text"></span></div>
+                </div>
+                <div class="game-element-container-2 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-2"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-2"><span class="game-element-text"></span></div>
+                </div>
+            </div>
+
+
+            <div class="div-container-merge-sort">
+                <div class="game-element-container-4 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-3"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-3"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-3"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-3"><span class="game-element-text"></span></div>
+                </div>
+                <div class="game-element-container-4 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-3"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-3"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-3"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-3"><span class="game-element-text"></span></div>
+                </div>
+            </div>
+
+            <div class="div-container-merge-sort">
+                <div class="game-element-container-8 game-element-container-merge-sort">
+                    <div class="game-element game-element-row-4"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-4"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-4"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-4"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-4"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-4"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-4"><span class="game-element-text"></span></div>
+                    <div class="game-element game-element-row-4"><span class="game-element-text"></span></div>
+                </div>
+            </div>
+
+            <button id="left-button"><span>Left</span></button>
+            <button id="right-button"><span>Right</span></button>
             <button id="submit-button"><span>Submit</span></button>
             <p id="move-explanation"></p>
 
