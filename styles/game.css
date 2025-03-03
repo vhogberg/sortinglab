@@ -1,4 +1,11 @@
+/* Viktor Högberg, Léo Tuomenoksa Texier */
+
+/* Default game styling, applies to all game modes.
+   Some gamemodes have specific css files too.
+*/
+
 /* Light-mode */
+/* TODO() check colours across this and base.css */
 :root {
     --color-header-background: #eceaf2;
     --color-background: #f8f8fc;
@@ -21,7 +28,7 @@
     --color-element-smallest: #7b7491;
     --color-element-sorted: #77ad77;
     --color-element-sorted-hover: #6d9e6d;
-    
+
 }
 
 /* Dark-mode */
@@ -80,37 +87,5 @@
 }
 
 .game-element-highlighted:hover {
-    background-color: var(--color-element-highlighted-hover);;
-}
-
-#skip-button-container {
-    position: relative;
-}
-
-#skip-button-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255, 255, 255, 0); /* Transparent */
-    cursor: pointer;
-    display: none; /* Hidden by default */
-}
-
-
-/* SELECTION SORT */
-/*TODO() list ut hur border-bottom kan flyttas ner*/
-.smallest-game-element {
-    border-bottom: solid;
-    border-width: 10px;
-    border-color: var(--color-element-smallest);
-}
-
-.sorted-element {
-    background-color: var(--color-element-sorted);
-}
-
-.sorted-element:hover {
-    background-color: var(--color-element-sorted-hover);
+    background-color: var(--color-element-highlighted-hover);
 }

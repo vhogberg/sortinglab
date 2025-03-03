@@ -1,0 +1,15 @@
+/* SELECTION SORT */
+/*TODO() list ut hur border-bottom kan flyttas ner*/
+.smallest-game-element {
+    border-bottom: solid;
+    border-width: 10px;
+    border-color: var(--color-element-smallest);
+}
+
+.sorted-element {
+    background-color: var(--color-element-sorted);
+}
+
+.sorted-element:hover {
+    background-color: var(--color-element-sorted-hover);
+}

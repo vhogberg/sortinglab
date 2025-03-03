@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Viktor Högberg, Léo Tuomenoksa Texier">
+    <meta name="description"
+        content="Learn how the Insertion Sort algorithm works through interactive visualization 🔄">
+    <meta name="generator" content="Visual Studio Code">
+    <meta name="keywords" content="Sandbox Sort, Sorting algorithm, Learning, Visualization, Computer science">
+    <title>SortingLab - Sandbox sort</title>
+
+    <!-- Update numbers for caching err -->
+    <link rel="stylesheet" href="styles/base.css?rnd=12355">
+    <link rel="stylesheet" href="styles/game.css?rnd=12355">
+    <link rel="stylesheet" href="styles/sandbox-sort.css?rnd=12355">
+</head>
+
+<body>
+    <header>
+        <div id="header-container">
+            <div id="logo-container">
+                <h1>Sorting<span id="logo-span">Lab</span></h1>
+                <img src="assets/icons/neural.png" alt="" id="logo">
+            </div>
+            <div id="header-button-container">
+                <button><span>About</span></button>
+                <button id="theme-toggle-button"><span>Theme</span></button>
+            </div>
+        </div>
+    </header>
+    <main>
+
+        <h2>Sandbox sort</h2>
+        <section id="theory-view">
+
+            <div id="hide-theory-container">
+                <h3>How it works</h3>
+            </div>
+
+            <p>Here you are free to drag and drop elements as you wish! You can practice sorting as you wish in your own
+                way!</p>
+            <h2>Try it yourself</h2>
+        </section>
+
+        <section id="game-view">
+
+
+            <button id="start-button"><span>Start</span></button>
+
+            <div id="game-element-container">
+                <div id="first-element" class="game-element" draggable="true"><span class="game-element-text">1</span>
+                </div>
+                <div class="game-element" draggable="true"><span class="game-element-text">2</span></div>
+                <div class="game-element" draggable="true"><span class="game-element-text">3</span></div>
+                <div class="game-element" draggable="true"><span class="game-element-text">4</span></div>
+                <div class="game-element" draggable="true"><span class="game-element-text">5</span></div>
+                <div class="game-element" draggable="true"><span class="game-element-text">6</span></div>
+                <div class="game-element" draggable="true"><span class="game-element-text">7</span></div>
+                <div class="game-element" draggable="true"><span class="game-element-text">8</span></div>
+                <div class="game-element" draggable="true"><span class="game-element-text">9</span></div>
+                <div class="game-element" draggable="true"><span class="game-element-text">10</span></div>
+            </div>
+
+            <button id="submit-button"><span>Submit</span></button>
+            <p id="move-explanation"></p>
+        </section>
+    </main>
+
+    <script src="scripts/sandbox-sort.js"></script>
+    <script src="scripts/base.js"></script>
+
+</body>
+
+</html>

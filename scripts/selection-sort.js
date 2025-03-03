@@ -1,4 +1,5 @@
-// Start button
+/* Viktor Högberg, Léo Tuomenoksa Texier */
+
 const startButton = document.getElementById("start-button");
 const selectButton = document.getElementById("select-button");
 const skipButton = document.getElementById("next-button");
