@@ -91,8 +91,19 @@ async function gameLoop() {
         while (elementIndex < 8) {
             allowedMoveMade = false;
 
-            leftElement.classList.add("marked-left");
-            rightElement.classList.add("marked-right");
+            // TODO() disabled look too.
+            if (rowIndex === 1) {
+                if (elementIndex % 2 === 0) {
+                    elementList[elementIndex].classList.add("marked-left");
+                    elementList[elementIndex + 1].classList.add("marked-right");
+                    
+                }
+                else {
+                    elementList[elementIndex - 1].classList.add("marked-left");
+                    elementList[elementIndex].classList.add("marked-right");
+                }
+            }
+            
 
             leftButton.addEventListener("click", handleLeftClick);
             rightButton.addEventListener("click", handleRightClick);
