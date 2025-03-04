@@ -233,7 +233,7 @@ function gameOver() {
     }
     // reset ordering on theoryview
     for (let index = 0; index < elementList.length; index++) {
-        elementList[index].innerHTML = index;
+        elementList[index].innerHTML = index; //TODO() index+1?
     }
     elementList = null;
 

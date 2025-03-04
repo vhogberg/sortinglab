@@ -181,4 +181,5 @@ function gameOver() {
     for (let index = 0; index < elementList.length; index++) {
         elementList[index].classList.remove("game-element-highlighted");
     }
+    //TODO() index+1?
 }
