@@ -43,7 +43,7 @@ function scrambleElements() {
     for (const element of elementList) {
         element.innerHTML = Math.floor(Math.random() * 10); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
     }
-    elementList2 = document.querySelectorAll(".game-element-row-2");
+    // elementList2 = document.querySelectorAll(".game-element-row-2");
 }
 
 function startGame() {
@@ -60,60 +60,67 @@ function startGame() {
 let elementIndex = 0;
 let rowIndex = 1;
 
+let rowArray;
+
+function getValue(elementToGetValue) {
+    return parseInt(elementToGetValue.textContent);
+}
+
+function getSmallestValue(rowArray) {
+    let allValues = rowArray.flat(Infinity).map(div => getValue(div));
+    return Math.min(...allValues);
+}
+
 async function gameLoop() {
     while (rowIndex < 4) {
+
+        if (rowIndex === 1) {
+            rowArray = [
+                [elementList[elementIndex], elementList[elementIndex + 1]],
+                [elementList[elementIndex + 2], elementList[elementIndex + 3]],
+                [elementList[elementIndex + 4], elementList[elementIndex + 5]],
+                [elementList[elementIndex + 6], elementList[elementIndex + 7]],
+            ]
+        }
+        else if (rowIndex === 2) {
+            rowArray = [
+                [elementList[elementIndex], elementList[elementIndex + 1], elementList[elementIndex + 2], elementList[elementIndex + 3]],
+                [elementList[elementIndex + 4], elementList[elementIndex + 5], elementList[elementIndex + 6], elementList[elementIndex + 7]]
+            ]
+        }
+        else if (rowIndex === 3) {
+            rowArray = [
+                [elementList[elementIndex], elementList[elementIndex + 1], elementList[elementIndex + 2], elementList[elementIndex + 3],
+                elementList[elementIndex + 4], elementList[elementIndex + 5], elementList[elementIndex + 6], elementList[elementIndex + 7]]
+            ]
+        }
+
         while (elementIndex < 8) {
             console.log("Element index: " + elementIndex)
             allowedMoveMade = false;
 
-            // ROW 1
-            if (rowIndex === 1) {
-                if (elementIndex % 2 === 0) {
-                    leftElement = elementList[elementIndex];
-                    rightElement = elementList[elementIndex + 1];
-                    console.log("left 1: " + leftElement.textContent);
-                    console.log("right 1: " + rightElement.textContent);
-                }
-                else {
-                    leftElement = elementList[elementIndex - 1];
-                    rightElement = elementList[elementIndex];
-                    console.log("left 2: " + leftElement.textContent);
-                    console.log("right 2: " + rightElement.textContent);
-                }
-            }
-            
-            // ROW 2
-            else if (rowIndex === 2) {
-                if (elementIndex < 4) {
-                    leftElement = elementList[elementIndex];
-                    rightElement = elementList[elementIndex + 2];
-                }
-                else {
-                    leftElement = elementList[elementIndex + 2];
-                    rightElement = elementList[elementIndex];
-                }
-            }
-            else {
-                
-            }
+            // leftElement.classList.add("marked-left");
+            // rightElement.classList.add("marked-right");
 
-
-            leftElement.classList.add("marked-left");
-            rightElement.classList.add("marked-right");
-
-            leftButton.addEventListener("click", moveLeftElement);
-            rightButton.addEventListener("click", moveRightElement);
+            leftButton.addEventListener("click", handleLeftClick);
+            rightButton.addEventListener("click", handleRightClick);
             await waitForValidMove();
 
-            leftElement.classList.remove("marked-left");
-            rightElement.classList.remove("marked-right");
-            leftButton.removeEventListener("click", moveLeftElement);
-            rightButton.removeEventListener("click", moveRightElement);
+            // leftElement.classList.remove("marked-left");
+            // rightElement.classList.remove("marked-right");
+            leftButton.removeEventListener("click", handleLeftClick);
+            rightButton.removeEventListener("click", handleRightClick);
         }
-        rowIndex++
+        rowIndex++;
+        console.log("new for loop, rowindex: " + rowIndex);
         elementIndex = 0;
         elementList = document.querySelectorAll(`.game-element-row-${rowIndex}`);
-        elementList2 = document.querySelectorAll(`.game-element-row-${rowIndex + 1}`);
+        rowArray = [];
+        currentSubArray = [];
+        subArrayIndex = 0;
+        leftElements = [];
+        rightElements = [];
+        // elementList2 = document.querySelectorAll(`.game-element-row-${rowIndex + 1}`);
     }
 }
 
@@ -138,22 +145,152 @@ function waitForValidMove() {
     })
 }
 
-let leftMoveMade = false;
-let rightMoveMade = false;
+function handleLeftClick() {
+    checkMove("left");
+}
+
+function handleRightClick() {
+    checkMove("right");
+}
+
+let leftElements = [];
+let rightElements = [];
+
+let currentSubArray;
+let subArrayIndex;
+
+function checkMove(direction) {
+
+    if (rowIndex === 1) {
+        subArrayIndex = Math.floor(elementIndex / 2)
+    }
+    else if (rowIndex === 2) {
+        subArrayIndex = Math.floor(elementIndex / 4);
+        console.log("subindex2: "+subArrayIndex);
+    }
+    else if (rowIndex === 3) {
+        subArrayIndex = 1;
+    }
+
+    // ROW 1
+    if (rowIndex === 1) {
+        if (elementIndex % 2 === 0) {
+            leftElement = elementList[elementIndex];
+            rightElement = elementList[elementIndex + 1];
+        }
+        else {
+            leftElement = elementList[elementIndex - 1];
+            rightElement = elementList[elementIndex];
+        }
+
+        if (direction == "left") {
+            moveDownElement(leftElement);
+        } else if (direction == "right") {
+            moveDownElement(rightElement);
+        }
+    }
+    else if (rowIndex === 2) {
+        currentSubArray = rowArray[subArrayIndex];
+
+        for (let element of currentSubArray) {
+            console.log("subarrayloop: "+element.textContent);
+        }
+
+        if (elementIndex < 4) {
+            leftElements.push(...currentSubArray.slice(0, 1));
+            rightElements.push(...currentSubArray.slice(2, 3));
+        }
+        else {
+            leftElements.push(...currentSubArray.slice(4, 5));
+            rightElements.push(...currentSubArray.slice(6, 7));
+        }
+
+        if (direction == "left") {
+            // GET SMALLEST VALUE OF LEFTELEMENTS
+            console.log("LOGLEFT"+leftElements);
+            
+            leftElements.sort();
+            leftElement = leftElements[0];
+            
+            console.log("leftElement: " + leftElement);
+
+            moveDownElement(leftElement);
+        } else if (direction == "right") {
+            // GET SMALLEST VALUE OF RIGHTELEMENTS
+            
+            rightElements.sort();
+            rightElement = rightElements[0];
+            
+
+            moveDownElement(rightElement);
+        }
+
+    }
+
+}
+
+let nextRowElements;
+let currentRowElements;
+
+function moveDownElement(elementToMove) {
+
+    if (rowIndex === 1) {
+        subArrayIndex = Math.floor(elementIndex / 2)
+    }
+    else if (rowIndex === 2) {
+        subArrayIndex = Math.floor(elementIndex / 4)
+    }
+    else if (rowIndex === 3) {
+        subArrayIndex = 1;
+    }
 
 
+    console.log("subarrayindx: " + subArrayIndex);
+
+    console.log("to move: " + getValue(elementToMove));
+    console.log("smallest value in move: " + getSmallestValue(rowArray[subArrayIndex]));
+    if (getValue(elementToMove) !== getSmallestValue(rowArray[subArrayIndex])) {
+        console.log("Not smallest element");
+        return;
+    }
+    else {
+        const indexOfMovedElement = rowArray[subArrayIndex].indexOf(elementToMove);
+        if (indexOfMovedElement > -1) { // only splice array if an element is found
+            console.log("REMOVING element: " + elementToMove.textContent);
+            rowArray[subArrayIndex].splice(indexOfMovedElement, 1); //  remove one item only
+        }
+        nextRowElements = document.querySelectorAll(`.game-element-row-${rowIndex + 1}`);
+        nextRowElements[elementIndex].textContent = parseInt(elementToMove.textContent);
+    }
+
+
+    /*
+    if (rowIndex !== 3) {
+        currentRowElements = document.querySelectorAll(`.game-element-row-${rowIndex}`);
+        nextRowElements = document.querySelectorAll(`.game-element-row-${rowIndex + 1}`);
+    }
+        
+
+
+    nextRowElements[elementIndex].textContent = parseInt(elementToMove.textContent);
+*/
+
+    allowedMoveMade = true;
+}
+
+/*
 function moveLeftElement() {
     let leftElementValue = parseInt(leftElement.textContent);
     let rightElementValue = parseInt(rightElement.textContent);
 
     // IF user has already made a left move this turn / set of elements, they can not do it again
-    if (leftMoveMade) {
+    if (leftMoveMade && rowIndex === 1) {
         moveExplanationText.textContent = "Wrong! Try again."
         return;
     }
 
     // IF user made a right move, then they can now make a left move (even if that element is bigger)
-    if (rightMoveMade) {
+    if (rightMoveMade && rowIndex === 1) {
         elementList2[elementIndex].textContent = leftElementValue;
         allowedMoveMade = true;
         rightMoveMade = false;
@@ -202,6 +339,7 @@ function moveRightElement() {
     rightMoveMade = true;
 }
 
+*/
 
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
