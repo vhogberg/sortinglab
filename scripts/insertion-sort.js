@@ -1,4 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
+import { isSorted } from "./game.js";
 import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "./points.js";
 
 const startButton = document.getElementById("start-button");
@@ -28,7 +29,7 @@ let element2;
 function scrambleElements() {
     elementList = document.querySelectorAll(".game-element");
     for (const element of elementList) {
-        element.innerHTML = Math.floor(Math.random() * 10); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+        element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
     }
 }
 
@@ -172,29 +173,15 @@ function swapElements() {
     element2 = elementList[selectedElementIndex - 1];
 
     // If element2 is bigger
-    if (element2 !== undefined && element2.textContent > selectedElement.textContent) {
+    if (element2 !== undefined && parseInt(element2.textContent) > parseInt(selectedElement.textContent)) {
         allowedMoveMade = false;
     }
     elementList = document.querySelectorAll(".game-element");
 }
 
-
-
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
-    elementList = document.querySelectorAll(".game-element");
-
-    // Made a new array containing the values (numbers or letters)
-    const valueArray = [];
-    for (let index = 0; index < elementList.length; index++) {
-        valueArray[index] = elementList[index].textContent;
-    }
-
-    // For number-mode
-    const isSorted = valueArray.every((value, index, array) =>
-        index === 0 || value >= array[index - 1]);
-
-    if (isSorted) {
+    if (isSorted("insertion")) {
         gameOver()
     }
     else {

@@ -1,4 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
+import { isSorted } from "./game.js";
 import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "./points.js";
 
 const startButton = document.getElementById("start-button");
@@ -182,7 +183,7 @@ function swapElements() {
     // gets the parentElement of the first element, ie the container that contains all elements
     let parentElement = selectedElement.parentElement;
 
-    firstElement = elementList[index];
+    let firstElement = elementList[index];
 
     //moves SELECTED element to LEFT OF element2, swapping them
     parentElement.insertBefore(smallestElement, firstElement);
@@ -193,20 +194,8 @@ function swapElements() {
 
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
-    elementList = document.querySelectorAll(".game-element");
-
-    // Made a new array containing the values (numbers or letters)
-    const valueArray = [];
-    for (let index = 0; index < elementList.length; index++) {
-        valueArray[index] = elementList[index].textContent;
-    }
-
-    // For number-mode
-    const isSorted = valueArray.every((value, index, array) =>
-        index === 0 || value >= array[index - 1]);
-
-    if (isSorted) {
-        gameOver();
+if (isSorted("selection")) {
+        gameOver()
     }
     else {
         alert("Not sorted yet, continue!");

@@ -1,4 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
+import { isSorted } from "./game.js";
 import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "./points.js";
 
 const startButton = document.getElementById("start-button");
@@ -26,7 +27,7 @@ let element2;
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
     for (const element of elementList) {
-        element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+        element.innerHTML = Math.floor(Math.random() * 10); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
     }
 }
 
@@ -107,7 +108,7 @@ function swapElements() {
     //moves element2 to be before element1, ie swapping them
     parentElement.insertBefore(element2, element1);
 
-    //since the index of the elements gets shuffled around by swapping them, we reasign all elements to the nodeList to ensure they are in the correct order.
+    //since the index of the elements gets shuffled around by swapping them, we reassign all elements to the nodeList to ensure they are in the correct order.
     elementList = document.querySelectorAll(".game-element");
 }
 
@@ -133,19 +134,7 @@ function skip() {
 
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
-    elementList = document.querySelectorAll(".game-element");
-
-    // Made a new array containing the values (numbers or letters)
-    const valueArray = [];
-    for (let index = 0; index < elementList.length; index++) {
-        valueArray[index] = elementList[index].textContent;
-    }
-
-    // For number-mode
-    const isSorted = valueArray.every((value, index, array) =>
-        index === 0 || value >= array[index - 1]);
-
-    if (isSorted) {
+    if (isSorted("bubble")) {
         gameOver()
     }
     else {
@@ -177,6 +166,6 @@ function gameOver() {
 
     for (let index = 0; index < elementList.length; index++) {
         elementList[index].classList.remove("game-element-highlighted");
+        elementList[index].innerHTML = index;
     }
-    //TODO() index+1?
 }

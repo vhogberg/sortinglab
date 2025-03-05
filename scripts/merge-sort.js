@@ -1,4 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
+import { isSorted } from "./game.js";
 import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "./points.js";
 
 const startButton = document.getElementById("start-button");
@@ -35,6 +36,7 @@ let elementIndex = 0;
 let rowIndex = 1;
 let currentSubArray;
 let subArrayIndex;
+let gameIsOver = false;
 
 // 2D array of elements
 let rowArray;
@@ -152,7 +154,7 @@ async function gameLoop() {
     gameIsOver = true;
 }
 
-let gameIsOver = false;
+
 
 // Handles for buttons
 function handleLeftClick() {
@@ -357,38 +359,34 @@ function moveDownElement(elementToMove) {
 function checkIfSorted() {
 
     if (!gameIsOver) {
-        alert("Not sorted yet, continue!");
+        alert("Not sorted yet 1, continue!");
         return;
     }
 
-    elementList = document.querySelectorAll(".game-element-row-4");
 
-    // Made a new array containing the values (numbers or letters)
+    const elementList = document.querySelectorAll(".game-element-row-4");
+
     const valueArray = [];
     for (let index = 0; index < elementList.length; index++) {
         valueArray[index] = elementList[index].textContent;
     }
 
-    let listIsSorted = false;
+    let listHasEmptyElements = false;
     for (let index = 0; index < valueArray.length; index++) {
         if (valueArray[index] === "") {
-            listIsSorted = true;
+            listHasEmptyElements = true;
         }
     }
-    if (listIsSorted) {
-        alert("Not sorted yet, continue!");
+    if (listHasEmptyElements) {
+        alert("Not sorted yet 2, continue!");
         return;
     }
 
-    // For number-mode
-    const isSorted = valueArray.every((value, index, array) =>
-        index === 0 || value >= array[index - 1]);
-
-    if (isSorted) {
+    if (isSorted("merge")) {
         gameOver();
     }
     else {
-        alert("Not sorted yet, continue!");
+        alert("Not sorted yet 3, continue!");
     }
 }
 
