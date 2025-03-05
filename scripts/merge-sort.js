@@ -1,4 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
+import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "./points.js";
 
 const startButton = document.getElementById("start-button");
 const leftButton = document.getElementById("left-button");
@@ -27,8 +28,6 @@ let rightElements = [];
 let nextRowElements;
 
 // Points
-let correctMoves = 0;
-let wrongMoves = 0;
 let allowedMoveMade = false;
 
 // Global looping elements
@@ -311,7 +310,7 @@ function moveDownElement(elementToMove) {
     // If it is not the smallest element in the current subarray, do nothing.
     if (getValue(elementToMove) !== getSmallestValue(rowArray[subArrayIndex])) {
         moveExplanationText.textContent = "Wrong! There is a smaller element on the other side!"
-        wrongMoves++;
+        increaseIncorrectMoves();
         return;
     } else {
 
@@ -349,7 +348,7 @@ function moveDownElement(elementToMove) {
         nextRowElements[elementIndex].textContent = parseInt(elementToMove.textContent);
     }
     // give points
-    correctMoves++;
+    increaseCorrectMoves();
     allowedMoveMade = true;
     moveExplanationText.textContent = ""
 }
@@ -395,10 +394,12 @@ function checkIfSorted() {
 
 // Function called if user clicks submit and the array is sorted
 function gameOver() {
-    if (wrongMoves > correctMoves * 0.4) {
-        alert("Game over!\nCorrect moves: " + correctMoves + "\nWrong moves: " + wrongMoves + "\nTry again to improve your result!");
+    if (isScoreGood()) {
+        // good score
+        alert("Congrats!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves());
     } else {
-        alert("Congrats!\nCorrect moves: " + correctMoves + "\nWrong moves: " + wrongMoves);
+        // not good score
+        alert("Game over!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!");
     }
     // enable startButton again for new round
     startButton.classList.remove("hidden");
@@ -411,8 +412,7 @@ function gameOver() {
     leftElement = undefined;
     rightElement = undefined;
     // Reset points for next round
-    wrongMoves = 0;
-    correctMoves = 0;
+    resetScore();
 
     moveExplanationText.textContent = "";
 

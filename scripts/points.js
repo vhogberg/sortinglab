@@ -23,3 +23,10 @@ export function resetScore() {
     correctMoves = 0;
     wrongMoves = 0;
 }
+
+export function isScoreGood() {
+    if (wrongMoves > correctMoves * 0.4) {
+        return false;
+    }
+    return true;
+}

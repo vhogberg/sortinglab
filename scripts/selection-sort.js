@@ -1,4 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
+import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "./points.js";
 
 const startButton = document.getElementById("start-button");
 const selectButton = document.getElementById("select-button");
@@ -25,9 +26,6 @@ let elementList;
 // Global variables of the two elements
 let selectedElement;
 let smallestElement;
-
-let correctMoves = 0; // for points
-let wrongMoves = 0; // for points
 
 // for looping logic
 let allowedMoveMade = false;
@@ -116,7 +114,7 @@ function skip() {
     // Control so that user does not skip over a value they should not (would break the algorithm)
     if (parseInt(selectedElement.textContent) < parseInt(smallestElement.textContent)) {
         moveExplanationText.textContent = "Wrong! " + selectedElement.textContent + " is smaller than " + smallestElement.textContent + " so it should become the new minimum value!";
-        wrongMoves++;
+        increaseIncorrectMoves();
         return;
     }
 
@@ -154,18 +152,18 @@ function selectSmallestElement() {
         //updates the current smallest element to the smaller one selected by the user
         smallestElement = selectedElement;
         smallestElement.classList.add("smallest-game-element");
-        correctMoves++;
+        increaseCorrectMoves();
         //if it is the same element
     } else if (selectedElement == smallestElement) {
         moveExplanationText.textContent = "This element is already selected!";
         //if it is another element with the same value
     } else if (parseInt(selectedElement.textContent) == parseInt(smallestElement.textContent)) {
         moveExplanationText.textContent = "This element is the same size as the already selected value!";
-        wrongMoves++;
+        increaseIncorrectMoves();
         //if element user has selected is bigger than currently selected element
     } else {
         moveExplanationText.textContent = "This element is bigger than the selected value!";
-        wrongMoves++;
+        increaseIncorrectMoves();
     }
 }
 
@@ -217,10 +215,12 @@ function checkIfSorted() {
 
 // Function called if user clicks submit and the array is sorted
 function gameOver() {
-    if (wrongMoves > correctMoves * 0.4) {
-        alert("Game over!\nCorrect moves: " + correctMoves + "\nWrong moves: " + wrongMoves + "\nTry again to improve your result!");
+    if (isScoreGood()) {
+        // good score
+        alert("Congrats!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves());
     } else {
-        alert("Congrats!\nCorrect moves: " + correctMoves + "\nWrong moves: " + wrongMoves);
+        // not good score
+        alert("Game over!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!");
     }
     // enable startButton again for new round
     startButton.classList.remove("hidden");
@@ -235,8 +235,7 @@ function gameOver() {
     selectedElement = undefined;
     smallestElement = undefined;
     // Reset points for next round
-    wrongMoves = 0;
-    correctMoves = 0;
+    resetScore();
 
     moveExplanationText.textContent = "";
 

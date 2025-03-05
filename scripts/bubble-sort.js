@@ -1,4 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
+import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "./points.js";
 
 const startButton = document.getElementById("start-button");
 const swapButton = document.getElementById("swap-button");
@@ -21,10 +22,6 @@ let elementList = document.querySelectorAll(".game-element");
 // Global variables of the current two elements selected
 let element1;
 let element2;
-
-
-let correctMoves = 0;
-let wrongMoves = 0;
 
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
@@ -94,14 +91,14 @@ function swapElements() {
 
     if (element1Value > element2Value) {
         moveExplanationText.textContent = "Correct! " + element1Value + " is bigger than " + element2Value + " so they should be swapped!";
-        correctMoves++;
+        increaseCorrectMoves();
     } else if (element1Value === element2Value) {
         moveExplanationText.textContent = "Wrong! " + element1Value + " is equal to " + element2Value + " so they should not be swapped!";
-        wrongMoves++;
+        increaseIncorrectMoves();
     }
     else {
         moveExplanationText.textContent = "Wrong! " + element1Value + " is smaller than " + element2Value + " so they should not be swapped!";
-        wrongMoves++;
+        increaseIncorrectMoves();
     }
 
     //gets the parentElement of the first element, ie the game-element-container that contains all elements
@@ -116,21 +113,21 @@ function swapElements() {
 
 // skip function
 function skip() {
-    
+
     let element1Value = parseInt(element1.textContent);
     let element2Value = parseInt(element2.textContent);
-    
+
     // check if move is correct (i.e whether user should've skipped)
     if (element1Value < element2Value) {
         moveExplanationText.textContent = "Correct! " + element1Value + " is smaller than " + element2Value + " so they should not be swapped!";
-        correctMoves++;
+        increaseCorrectMoves();
     } else if (element1Value === element2Value) {
         moveExplanationText.textContent = "Correct! " + element1Value + " is equal to " + element2Value + " so they should not be swapped!";
-        wrongMoves++;
+        increaseIncorrectMoves();
     }
     else {
         moveExplanationText.textContent = "Wrong! " + element1Value + " is bigger than " + element2Value + " so they should be swapped!";
-        wrongMoves++;
+        increaseIncorrectMoves();
     }
 }
 
@@ -158,10 +155,12 @@ function checkIfSorted() {
 
 // Function called if user clicks submit and the array is sorted
 function gameOver() {
-    if (wrongMoves > correctMoves * 0.4) {
-        alert("Game over!\nCorrect moves: " + correctMoves + "\nWrong moves: " + wrongMoves + "\nTry again to improve your result!");
+    if (isScoreGood()) {
+        // good score
+        alert("Congrats!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves());
     } else {
-        alert("Congrats!\nCorrect moves: " + correctMoves + "\nWrong moves: " + wrongMoves);
+        // not good score
+        alert("Game over!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!");
     }
     // enable startButton again for new round
     startButton.classList.remove("hidden");
@@ -170,13 +169,11 @@ function gameOver() {
     skipButton.classList.add("disabled");
     submitButton.classList.add("disabled");
 
+    // reset score for next round;
+    resetScore();
 
     // reset the indexes in list
     elementList = document.querySelectorAll(".game-element");
-
-    // Reset points for next round
-    wrongMoves = 0;
-    correctMoves = 0;
 
     for (let index = 0; index < elementList.length; index++) {
         elementList[index].classList.remove("game-element-highlighted");

@@ -1,4 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
+import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "./points.js";
 
 const startButton = document.getElementById("start-button");
 const leftButton = document.getElementById("left-button");
@@ -22,9 +23,6 @@ let elementList;
 // Global variables of the current two elements
 let selectedElement;
 let element2;
-
-let correctMoves = 0;
-let wrongMoves = 0;
 
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
@@ -102,23 +100,23 @@ function skip() {
 
     if (!element2) {
         moveExplanationText.textContent = "Correct! You should always skip when the selected element is furthest to the left!";
-        correctMoves++;
+        increaseCorrectMoves();
         allowedMoveMade = true;
         return;
     }
     if (selectedValue < element2Value) {
         moveExplanationText.textContent = "Wrong! " + selectedValue + " is smaller than " + element2Value + " so it should be swapped!";
-        wrongMoves++;
+        increaseIncorrectMoves();
         allowedMoveMade = false;
         return;
     }
     if (selectedValue > element2Value) {
         moveExplanationText.textContent = "Correct! " + selectedValue + " is bigger than " + element2Value + " so it should be skipped!";
-        correctMoves++;
+        increaseCorrectMoves();
         allowedMoveMade = true;
     } else {
         moveExplanationText.textContent = "Correct! " + selectedValue + " is equal to " + element2Value + " so they should be skipped!";
-        correctMoves++;
+        increaseCorrectMoves();
         allowedMoveMade = true;
     }
 }
@@ -134,25 +132,25 @@ function swapElements() {
     if (element2 === undefined) {
         moveExplanationText.textContent = "Wrong! You can't move this further to the left!";
         // TODO("Update to selection sort theory");
-        wrongMoves++;
+        increaseIncorrectMoves();
         allowedMoveMade = false;
         return;
     }
     else if (selectedValue > element2Value) {
         moveExplanationText.textContent = "Wrong! " + selectedValue + " is bigger than " + element2Value + " so they should not be swapped!";
-        wrongMoves++;
+        increaseIncorrectMoves();
         allowedMoveMade = false;
         return;
     }
     else if (selectedValue === element2Value) {
         moveExplanationText.textContent = "Wrong! " + selectedValue + " is equal to " + element2Value + " so they should not be swapped!";
-        wrongMoves++;
+        increaseIncorrectMoves();
         allowedMoveMade = false;
         return;
     }
     else {
         moveExplanationText.textContent = "Correct! " + selectedValue + " is smaller than " + element2Value + " so they should be swapped!";
-        correctMoves++;
+        increaseCorrectMoves();
         allowedMoveMade = true;
     }
 
@@ -206,10 +204,12 @@ function checkIfSorted() {
 
 // Function called if user clicks submit and the array is sorted
 function gameOver() {
-    if (wrongMoves > correctMoves * 0.4) {
-        alert("Game over!\nCorrect moves: " + correctMoves + "\nWrong moves: " + wrongMoves + "\nTry again to improve your result!");
+    if (isScoreGood()) {
+        // good score
+        alert("Congrats!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves());
     } else {
-        alert("Congrats!\nCorrect moves: " + correctMoves + "\nWrong moves: " + wrongMoves);
+        // not good score
+        alert("Game over!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!");
     }
     // enable startButton again for new round
     startButton.classList.remove("hidden");
@@ -222,8 +222,7 @@ function gameOver() {
     selectedElement = undefined;
     element2 = undefined;
     // Reset points for next round
-    wrongMoves = 0;
-    correctMoves = 0;
+    resetScore();
 
     moveExplanationText.textContent = "";
 
