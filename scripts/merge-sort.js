@@ -64,6 +64,7 @@ function scrambleElements() {
 async function gameLoop() {
     while (rowIndex < 4) {
 
+
         // Insert elements into 2d array, different depending on current row.
         if (rowIndex === 1) {
             rowArray = [
@@ -91,7 +92,7 @@ async function gameLoop() {
         while (elementIndex < 8) {
             allowedMoveMade = false;
 
-
+            addMarkingForNextRow();
             // TODO() disabled look too.
             if (rowIndex === 1) {
                 if (elementIndex % 2 === 0) {
@@ -118,6 +119,7 @@ async function gameLoop() {
             // for getting values in the second set of subarrays in row 2 only.
             if (rowIndex === 2 && elementIndex === 4) {
                 removeMarking(2);
+                removeMarkingForNextRow(3);
                 getElementsRow2();
             }
 
@@ -126,6 +128,7 @@ async function gameLoop() {
             await waitForValidMove();
 
             if (rowIndex === 1) {
+                removeMarkingForNextRow(2);
                 leftElement.parentElement.classList.remove("marked-left");
                 rightElement.parentElement.classList.remove("marked-right");
             }
@@ -146,6 +149,7 @@ async function gameLoop() {
     // Loop is done, user shall click submit!
     moveExplanationText.textContent = "No further elements to sort, click submit!";
     removeMarking(3);
+    removeMarkingForNextRow(4);
     gameIsOver = true;
 }
 
@@ -203,30 +207,14 @@ function getElementsRow2() {
         rightElements.push(currentSubArray[2]);
         rightElements.push(currentSubArray[3]);
         addMarking();
-    }
-}
-
-function addMarking () {
-    for (const element of leftElements) {
-        element.parentElement.classList.add("marked-left");
-    }
-    for (const element of rightElements) {
-        element.parentElement.classList.add("marked-right");
-    }
-}
-
-function removeMarking (index) {
-    const list = document.querySelectorAll(`.game-element-row-${index}`);
-    for (let index = 0; index < list.length; index++) {
-        list[index].parentElement.classList.remove("marked-left");
-        list[index].parentElement.classList.remove("marked-right");
+        addMarkingForNextRow();
     }
 }
 
 // Function to get right and left arrays of elements for row 3
 function getElementsRow3() {
     removeMarking(2);
-
+    removeMarkingForNextRow(3);
     currentSubArray = rowArray[subArrayIndex];
 
     for (let subIndex = 0; subIndex < currentSubArray.length; subIndex++) {
@@ -238,6 +226,36 @@ function getElementsRow3() {
         }
     }
     addMarking();
+}
+// function that adds the left/right visualisation to a set of elements
+function addMarking() {
+    for (const element of leftElements) {
+        element.parentElement.classList.add("marked-left");
+    }
+    for (const element of rightElements) {
+        element.parentElement.classList.add("marked-right");
+    }
+}
+
+// function that removes the left/right visualisation for a certain given row from a parameter
+function removeMarking(index) {
+    const list = document.querySelectorAll(`.game-element-row-${index}`);
+    for (let index = 0; index < list.length; index++) {
+        list[index].parentElement.classList.remove("marked-left");
+        list[index].parentElement.classList.remove("marked-right");
+    }
+}
+
+function addMarkingForNextRow() {
+    nextRowElements = document.querySelectorAll(`.game-element-row-${rowIndex + 1}`);
+    nextRowElements[elementIndex].parentElement.classList.add("next-row-marked");
+}
+
+function removeMarkingForNextRow(index) {
+    const list = document.querySelectorAll(`.game-element-row-${index}`);
+    for (let index = 0; index < list.length; index++) {
+        list[index].parentElement.classList.remove("next-row-marked");
+    }
 }
 
 // Function to get the value of a certain element
@@ -275,14 +293,6 @@ function handleMove(direction) {
     }
     // FOR ROW 2 and 3
     else if (rowIndex === 2 || 3) {
-        /*
-        // for getting values in the second set of subarrays in row 2 only.
-        if (rowIndex === 2 && elementIndex === 4) {
-
-                getElementsRow2();
-
-        }
-            */
         if (direction == "left") {
             //sorts elements to ensure the smallest value is available at index 0
             leftElements.sort();
@@ -330,14 +340,14 @@ function moveDownElement(elementToMove) {
                 const indexOfMovedLeftElement = leftElements.indexOf(elementToMove);
                 leftElements.splice(indexOfMovedLeftElement, 1);
                 if (leftElements.length === 0) {
-                    elementToMove.parentElement.classList.add("marked-disabled"); //TODO
+                    elementToMove.parentElement.classList.add("marked-disabled");
                 }
             }
             else if (rightElements.includes(elementToMove)) {
                 const indexOfMovedRightElement = rightElements.indexOf(elementToMove);
                 rightElements.splice(indexOfMovedRightElement, 1);
                 if (rightElements.length === 0) {
-                    elementToMove.parentElement.classList.add("marked-disabled"); //TODO
+                    elementToMove.parentElement.classList.add("marked-disabled");
                 }
             }
         }
