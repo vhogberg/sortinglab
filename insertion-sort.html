@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Viktor Högberg, Léo Tuomenoksa Texier">
-    <meta name="description" content="Learn how the Insertion Sort algorithm works through interactive visualization 🔄">
+    <meta name="description"
+        content="Learn how the Insertion Sort algorithm works through interactive visualization 🔄">
     <meta name="generator" content="Visual Studio Code">
     <meta name="keywords" content="Insertion Sort, Sorting algorithm, Learning, Visualization, Computer science">
     <title>SortingLab - Insertion sort</title>
@@ -42,20 +43,59 @@
             <h2>Try it yourself</h2>
         </section>
         <section id="game-view">
-            
+
+            <div id="game-options-container">
+                <div id="game-preference-container">
+                    <p>Choose game preferences: </p>
+                    <input type="checkbox" name="game-preferences" id="lives-checkbox">
+                    <label for="lives-checkbox">Enable lives</label>
+                    <input type="checkbox" name="game-preferences" id="time-checkbox">
+                    <label for="time-checkbox">Enable time limit</label>
+                    <input type="checkbox" name="game-preferences" id="points-checkbox">
+                    <label for="points-checkbox">Disable points</label>
+                </div>
+
+                <div id="game-mode-container">
+                    <p>Choose game mode: </p>
+                    <input type="radio" checked name="game-mode" id="number-mode">
+                    <label for="number-mode">Number-mode (123...)</label>
+                    <input type="radio" name="game-mode" id="letter-mode">
+                    <label for="letter-mode">Letter-mode (ABC...)</label>
+                </div>
+
+
+                <div id="game-difficulty-container">
+                    <p>Choose game difficulty: </p>
+                    <input type="radio" name="game-difficulty" id="easy-difficulty">
+                    <label for="easy-difficulty">Easy (5 elements)</label>
+                    <input type="radio" checked name="game-difficulty" id="normal-difficulty">
+                    <label for="normal-difficulty">Normal (10 elements)</label>
+                    <input type="radio" name="game-difficulty" id="hard-difficulty">
+                    <label for="hard-difficulty">Hard (15 elements)</label>
+                </div>
+            </div>
+            <br>
+
+            <div id="time-container">
+                <p>00:00</p>
+            </div>
+            <div id="lives-container">
+                <p>❤️❤️❤️</p>
+            </div>
+
             <button id="start-button"><span>Start</span></button>
 
             <div id="game-element-container">
-                <div class="game-element" ><span class="game-element-text">1</span></div>
-                <div class="game-element" ><span class="game-element-text">2</span></div>
-                <div class="game-element" ><span class="game-element-text">3</span></div>
-                <div class="game-element" ><span class="game-element-text">4</span></div>
-                <div class="game-element" ><span class="game-element-text">5</span></div>
-                <div class="game-element" ><span class="game-element-text">6</span></div>
-                <div class="game-element" ><span class="game-element-text">7</span></div>
-                <div class="game-element" ><span class="game-element-text">8</span></div>
-                <div class="game-element" ><span class="game-element-text">9</span></div>
-                <div class="game-element" ><span class="game-element-text">10</span></div>
+                <div class="game-element"><span class="game-element-text">1</span></div>
+                <div class="game-element"><span class="game-element-text">2</span></div>
+                <div class="game-element"><span class="game-element-text">3</span></div>
+                <div class="game-element"><span class="game-element-text">4</span></div>
+                <div class="game-element"><span class="game-element-text">5</span></div>
+                <div class="game-element"><span class="game-element-text">6</span></div>
+                <div class="game-element"><span class="game-element-text">7</span></div>
+                <div class="game-element"><span class="game-element-text">8</span></div>
+                <div class="game-element"><span class="game-element-text">9</span></div>
+                <div class="game-element"><span class="game-element-text">10</span></div>
             </div>
 
             <button id="skip-button"><span>Skip</span></button>
@@ -63,7 +103,7 @@
             <button id="submit-button"><span>Submit</span></button>
             <p id="move-explanation"></p>
 
-            
+
 
         </section>
 
@@ -74,7 +114,8 @@
     </footer>
 
     <script src="scripts/base.js"></script>
-    <script src="scripts/insertion-sort.js" type="module"></script>
+    <script src="scripts/algorithms/insertion-sort.js" type="module"></script>
+    <script src="scripts/game-options.js" type="module"></script>
 </body>
 
 </html>

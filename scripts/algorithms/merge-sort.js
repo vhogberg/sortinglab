@@ -1,6 +1,6 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { isSorted } from "./game.js";
-import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "./points.js";
+import { isSorted } from "../game.js";
+import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "../points.js";
 
 const startButton = document.getElementById("start-button");
 const leftButton = document.getElementById("left-button");

@@ -1,6 +1,7 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { isSorted } from "./game.js";
-import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "./points.js";
+import { handleGameOptions } from "../game-options.js";
+import { isSorted } from "../game.js";
+import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "../points.js";
 
 const startButton = document.getElementById("start-button");
 const leftButton = document.getElementById("left-button");
@@ -25,6 +26,27 @@ let elementList;
 let selectedElement;
 let element2;
 
+let allowedMoveMade = false;
+
+function startGame() {
+    handleGameOptions();
+    disableButtons();
+    hideTheory();
+    scrambleElements();
+    gameLoop();
+}
+
+function disableButtons() {
+    leftButton.classList.remove("disabled");
+    skipButton.classList.remove("disabled");
+    submitButton.classList.remove("disabled");
+    startButton.classList.add("hidden");
+}
+
+function hideTheory() {
+    theoryView.classList.add("hidden");
+}
+
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
     elementList = document.querySelectorAll(".game-element");
@@ -32,19 +54,6 @@ function scrambleElements() {
         element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
     }
 }
-
-function startGame() {
-    leftButton.classList.remove("disabled");
-    skipButton.classList.remove("disabled");
-    submitButton.classList.remove("disabled");
-    startButton.classList.add("hidden");
-    theoryView.classList.add("hidden");
-
-    scrambleElements();
-    gameLoop();
-}
-
-let allowedMoveMade = false;
 
 async function gameLoop() {
     let index = 0;
@@ -191,6 +200,7 @@ function checkIfSorted() {
 
 // Function called if user clicks submit and the array is sorted
 function gameOver() {
+    //TODO() reset points to zero if isPointsDisabled
     if (isScoreGood()) {
         // good score
         alert("Congrats!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves());
