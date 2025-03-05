@@ -60,3 +60,7 @@
 .marked-right {
     background-color: var(--color-element-marked-right);
 }
+
+.marked-disabled {
+    opacity: 0.5;
+}

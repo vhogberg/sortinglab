@@ -91,26 +91,45 @@ async function gameLoop() {
         while (elementIndex < 8) {
             allowedMoveMade = false;
 
+
             // TODO() disabled look too.
             if (rowIndex === 1) {
                 if (elementIndex % 2 === 0) {
-                    elementList[elementIndex].classList.add("marked-left");
-                    elementList[elementIndex + 1].classList.add("marked-right");
-                    
+                    elementList[elementIndex].parentElement.classList.add("marked-left");
+                    elementList[elementIndex + 1].parentElement.classList.add("marked-right");
+
                 }
                 else {
-                    elementList[elementIndex - 1].classList.add("marked-left");
-                    elementList[elementIndex].classList.add("marked-right");
+                    elementList[elementIndex - 1].parentElement.classList.add("marked-left");
+                    elementList[elementIndex].parentElement.classList.add("marked-right");
                 }
             }
-            
+
+            if (rowIndex === 1) {
+                subArrayIndex = Math.floor(elementIndex / 2)
+            }
+            else if (rowIndex === 2) {
+                subArrayIndex = Math.floor(elementIndex / 4);
+            }
+            else if (rowIndex === 3) {
+                subArrayIndex = 0;
+            }
+
+            // for getting values in the second set of subarrays in row 2 only.
+            if (rowIndex === 2 && elementIndex === 4) {
+                removeMarking(2);
+                getElementsRow2();
+            }
 
             leftButton.addEventListener("click", handleLeftClick);
             rightButton.addEventListener("click", handleRightClick);
             await waitForValidMove();
 
-            leftElement.classList.remove("marked-left");
-            rightElement.classList.remove("marked-right");
+            if (rowIndex === 1) {
+                leftElement.parentElement.classList.remove("marked-left");
+                rightElement.parentElement.classList.remove("marked-right");
+            }
+
             leftButton.removeEventListener("click", handleLeftClick);
             rightButton.removeEventListener("click", handleRightClick);
         }
@@ -126,7 +145,11 @@ async function gameLoop() {
     }
     // Loop is done, user shall click submit!
     moveExplanationText.textContent = "No further elements to sort, click submit!";
+    removeMarking(3);
+    gameIsOver = true;
 }
+
+let gameIsOver = false;
 
 // Handles for buttons
 function handleLeftClick() {
@@ -169,6 +192,8 @@ function getElementsRow2() {
         leftElements.push(currentSubArray[1]);
         rightElements.push(currentSubArray[2]);
         rightElements.push(currentSubArray[3]);
+        addMarking();
+
     }
     else {
         leftElements = [];
@@ -177,12 +202,31 @@ function getElementsRow2() {
         leftElements.push(currentSubArray[1]);
         rightElements.push(currentSubArray[2]);
         rightElements.push(currentSubArray[3]);
+        addMarking();
+    }
+}
+
+function addMarking () {
+    for (const element of leftElements) {
+        element.parentElement.classList.add("marked-left");
+    }
+    for (const element of rightElements) {
+        element.parentElement.classList.add("marked-right");
+    }
+}
+
+function removeMarking (index) {
+    const list = document.querySelectorAll(`.game-element-row-${index}`);
+    for (let index = 0; index < list.length; index++) {
+        list[index].parentElement.classList.remove("marked-left");
+        list[index].parentElement.classList.remove("marked-right");
     }
 }
 
 // Function to get right and left arrays of elements for row 3
 function getElementsRow3() {
-    console.log("SubArrayIndex Row 3 (should be 0): " + subArrayIndex)
+    removeMarking(2);
+
     currentSubArray = rowArray[subArrayIndex];
 
     for (let subIndex = 0; subIndex < currentSubArray.length; subIndex++) {
@@ -193,6 +237,7 @@ function getElementsRow3() {
             rightElements.push(currentSubArray[subIndex]);
         }
     }
+    addMarking();
 }
 
 // Function to get the value of a certain element
@@ -210,16 +255,6 @@ function getSmallestValue(rowArray) {
 
 // Function that handles a move, takes in a direction "left" or "right" and calls the move method.
 function handleMove(direction) {
-
-    if (rowIndex === 1) {
-        subArrayIndex = Math.floor(elementIndex / 2)
-    }
-    else if (rowIndex === 2) {
-        subArrayIndex = Math.floor(elementIndex / 4);
-    }
-    else if (rowIndex === 3) {
-        subArrayIndex = 0;
-    }
 
     // FOR ROW 1
     if (rowIndex === 1) {
@@ -240,12 +275,14 @@ function handleMove(direction) {
     }
     // FOR ROW 2 and 3
     else if (rowIndex === 2 || 3) {
+        /*
         // for getting values in the second set of subarrays in row 2 only.
         if (rowIndex === 2 && elementIndex === 4) {
-            if (rowIndex === 2) {
+
                 getElementsRow2();
-            }
+
         }
+            */
         if (direction == "left") {
             //sorts elements to ensure the smallest value is available at index 0
             leftElements.sort();
@@ -281,6 +318,7 @@ function moveDownElement(elementToMove) {
         if (rowIndex === 1) {
             if (indexOfMovedElement > -1) { // only splice array if an element is found
                 rowArray[subArrayIndex].splice(indexOfMovedElement, 1); //  remove one item only
+                elementToMove.parentElement.classList.add("marked-disabled");
             }
         }
         // FOR ROW 2 and 3, remove from inner level arrays (left and right arrays)
@@ -291,12 +329,19 @@ function moveDownElement(elementToMove) {
             if (leftElements.includes(elementToMove)) {
                 const indexOfMovedLeftElement = leftElements.indexOf(elementToMove);
                 leftElements.splice(indexOfMovedLeftElement, 1);
+                if (leftElements.length === 0) {
+                    elementToMove.parentElement.classList.add("marked-disabled"); //TODO
+                }
             }
             else if (rightElements.includes(elementToMove)) {
                 const indexOfMovedRightElement = rightElements.indexOf(elementToMove);
                 rightElements.splice(indexOfMovedRightElement, 1);
+                if (rightElements.length === 0) {
+                    elementToMove.parentElement.classList.add("marked-disabled"); //TODO
+                }
             }
         }
+
         nextRowElements = document.querySelectorAll(`.game-element-row-${rowIndex + 1}`);
         nextRowElements[elementIndex].textContent = parseInt(elementToMove.textContent);
     }
@@ -308,12 +353,29 @@ function moveDownElement(elementToMove) {
 
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
+
+    if (!gameIsOver) {
+        alert("Not sorted yet, continue!");
+        return;
+    }
+
     elementList = document.querySelectorAll(".game-element-row-4");
 
     // Made a new array containing the values (numbers or letters)
     const valueArray = [];
     for (let index = 0; index < elementList.length; index++) {
         valueArray[index] = elementList[index].textContent;
+    }
+
+    let listIsSorted = false;
+    for (let index = 0; index < valueArray.length; index++) {
+        if (valueArray[index] === "") {
+            listIsSorted = true;
+        }
+    }
+    if (listIsSorted) {
+        alert("Not sorted yet, continue!");
+        return;
     }
 
     // For number-mode
@@ -358,12 +420,9 @@ function gameOver() {
     leftElements = [];
     rightElements = [];
 
-    // remove highlighted class after game is over
-    for (let index = 0; index < elementList.length; index++) {
-        elementList[index].classList.remove("game-element-highlighted");
-    }
     const allElements = document.querySelectorAll(".game-element");
     for (let index = 0; index < allElements.length; index++) {
+        allElements[index].parentElement.classList.remove("marked-disabled");
         allElements[index].innerHTML = "";
     }
 
