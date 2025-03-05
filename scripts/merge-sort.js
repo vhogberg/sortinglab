@@ -157,12 +157,10 @@ let gameIsOver = false;
 
 // Handles for buttons
 function handleLeftClick() {
-    console.log("left button clicked");
     handleMove("left");
 }
 
 function handleRightClick() {
-    console.log("right button clicked");
     handleMove("right");
 }
 
@@ -189,7 +187,6 @@ function waitForValidMove() {
 
 // Function to get right and left arrays of elements for row 2
 function getElementsRow2() {
-    console.log("SubArrayIndex Row 2: " + subArrayIndex);
     currentSubArray = rowArray[subArrayIndex];
     if (elementIndex < 4) {
         leftElements.push(currentSubArray[0]);
@@ -260,14 +257,12 @@ function removeMarkingForNextRow(index) {
 
 // Function to get the value of a certain element
 function getValue(elementToGetValue) {
-    console.log("GetValueOfAnElement: " + parseInt(elementToGetValue.textContent));
     return parseInt(elementToGetValue.textContent);
 }
 
 // Function to get the smallest value of an array of elements
 function getSmallestValue(rowArray) {
     let allValues = rowArray.flat(Infinity).map(div => getValue(div));
-    console.log("Smallest value. ArrayName: " + rowArray + " value: " + Math.min(...allValues));
     return Math.min(...allValues);
 }
 
@@ -313,10 +308,8 @@ function moveDownElement(elementToMove) {
     if (elementToMove == undefined) {
         return;
     }
-    console.log("TOMOVE: " + elementToMove.textContent);
     // If it is not the smallest element in the current subarray, do nothing.
     if (getValue(elementToMove) !== getSmallestValue(rowArray[subArrayIndex])) {
-        console.log("SMALLEST ELEMENT: " + getSmallestValue(rowArray[subArrayIndex]));
         moveExplanationText.textContent = "Wrong! There is a smaller element on the other side!"
         wrongMoves++;
         return;
