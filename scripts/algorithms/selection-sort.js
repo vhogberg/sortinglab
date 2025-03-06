@@ -197,7 +197,7 @@ if (isSorted("selection")) {
         gameOver()
     }
     else {
-        alert("Not sorted yet, continue!");
+        alert("Not sorted yet, continue!"); //when implementing own alert, pause timer if user clicks submit too early
     }
 }
 

@@ -1,12 +1,15 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { isSorted } from "../game.js";
-import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "../points.js";
+import { handleGameOptions, isLivesEnabled } from "../game-options.js";
+import { gameManager, isSorted, showGameOverDialog } from "../game.js";
+import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
 const startButton = document.getElementById("start-button");
 const swapButton = document.getElementById("swap-button");
 const skipButton = document.getElementById("skip-button");
+
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
+const optionsContainer = document.getElementById("game-options-container");
 
 submitButton.addEventListener("click", checkIfSorted);
 startButton.addEventListener("click", startGame);
@@ -24,26 +27,48 @@ let elementList = document.querySelectorAll(".game-element");
 let element1;
 let element2;
 
-// Function to scramble the elements so they are unsorted
-function scrambleElements() {
-    for (const element of elementList) {
-        element.innerHTML = Math.floor(Math.random() * 10); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
-    }
-}
-
 function startGame() {
-    swapButton.classList.remove("disabled");
-    skipButton.classList.remove("disabled");
-    submitButton.classList.remove("disabled");
-    startButton.classList.add("hidden");
-    theoryView.classList.add("hidden");
+
+    gameManager.setGame(
+        {
+            gameOver: function () {
+                isGameOver = true;
+                gameOver();
+            }
+        })
+
+    isGameOver = false;
+    handleGameOptions();
+    enableButtons();
+    hideTheory();
     scrambleElements();
     gameLoop();
 }
 
+function enableButtons() {
+    swapButton.classList.remove("disabled");
+    skipButton.classList.remove("disabled");
+    submitButton.classList.remove("disabled");
+    startButton.classList.add("hidden");
+}
+
+function hideTheory() {
+    theoryView.classList.add("hidden");
+    optionsContainer.classList.add("hidden");
+}
+
+// Function to scramble the elements so they are unsorted
+function scrambleElements() {
+    for (const element of elementList) {
+        element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+    }
+}
+
+let isGameOver = false;
+
 // async loop so that it waits for button presses
 async function gameLoop() {
-    while (true) {
+    while (!isGameOver) {
         // for loop, using list length -1
         for (let index = 0; index < elementList.length - 1; index++) {
             // grab current indexed element and the one to the right of it
@@ -51,8 +76,10 @@ async function gameLoop() {
             element2 = elementList[index + 1];
 
             // add visualisation for selected elements
-            element1.classList.add("game-element-highlighted");
-            element2.classList.add("game-element-highlighted");
+            if (!isGameOver) {
+                element1.classList.add("game-element-highlighted");
+                element2.classList.add("game-element-highlighted");
+            }
 
             // wait for button press
             await waitForButtonPress();
@@ -96,10 +123,12 @@ function swapElements() {
     } else if (element1Value === element2Value) {
         moveExplanationText.textContent = "Wrong! " + element1Value + " is equal to " + element2Value + " so they should not be swapped!";
         increaseIncorrectMoves();
+        checkLives();
     }
     else {
         moveExplanationText.textContent = "Wrong! " + element1Value + " is smaller than " + element2Value + " so they should not be swapped!";
         increaseIncorrectMoves();
+        checkLives();
     }
 
     //gets the parentElement of the first element, ie the game-element-container that contains all elements
@@ -125,10 +154,12 @@ function skip() {
     } else if (element1Value === element2Value) {
         moveExplanationText.textContent = "Correct! " + element1Value + " is equal to " + element2Value + " so they should not be swapped!";
         increaseIncorrectMoves();
+        checkLives();
     }
     else {
         moveExplanationText.textContent = "Wrong! " + element1Value + " is bigger than " + element2Value + " so they should be swapped!";
         increaseIncorrectMoves();
+        checkLives();
     }
 }
 
@@ -138,34 +169,36 @@ function checkIfSorted() {
         gameOver()
     }
     else {
-        alert("Not sorted yet, continue!");
+        alert("Not sorted yet, continue!"); //when implementing own alert, pause timer if user clicks submit too early
     }
 }
 
+// Method that ends the game if user is playing with lives and is out of lives
+function checkLives() {
+    if (isLivesEnabled() && getIncorrectMoves() === 3) {
+        isGameOver = true;
+        gameOver();
+    }
+}
+
+
 // Function called if user clicks submit and the array is sorted
 function gameOver() {
-    if (isScoreGood()) {
-        // good score
-        alert("Congrats!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves());
-    } else {
-        // not good score
-        alert("Game over!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!");
-    }
-    // enable startButton again for new round
-    startButton.classList.remove("hidden");
-    theoryView.classList.remove("hidden");
-    swapButton.classList.add("disabled");
-    skipButton.classList.add("disabled");
-    submitButton.classList.add("disabled");
+    isGameOver = true;
+
+    showGameOverDialog();
 
     // reset score for next round;
     resetScore();
 
+    moveExplanationText.textContent = "";
+
     // reset the indexes in list
     elementList = document.querySelectorAll(".game-element");
 
+    // remove highlighted class after game is over and reset ordering on theoryview
     for (let index = 0; index < elementList.length; index++) {
         elementList[index].classList.remove("game-element-highlighted");
-        elementList[index].innerHTML = index;
+        elementList[index].innerHTML = index + 1;
     }
 }

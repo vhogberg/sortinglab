@@ -359,7 +359,7 @@ function moveDownElement(elementToMove) {
 function checkIfSorted() {
 
     if (!gameIsOver) {
-        alert("Not sorted yet 1, continue!");
+        alert("Not sorted yet 1, continue!"); //when implementing own alert, pause timer if user clicks submit too early
         return;
     }
 

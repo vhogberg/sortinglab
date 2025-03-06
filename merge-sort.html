@@ -44,6 +44,46 @@
             <h2>Try it yourself</h2>
         </section>
         <section id="game-view">
+            <div id="game-options-container">
+                <h4>Options</h4>
+                <div id="game-preference-container">
+                    <p>Choose game preferences: </p>
+                    <input type="checkbox" name="game-preferences" id="lives-checkbox">
+                    <label for="lives-checkbox">Enable lives</label>
+                    <input type="checkbox" name="game-preferences" id="time-checkbox">
+                    <label for="time-checkbox">Enable time limit</label>
+                    <input type="checkbox" name="game-preferences" id="points-checkbox">
+                    <label for="points-checkbox">Disable points</label>
+                </div>
+
+                <div id="game-mode-container">
+                    <p>Choose game mode: </p>
+                    <input type="radio" checked name="game-mode" id="number-mode">
+                    <label for="number-mode">Number-mode (123...)</label>
+                    <input type="radio" name="game-mode" id="letter-mode">
+                    <label for="letter-mode">Letter-mode (ABC...)</label>
+                </div>
+
+
+                <div id="game-difficulty-container">
+                    <p>Choose game difficulty: </p>
+                    <input type="radio" name="game-difficulty" id="easy-difficulty">
+                    <label for="easy-difficulty">Easy (5 elements)</label>
+                    <input type="radio" checked name="game-difficulty" id="normal-difficulty">
+                    <label for="normal-difficulty">Normal (10 elements)</label>
+                    <input type="radio" name="game-difficulty" id="hard-difficulty">
+                    <label for="hard-difficulty">Hard (15 elements)</label>
+                </div>
+            </div>
+            <br>
+
+            <div id="time-container">
+                <p id="countdown">0:60</p>
+            </div>
+            <div id="lives-container">
+                <p>Lives:</p>
+                <p id="number-of-lives">❤️❤️❤️</p>
+            </div>
 
             <button id="start-button"><span>Start</span></button>
 
@@ -122,15 +162,18 @@
                 </div>
             </div>
 
-            <button id="left-button"><span>Left</span></button>
-            <button id="right-button"><span>Right</span></button>
-            <button id="submit-button"><span>Submit</span></button>
+            <div id="game-control-buttons-container">
+                <button id="left-button"><span>Left</span></button>
+                <button id="right-button"><span>Right</span></button>
+                <button id="submit-button"><span>Submit</span></button>
+            </div>
             <p id="move-explanation"></p>
 
         </section>
 
         <dialog id="game-over-dialog">
-            <h2>Game over!</h2>
+            <h4 id="game-over-title">Game over!</h4>
+            <p id="game-over-text"></p>
             <p>Try again with the button below or return to the menu</p>
             <button id="try-again-button">Try again</button>
             <button id="return-home-button">Return home</button>

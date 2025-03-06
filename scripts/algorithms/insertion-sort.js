@@ -43,13 +43,13 @@ function startGame() {
 
     isGameOver = false;
     handleGameOptions();
-    disableButtons();
+    enableButtons();
     hideTheory();
     scrambleElements();
     gameLoop();
 }
 
-function disableButtons() { //maybe rename
+function enableButtons() {
     leftButton.classList.remove("disabled");
     skipButton.classList.remove("disabled");
     submitButton.classList.remove("disabled");
@@ -225,7 +225,7 @@ function checkIfSorted() {
         gameOver()
     }
     else {
-        alert("Not sorted yet, continue!");
+        alert("Not sorted yet, continue!"); //when implementing own alert, pause timer if user clicks submit too early
     }
 }
 
@@ -252,13 +252,10 @@ function gameOver() {
 
     moveExplanationText.textContent = "";
 
-    // remove highlighted class after game is over
+    // remove highlighted class after game is over and reset ordering on theoryview
     for (let index = 0; index < elementList.length; index++) {
         elementList[index].classList.remove("game-element-highlighted");
-    }
-    // reset ordering on theoryview
-    for (let index = 0; index < elementList.length; index++) {
-        elementList[index].innerHTML = index; //TODO() index+1?
+        elementList[index].innerHTML = index + 1;
     }
     elementList = null;
 }
