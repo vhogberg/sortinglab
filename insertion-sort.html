@@ -43,8 +43,8 @@
             <h2>Try it yourself</h2>
         </section>
         <section id="game-view">
-
             <div id="game-options-container">
+                <h4>Options</h4>
                 <div id="game-preference-container">
                     <p>Choose game preferences: </p>
                     <input type="checkbox" name="game-preferences" id="lives-checkbox">
@@ -77,9 +77,10 @@
             <br>
 
             <div id="time-container">
-                <p>00:00</p>
+                <p id="countdown">00:00</p>
             </div>
             <div id="lives-container">
+                <p>Lives:</p>
                 <p id="number-of-lives">❤️❤️❤️</p>
             </div>
 
@@ -98,7 +99,7 @@
                 <div class="game-element"><span class="game-element-text">10</span></div>
             </div>
 
-            <div id="game-control-dialog">
+            <div id="game-control-buttons-container">
                 <button id="skip-button"><span>Skip</span></button>
                 <button id="left-button"><span>Left</span></button>
                 <button id="submit-button"><span>Submit</span></button>

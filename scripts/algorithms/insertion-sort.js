@@ -9,6 +9,7 @@ const skipButton = document.getElementById("skip-button");
 
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
+const optionsContainer = document.getElementById("game-options-container");
 
 submitButton.addEventListener("click", checkIfSorted);
 startButton.addEventListener("click", startGame);
@@ -47,6 +48,7 @@ function disableButtons() { //maybe rename
 
 function hideTheory() {
     theoryView.classList.add("hidden");
+    optionsContainer.classList.add("hidden");
 }
 
 // Function to scramble the elements so they are unsorted
@@ -230,12 +232,6 @@ function checkLives() {
 function gameOver() {
     isGameOver = true;
     showGameOverDialog();
-    // enable startButton again for new round
-    startButton.classList.remove("hidden");
-    theoryView.classList.remove("hidden");
-    leftButton.classList.add("disabled");
-    skipButton.classList.add("disabled");
-    submitButton.classList.add("disabled");
 
     // reset the indexes in list
     selectedElement = undefined;
