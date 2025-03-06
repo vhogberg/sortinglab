@@ -30,6 +30,7 @@ let element2;
 let allowedMoveMade = false;
 let isGameOver = false;
 
+// Function to start the game, hides theory and starts the loop.
 function startGame() {
 
     gameManager.setGame(
@@ -84,15 +85,15 @@ async function gameLoop() {
         leftButton.addEventListener("click", swapElements);
         // add visualisation for selected element
         selectedElement.classList.add("game-element-highlighted");
+        
 
         skipButton.addEventListener("click", skip);
 
         await waitForValidMove();
+        leftButton.removeEventListener("click", swapElements);
+        skipButton.removeEventListener("click", skip);
 
         if (!isGameOver) {
-            leftButton.removeEventListener("click", swapElements);
-            skipButton.removeEventListener("click", skip);
-
             selectedElement.classList.remove("game-element-highlighted");
             index++;
         }

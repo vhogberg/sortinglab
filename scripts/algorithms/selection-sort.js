@@ -1,6 +1,7 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { isSorted } from "../game.js";
-import { increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
+import { handleGameOptions, isLivesEnabled } from "../game-options.js";
+import { gameManager, isSorted, showGameOverDialog } from "../game.js";
+import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
 const startButton = document.getElementById("start-button");
 const selectButton = document.getElementById("select-button");
@@ -9,6 +10,7 @@ const moveButton = document.getElementById("move-button");
 
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
+const optionsContainer = document.getElementById("game-options-container");
 
 submitButton.addEventListener("click", checkIfSorted);
 startButton.addEventListener("click", startGame);
@@ -29,35 +31,58 @@ let selectedElement;
 let smallestElement;
 
 // for looping logic
-let allowedMoveMade = false;
 let skipIndex;
 let index = 0;
+
+let allowedMoveMade = false;
+let isGameOver = false;
+
+// Function to start the game, hides theory and starts the loop.
+function startGame() {
+
+    gameManager.setGame(
+        {
+            gameOver: function () {
+                forceValidMove();
+                isGameOver = true;
+                gameOver();
+            }
+        })
+
+    isGameOver = false;
+    handleGameOptions();
+    enableButtons();
+    hideTheory();
+    scrambleElements();
+    gameLoop();
+}
+
+function enableButtons() {
+    selectButton.classList.remove("disabled");
+    skipButton.classList.remove("disabled");
+    submitButton.classList.remove("disabled");
+    moveButton.classList.remove("disabled");
+    startButton.classList.add("hidden");
+}
+
+function hideTheory() {
+    theoryView.classList.add("hidden");
+    optionsContainer.classList.add("hidden");
+}
 
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
     elementList = document.querySelectorAll(".game-element");
     for (const element of elementList) {
-        element.innerHTML = Math.floor(Math.random() * 10); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+        element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
     }
-}
-
-// Function to start the game, hides theory and starts the loop.
-function startGame() {
-    selectButton.classList.remove("disabled");
-    skipButton.classList.remove("disabled");
-    submitButton.classList.remove("disabled");
-    startButton.classList.add("hidden");
-    theoryView.classList.add("hidden");
-
-    scrambleElements();
-    gameLoop();
 }
 
 // async game loop waiting for button presses
 async function gameLoop() {
 
     // goes through the entire list of elements, of variable length
-    while (index < elementList.length) {
+    while (elementList !== null && index < elementList.length) {
         allowedMoveMade = false;
         skipButton.classList.remove("hidden");
         moveButton.classList.add("hidden");
@@ -70,27 +95,37 @@ async function gameLoop() {
         skipIndex = index;
 
         // add visualisation for selected element
-        selectedElement.classList.add("game-element-highlighted");
-        smallestElement.classList.add("smallest-game-element");
+        if (!isGameOver) {
+            selectedElement.classList.add("game-element-highlighted");
+            smallestElement.classList.add("smallest-game-element");
+        }
 
         // add button listeners, wait for a valid move (correct game-wise buttno press), then remove button listenerrs
         selectButton.addEventListener("click", selectSmallestElement);
         skipButton.addEventListener("click", skip);
         moveButton.addEventListener("click", handleMove);
+
         await waitForValidMove();
+
         moveButton.removeEventListener("click", handleMove);
         selectButton.removeEventListener("click", selectSmallestElement);
         skipButton.removeEventListener("click", skip);
 
-        selectedElement.classList.remove("game-element-highlighted");
+        if (!isGameOver) {
+            selectedElement.classList.remove("game-element-highlighted");
+            smallestElement.classList.remove("smallest-game-element");
+        }
     }
     moveExplanationText.textContent = "No further elements to sort, click submit!";
 }
 
-// await function for a correct move that continues the game loop
+
+// Function that stops the loop, waiting for a button press
+// Can also be called with forceValidMove();
+let checkValidMove;
 function waitForValidMove() {
     return new Promise(resolve => {
-        function checkValidMove() {
+        checkValidMove = function () {
             if (allowedMoveMade) {
                 index++; // next loop
                 resolve();
@@ -105,9 +140,15 @@ function waitForValidMove() {
         }
 
         selectButton.addEventListener("click", checkValidMove);
-        skipButton.addEventListener("click", checkValidMove);
+        skipButton.addEventListener("click", checkValidMove)
         moveButton.addEventListener("click", checkValidMove);
     })
+}
+
+// Forces a valid move, so that the wait method can be resolved with resolve()
+function forceValidMove() {
+    allowedMoveMade = true;
+    checkValidMove();
 }
 
 // Function that skips over a selected element and looks for more elements
@@ -116,10 +157,11 @@ function skip() {
     if (parseInt(selectedElement.textContent) < parseInt(smallestElement.textContent)) {
         moveExplanationText.textContent = "Wrong! " + selectedElement.textContent + " is smaller than " + smallestElement.textContent + " so it should become the new minimum value!";
         increaseIncorrectMoves();
+        checkLives();
         return;
     }
 
-    //TODO() FIX POINTS
+    //TODO() FIX POINTS (you only get a set amount of correct moves, boring.)
 
     // At the end of the list of elements, move button shows up to move the smallest element to the left.
     if (skipIndex >= elementList.length - 1) {
@@ -161,16 +203,18 @@ function selectSmallestElement() {
     } else if (parseInt(selectedElement.textContent) == parseInt(smallestElement.textContent)) {
         moveExplanationText.textContent = "This element is the same size as the already selected value!";
         increaseIncorrectMoves();
+        checkLives();
         //if element user has selected is bigger than currently selected element
     } else {
         moveExplanationText.textContent = "This element is bigger than the selected value!";
         increaseIncorrectMoves();
+        checkLives();
     }
 }
 
-// If user does an allowed move, swap elements and continnue loop
+// If user does an allowed move, swap elements and continue loop
 function handleMove() {
-    allowedMoveMade = true;
+    allowedMoveMade = true; //TODO better name
     smallestElement.classList.remove("smallest-game-element");
     smallestElement.classList.add("sorted-element");
     swapElements();
@@ -193,7 +237,7 @@ function swapElements() {
 
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
-if (isSorted("selection")) {
+    if (isSorted("selection")) {
         gameOver()
     }
     else {
@@ -201,29 +245,33 @@ if (isSorted("selection")) {
     }
 }
 
+// Method that ends the game if user is playing with lives and is out of lives
+function checkLives() {
+    if (isLivesEnabled() && getIncorrectMoves() === 3) {
+        forceValidMove();
+        isGameOver = true;
+        gameOver();
+    }
+}
+
 // Function called if user clicks submit and the array is sorted
 function gameOver() {
-    /*
-    if (isScoreGood()) {
-        // good score
-        alert("Congrats!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves());
-    } else {
-        // not good score
-        alert("Game over!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!");
-    }
-        */
-    // enable startButton again for new round
-    startButton.classList.remove("hidden");
-    theoryView.classList.remove("hidden");
-    skipButton.classList.remove("hidden");
+    isGameOver = true;
+    showGameOverDialog();
+
+
+    // hide movebutton (obs! this becomes disabled automatically here too from game .js,
+    // but we enable it in the start method)
     moveButton.classList.add("hidden");
 
-    selectButton.classList.add("disabled");
-    skipButton.classList.add("disabled");
-    submitButton.classList.add("disabled");
+    // remove smallest element highlight after game is over, loop below does not work for some reason.
+    smallestElement.classList.remove("smallest-game-element"); //TODO investigate if you feel like it
 
+    // reset the two elements
     selectedElement = undefined;
     smallestElement = undefined;
+    index = 0;
+
     // Reset points for next round
     resetScore();
 
@@ -234,12 +282,7 @@ function gameOver() {
         elementList[index].classList.remove("game-element-highlighted");
         elementList[index].classList.remove("smallest-element");
         elementList[index].classList.remove("sorted-element");
-    }
-
-    // reset ordering on theoryview
-    for (let index = 0; index < elementList.length; index++) {
-        elementList[index].innerHTML = index+1;
+        elementList[index].innerHTML = index + 1;
     }
     elementList = null;
-    index = 0;
 }
