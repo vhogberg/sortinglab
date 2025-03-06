@@ -1,6 +1,6 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
 
-import { didTimeRunOut, isLivesEnabled, isTimeEnabled, resetCountdown, resetLives } from "./game-options.js";
+import { didTimeRunOut, isLivesEnabled, isPointsDisabled, isTimeEnabled, resetCountdown, resetLives } from "./game-options.js";
 import { getCorrectMoves, getIncorrectMoves, isScoreGood } from "./points.js";
 
 const gameOverDialog = document.getElementById("game-over-dialog");
@@ -55,6 +55,9 @@ export function isSorted(algorithmName) {
 
 //shows a dialog box for when game is over
 export function showGameOverDialog() {
+
+    document.getElementById("game-over-points").textContent = "";
+
     // check for if user has enabled lives and lost them all
     if (isTimeEnabled()) {
         resetCountdown();
@@ -63,7 +66,9 @@ export function showGameOverDialog() {
     // Lives enabled and all 3 lives lost
     if (isLivesEnabled() && getIncorrectMoves() === 3) {
         document.getElementById("game-over-title").textContent = "All lives lost\n!💔💔💔";
-        document.getElementById("game-over-text").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
+        if (!isPointsDisabled()) {
+            document.getElementById("game-over-points").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
+        }
         gameOverDialog.showModal();
         return;
     }
@@ -71,7 +76,9 @@ export function showGameOverDialog() {
     // Lives enabled and time ran out
     if (isTimeEnabled() && didTimeRunOut()) {
         document.getElementById("game-over-title").textContent = "Time is up!";
-        document.getElementById("game-over-text").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
+        if (!isPointsDisabled) {
+            document.getElementById("game-over-points").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
+        }
         resetCountdown();
         gameOverDialog.showModal();
         return;
@@ -81,14 +88,18 @@ export function showGameOverDialog() {
     if (isScoreGood()) {
         // good score
         document.getElementById("game-over-title").textContent = "Congrats!";
-        document.getElementById("game-over-text").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
+        if (!isPointsDisabled()) {
+            document.getElementById("game-over-points").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
+        }
         gameOverDialog.showModal();
         return;
     } // Game completed without hindarance and score is bad!
     else {
         // not good score
         document.getElementById("game-over-title").textContent = "Game over!";
-        document.getElementById("game-over-text").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!";
+        if (!isPointsDisabled()) {
+            document.getElementById("game-over-points").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!";
+        }
         gameOverDialog.showModal();
         return;
     }
