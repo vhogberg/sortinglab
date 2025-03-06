@@ -1,6 +1,6 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
 import { handleGameOptions, isLivesEnabled } from "../game-options.js";
-import { isSorted, showGameOverDialog } from "../game.js";
+import { gameManager, isSorted, showGameOverDialog } from "../game.js";
 import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
 const startButton = document.getElementById("start-button");
@@ -31,6 +31,16 @@ let allowedMoveMade = false;
 let isGameOver = false;
 
 function startGame() {
+
+    gameManager.setGame(
+        {
+            gameOver: function () {
+                forceValidMove();
+                isGameOver = true;
+                gameOver();
+            }
+        })
+
     isGameOver = false;
     handleGameOptions();
     disableButtons();
@@ -64,7 +74,7 @@ let index = 0;
 async function gameLoop() {
     // If element list is null, stop the loop
     // This first check cancels out the second check, so null.length is never considered.
-    while (elementList !== null && index < elementList.length) { 
+    while (elementList !== null && index < elementList.length) {
         selectedElement = elementList[index];
 
         if (index != 0) {

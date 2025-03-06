@@ -1,6 +1,6 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
 
-import { isLivesEnabled, resetLives } from "./game-options.js";
+import { didTimeRunOut, isLivesEnabled, isTimeEnabled, resetCountdown, resetLives } from "./game-options.js";
 import { getCorrectMoves, getIncorrectMoves, isScoreGood } from "./points.js";
 
 const gameOverDialog = document.getElementById("game-over-dialog");
@@ -55,12 +55,16 @@ export function isSorted(algorithmName) {
 
 //shows a dialog box for when game is over
 export function showGameOverDialog() {
-    //check for if user has enabled lives and lost them all
+    // check for if user has enabled lives and lost them all
     if (isLivesEnabled() && getIncorrectMoves() === 3) {
         document.getElementById("game-over-title").textContent = "All lives lost\n!💔💔💔";
         document.getElementById("game-over-text").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
     }
-    else {
+    if (isTimeEnabled() && didTimeRunOut()) {
+        document.getElementById("game-over-title").textContent = "Time is up!";
+        document.getElementById("game-over-text").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
+        resetCountdown();
+    } else {
         if (isScoreGood()) {
             // good score
             document.getElementById("game-over-title").textContent = "Congrats!";
@@ -70,6 +74,9 @@ export function showGameOverDialog() {
             document.getElementById("game-over-title").textContent = "Game over!";
             document.getElementById("game-over-text").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!";
         }
+    }
+    if (isTimeEnabled()) {
+        resetCountdown();
     }
     gameOverDialog.showModal();
 }
@@ -99,9 +106,32 @@ function handleHidingElements() {
     document.getElementById("start-button").classList.remove("hidden");
     document.getElementById("theory-view").classList.remove("hidden");
 
+    document.getElementById("lives-container").classList.add("hidden");
+    document.getElementById("time-container").classList.add("hidden");
+
     // disable all control buttons on start
     const gameControlButtons = document.querySelectorAll("#game-control-buttons-container button");
     gameControlButtons.forEach(button => {
         button.classList.add("disabled");
     })
+}
+
+
+export const gameManager = {
+    currentGame: null,
+
+    setGame(gameMethods) {
+        this.currentGame = gameMethods
+        console.log("gameManagerConstructor");
+    },
+
+    gameOver() {
+        console.log("current game: " + this.currentGame);
+        if (this.currentGame && this.currentGame.gameOver) {
+            this.currentGame.gameOver()
+        }
+        else {
+            console.log("trasig")
+        }
+    }
 }
