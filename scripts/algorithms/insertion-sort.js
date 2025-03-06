@@ -30,6 +30,8 @@ let element2;
 let allowedMoveMade = false;
 let isGameOver = false;
 
+let index = 0;
+
 // Function to start the game, hides theory and starts the loop.
 function startGame() {
 
@@ -70,8 +72,6 @@ function scrambleElements() {
     }
 }
 
-let index = 0;
-
 async function gameLoop() {
     // If element list is null, stop the loop
     // This first check cancels out the second check, so null.length is never considered.
@@ -86,7 +86,6 @@ async function gameLoop() {
         // add visualisation for selected element
         selectedElement.classList.add("game-element-highlighted");
         
-
         skipButton.addEventListener("click", skip);
 
         await waitForValidMove();

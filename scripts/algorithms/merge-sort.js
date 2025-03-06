@@ -1,6 +1,7 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { isSorted } from "../game.js";
-import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "../points.js";
+import { handleGameOptions, isLivesEnabled } from "../game-options.js";
+import { gameManager, isSorted, showGameOverDialog } from "../game.js";
+import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
 const startButton = document.getElementById("start-button");
 const leftButton = document.getElementById("left-button");
@@ -8,6 +9,8 @@ const rightButton = document.getElementById("right-button");
 
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
+const optionsContainer = document.getElementById("game-options-container");
+const difficultyContainer = document.getElementById("game-difficulty-container");
 
 submitButton.addEventListener("click", checkIfSorted);
 startButton.addEventListener("click", startGame);
@@ -15,6 +18,9 @@ startButton.addEventListener("click", startGame);
 submitButton.classList.add("disabled");
 leftButton.classList.add("disabled");
 rightButton.classList.add("disabled");
+
+// Game difficulty is not an option on merge sort since it can only be visualised here with 8 elements
+difficultyContainer.classList.add("hidden");
 
 let moveExplanationText = document.getElementById("move-explanation");
 
@@ -28,43 +34,68 @@ let leftElements = [];
 let rightElements = [];
 let nextRowElements;
 
-// Points
-let allowedMoveMade = false;
-
 // Global looping elements
 let elementIndex = 0;
 let rowIndex = 1;
 let currentSubArray;
 let subArrayIndex;
-let gameIsOver = false;
 
 // 2D array of elements
 let rowArray;
 
-// Function to start game, when click on "start" button this is run.
+let allowedMoveMade = false;
+let isGameOver = false;
+
+// Function to start the game, hides theory and starts the loop.
 function startGame() {
+
+    gameManager.setGame(
+        {
+            gameOver: function () {
+                forceValidMove();
+                isGameOver = true;
+                gameOver();
+            }
+        })
+
+    isGameOver = false;
+    handleGameOptions();
+    enableButtons();
+    hideTheory();
+    scrambleElements();
+    gameLoop();
+}
+
+function enableButtons() {
     leftButton.classList.remove("disabled");
     rightButton.classList.remove("disabled");
     submitButton.classList.remove("disabled");
     startButton.classList.add("hidden");
-    theoryView.classList.add("hidden");
-
-    scrambleElements();
-    gameLoop();
 }
+
+function hideTheory() {
+    theoryView.classList.add("hidden");
+    optionsContainer.classList.add("hidden");
+}
+
 
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
     elementList = document.querySelectorAll(".game-element-row-1");
     for (const element of elementList) {
-        element.innerHTML = Math.floor(Math.random() * 10); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+        element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
     }
 }
 
 // Game loop
 async function gameLoop() {
+    rowIndex = 1;
+
     while (rowIndex < 4) {
 
+        if (isGameOver) {
+            return;
+        }
 
         // Insert elements into 2d array, different depending on current row.
         if (rowIndex === 1) {
@@ -80,21 +111,25 @@ async function gameLoop() {
                 [elementList[elementIndex], elementList[elementIndex + 1], elementList[elementIndex + 2], elementList[elementIndex + 3]],
                 [elementList[elementIndex + 4], elementList[elementIndex + 5], elementList[elementIndex + 6], elementList[elementIndex + 7]]
             ]
-            getElementsRow2();
+            if (!isGameOver) {
+                getElementsRow2();
+            }
+
         }
         else if (rowIndex === 3) {
             rowArray = [
                 [elementList[elementIndex], elementList[elementIndex + 1], elementList[elementIndex + 2], elementList[elementIndex + 3],
                 elementList[elementIndex + 4], elementList[elementIndex + 5], elementList[elementIndex + 6], elementList[elementIndex + 7]]
             ]
-            getElementsRow3();
+            if (!isGameOver) {
+                getElementsRow3();
+            }
         }
         // Inner loop that goes through the 8 elements
-        while (elementIndex < 8) {
+        while (elementList !== null && elementIndex < 8) {
             allowedMoveMade = false;
 
             addMarkingForNextRow();
-            // TODO() disabled look too.
             if (rowIndex === 1) {
                 if (elementIndex % 2 === 0) {
                     elementList[elementIndex].parentElement.classList.add("marked-left");
@@ -121,14 +156,17 @@ async function gameLoop() {
             if (rowIndex === 2 && elementIndex === 4) {
                 removeMarking(2);
                 removeMarkingForNextRow(3);
-                getElementsRow2();
+                if (!isGameOver) {
+                    getElementsRow2();
+                }
             }
 
             leftButton.addEventListener("click", handleLeftClick);
             rightButton.addEventListener("click", handleRightClick);
             await waitForValidMove();
+            console.log("await lil bit");
 
-            if (rowIndex === 1) {
+            if (rowIndex === 1 && !isGameOver) {
                 removeMarkingForNextRow(2);
                 leftElement.parentElement.classList.remove("marked-left");
                 rightElement.parentElement.classList.remove("marked-right");
@@ -146,12 +184,13 @@ async function gameLoop() {
         subArrayIndex = 0;
         leftElements = [];
         rightElements = [];
+
     }
     // Loop is done, user shall click submit!
     moveExplanationText.textContent = "No further elements to sort, click submit!";
     removeMarking(3);
     removeMarkingForNextRow(4);
-    gameIsOver = true;
+    isGameOver = true; //replaced gameIsOver
 }
 
 
@@ -165,10 +204,12 @@ function handleRightClick() {
     handleMove("right");
 }
 
-// await function for a correct move that continues the game loop
+// Function that stops the loop, waiting for a button press
+// Can also be called with forceValidMove();
+let checkValidMove;
 function waitForValidMove() {
     return new Promise(resolve => {
-        function checkValidMove() {
+        checkValidMove = function () {
             if (allowedMoveMade) {
                 elementIndex++;
                 resolve();
@@ -184,6 +225,12 @@ function waitForValidMove() {
         rightButton.addEventListener("click", checkValidMove);
         leftButton.addEventListener("click", checkValidMove);
     })
+}
+
+// Forces a valid move, so that the wait method can be resolved with resolve()
+function forceValidMove() {
+    allowedMoveMade = true;
+    checkValidMove();
 }
 
 // Function to get right and left arrays of elements for row 2
@@ -311,8 +358,10 @@ function moveDownElement(elementToMove) {
     }
     // If it is not the smallest element in the current subarray, do nothing.
     if (getValue(elementToMove) !== getSmallestValue(rowArray[subArrayIndex])) {
+        console.log("incorrect move move down element")
         moveExplanationText.textContent = "Wrong! There is a smaller element on the other side!"
         increaseIncorrectMoves();
+        checkLives();
         return;
     } else {
 
@@ -358,11 +407,10 @@ function moveDownElement(elementToMove) {
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
 
-    if (!gameIsOver) {
-        alert("Not sorted yet 1, continue!"); //when implementing own alert, pause timer if user clicks submit too early
+    if (!isGameOver) {
+        alert("Not sorted yet 1, continue!"); // when implementing own alert, pause timer if user clicks submit too early
         return;
     }
-
 
     const elementList = document.querySelectorAll(".game-element-row-4");
 
@@ -390,31 +438,31 @@ function checkIfSorted() {
     }
 }
 
+// Method that ends the game if user is playing with lives and is out of lives
+function checkLives() {
+    console.log("merge sort all lives lost " + getIncorrectMoves());
+    if (isLivesEnabled() && getIncorrectMoves() === 3) {
+        forceValidMove();
+        isGameOver = true;
+        gameOver();
+    }
+}
+
 // Function called if user clicks submit and the array is sorted
 function gameOver() {
-    if (isScoreGood()) {
-        // good score
-        alert("Congrats!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves());
-    } else {
-        // not good score
-        alert("Game over!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!");
-    }
-    // enable startButton again for new round
-    startButton.classList.remove("hidden");
-    theoryView.classList.remove("hidden");
-    leftButton.classList.add("disabled");
-    rightButton.classList.add("disabled");
-    submitButton.classList.add("disabled");
+    isGameOver = true;
+    showGameOverDialog();
 
     // reset the indexes in list
     leftElement = undefined;
     rightElement = undefined;
+
     // Reset points for next round
     resetScore();
 
     moveExplanationText.textContent = "";
 
-    rowIndex = 1;
+    rowIndex = 1; //TODO check which are necessary
     rowArray = [];
     currentSubArray = [];
     subArrayIndex = 0;
@@ -424,6 +472,9 @@ function gameOver() {
     const allElements = document.querySelectorAll(".game-element");
     for (let index = 0; index < allElements.length; index++) {
         allElements[index].parentElement.classList.remove("marked-disabled");
+        allElements[index].parentElement.classList.remove("marked-left");
+        allElements[index].parentElement.classList.remove("marked-right");
+        allElements[index].parentElement.classList.remove("next-row-marked");
         allElements[index].innerHTML = "";
     }
 
@@ -432,6 +483,5 @@ function gameOver() {
     for (let index = 0; index < elementList.length; index++) {
         elementList[index].innerHTML = index + 1;
     }
-
     elementList = null;
 }
