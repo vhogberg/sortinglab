@@ -1,4 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
+import { handleLives, isLivesEnabled } from "./game-options.js";
 
 let correctMoves = 0;
 let wrongMoves = 0;
@@ -9,6 +10,9 @@ export function increaseCorrectMoves() {
 
 export function increaseIncorrectMoves() {
     wrongMoves++;
+    if (isLivesEnabled()) {
+        handleLives();
+    }
 }
 
 export function getCorrectMoves() {

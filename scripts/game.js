@@ -1,5 +1,7 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
 
+import { getCorrectMoves, getIncorrectMoves, isScoreGood } from "./points.js";
+
 // function that checks whether the elements are sorted, either numbers or characters
 export function isSorted(algorithmName) {
 
@@ -47,3 +49,27 @@ export function isSorted(algorithmName) {
     // return true if it is sorted correctly
     return true;
 }
+
+const gameOverDialog = document.getElementById("game-over-dialog");
+
+export function showGameOverDialog() {
+    if (isScoreGood()) {
+        // good score
+        document.getElementById("game-over-title").textContent = "Congrats!";
+        document.getElementById("game-over-text").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
+    } else {
+        // not good score
+        document.getElementById("game-over-title").textContent = "Game over!";
+        document.getElementById("game-over-text").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!";
+    }
+    gameOverDialog.showModal();
+}
+
+document.getElementById("try-again-button").addEventListener("click", () => {
+    gameOverDialog.close();
+})
+
+document.getElementById("return-home-button").addEventListener("click", () => {
+    returnHome();
+    gameOverDialog.close();
+})

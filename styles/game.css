@@ -89,3 +89,7 @@
 .game-element-highlighted:hover {
     background-color: var(--color-element-highlighted-hover);
 }
+
+#game-over-dialog {
+    background-color: thistle;
+}

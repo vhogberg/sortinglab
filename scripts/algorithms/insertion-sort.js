@@ -1,7 +1,7 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { handleGameOptions } from "../game-options.js";
-import { isSorted } from "../game.js";
-import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "../points.js";
+import { handleGameOptions, isLivesEnabled } from "../game-options.js";
+import { isSorted, showGameOverDialog } from "../game.js";
+import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
 const startButton = document.getElementById("start-button");
 const leftButton = document.getElementById("left-button");
@@ -27,8 +27,10 @@ let selectedElement;
 let element2;
 
 let allowedMoveMade = false;
+let isGameOver = false;
 
 function startGame() {
+    isGameOver = false;
     handleGameOptions();
     disableButtons();
     hideTheory();
@@ -36,7 +38,7 @@ function startGame() {
     gameLoop();
 }
 
-function disableButtons() {
+function disableButtons() { //maybe rename
     leftButton.classList.remove("disabled");
     skipButton.classList.remove("disabled");
     submitButton.classList.remove("disabled");
@@ -55,10 +57,12 @@ function scrambleElements() {
     }
 }
 
-async function gameLoop() {
-    let index = 0;
-    while (index < elementList.length) {
+let index = 0;
 
+async function gameLoop() {
+    // If element list is null, stop the loop
+    // This first check cancels out the second check, so null.length is never considered.
+    while (elementList !== null && index < elementList.length) { 
         selectedElement = elementList[index];
 
         if (index != 0) {
@@ -73,18 +77,23 @@ async function gameLoop() {
 
         await waitForValidMove();
 
-        leftButton.removeEventListener("click", swapElements);
-        skipButton.removeEventListener("click", skip);
+        if (!isGameOver) {
+            leftButton.removeEventListener("click", swapElements);
+            skipButton.removeEventListener("click", skip);
 
-        selectedElement.classList.remove("game-element-highlighted");
-        index++;
+            selectedElement.classList.remove("game-element-highlighted");
+            index++;
+        }
     }
     moveExplanationText.textContent = "No further elements to sort, click submit!";
 }
 
+// Function that stops the loop, waiting for a button press
+// Can also be called with forceValidMove();
+let checkValidMove;
 function waitForValidMove() {
     return new Promise(resolve => {
-        function checkValidMove() {
+        checkValidMove = function () {
             if (allowedMoveMade) {
                 resolve();
                 removeEventListeners();
@@ -99,6 +108,12 @@ function waitForValidMove() {
         leftButton.addEventListener("click", checkValidMove);
         skipButton.addEventListener("click", checkValidMove)
     })
+}
+
+// Forces a valid move, so that the wait method can be resolved with resolve()
+function forceValidMove() {
+    allowedMoveMade = true;
+    checkValidMove();
 }
 
 function skip() {
@@ -117,6 +132,7 @@ function skip() {
     if (selectedValue < element2Value) {
         moveExplanationText.textContent = "Wrong! " + selectedValue + " is smaller than " + element2Value + " so it should be swapped!";
         increaseIncorrectMoves();
+        checkLives();
         allowedMoveMade = false;
         return;
     }
@@ -143,18 +159,21 @@ function swapElements() {
         moveExplanationText.textContent = "Wrong! You can't move this further to the left!";
         // TODO("Update to selection sort theory");
         increaseIncorrectMoves();
+        checkLives();
         allowedMoveMade = false;
         return;
     }
     else if (selectedValue > element2Value) {
         moveExplanationText.textContent = "Wrong! " + selectedValue + " is bigger than " + element2Value + " so they should not be swapped!";
         increaseIncorrectMoves();
+        checkLives();
         allowedMoveMade = false;
         return;
     }
     else if (selectedValue === element2Value) {
         moveExplanationText.textContent = "Wrong! " + selectedValue + " is equal to " + element2Value + " so they should not be swapped!";
         increaseIncorrectMoves();
+        checkLives();
         allowedMoveMade = false;
         return;
     }
@@ -198,16 +217,19 @@ function checkIfSorted() {
     }
 }
 
+// Method that ends the game if user is playing with lives and is out of lives
+function checkLives() {
+    if (isLivesEnabled() && getIncorrectMoves() === 3) {
+        forceValidMove();
+        isGameOver = true;
+        gameOver();
+    }
+}
+
 // Function called if user clicks submit and the array is sorted
 function gameOver() {
-    //TODO() reset points to zero if isPointsDisabled
-    if (isScoreGood()) {
-        // good score
-        alert("Congrats!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves());
-    } else {
-        // not good score
-        alert("Game over!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!");
-    }
+    isGameOver = true;
+    showGameOverDialog();
     // enable startButton again for new round
     startButton.classList.remove("hidden");
     theoryView.classList.remove("hidden");
@@ -218,6 +240,7 @@ function gameOver() {
     // reset the indexes in list
     selectedElement = undefined;
     element2 = undefined;
+    index = 0;
     // Reset points for next round
     resetScore();
 
@@ -232,5 +255,4 @@ function gameOver() {
         elementList[index].innerHTML = index; //TODO() index+1?
     }
     elementList = null;
-
 }

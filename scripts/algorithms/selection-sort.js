@@ -1,6 +1,6 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
 import { isSorted } from "../game.js";
-import { getCorrectMoves, getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, isScoreGood, resetScore } from "../points.js";
+import { increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
 const startButton = document.getElementById("start-button");
 const selectButton = document.getElementById("select-button");
@@ -176,7 +176,6 @@ function handleMove() {
     swapElements();
 }
 
-
 // Swaps the SELECTED element with element to the left of selected element
 function swapElements() {
 
@@ -204,6 +203,7 @@ if (isSorted("selection")) {
 
 // Function called if user clicks submit and the array is sorted
 function gameOver() {
+    /*
     if (isScoreGood()) {
         // good score
         alert("Congrats!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves());
@@ -211,6 +211,7 @@ function gameOver() {
         // not good score
         alert("Game over!\nCorrect moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!");
     }
+        */
     // enable startButton again for new round
     startButton.classList.remove("hidden");
     theoryView.classList.remove("hidden");
@@ -237,7 +238,7 @@ function gameOver() {
 
     // reset ordering on theoryview
     for (let index = 0; index < elementList.length; index++) {
-        elementList[index].innerHTML = index; //TODO() index+1?
+        elementList[index].innerHTML = index+1;
     }
     elementList = null;
     index = 0;

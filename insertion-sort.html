@@ -80,7 +80,7 @@
                 <p>00:00</p>
             </div>
             <div id="lives-container">
-                <p>❤️❤️❤️</p>
+                <p id="number-of-lives">❤️❤️❤️</p>
             </div>
 
             <button id="start-button"><span>Start</span></button>
@@ -98,14 +98,24 @@
                 <div class="game-element"><span class="game-element-text">10</span></div>
             </div>
 
-            <button id="skip-button"><span>Skip</span></button>
-            <button id="left-button"><span>Left</span></button>
-            <button id="submit-button"><span>Submit</span></button>
+            <div id="game-control-dialog">
+                <button id="skip-button"><span>Skip</span></button>
+                <button id="left-button"><span>Left</span></button>
+                <button id="submit-button"><span>Submit</span></button>
+            </div>
             <p id="move-explanation"></p>
 
 
 
         </section>
+
+        <dialog id="game-over-dialog">
+            <h4 id="game-over-title">Game over!</h4>
+            <p id="game-over-text"></p>
+            <p>Try again with the button below or return to the menu</p>
+            <button id="try-again-button">Try again</button>
+            <button id="return-home-button">Return home</button>
+        </dialog>
 
     </main>
 
@@ -116,6 +126,7 @@
     <script src="scripts/base.js"></script>
     <script src="scripts/algorithms/insertion-sort.js" type="module"></script>
     <script src="scripts/game-options.js" type="module"></script>
+    <script src="scripts/game.js" type="module"></script>
 </body>
 
 </html>
