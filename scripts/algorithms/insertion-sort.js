@@ -1,6 +1,6 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
 import { getDifficulty, handleGameOptions, isLivesEnabled } from "../game-options.js";
-import { gameManager, isSorted, showGameOverDialog } from "../game.js";
+import { gameManager, isSorted, parseValue, showGameOverDialog } from "../game.js";
 import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
 const startButton = document.getElementById("start-button");
@@ -57,6 +57,7 @@ function startGame() {
     getElementsByDifficulty();
     scrambleElements();
     gameLoop();
+    parseValue(123);
 }
 
 function enableButtons() {
@@ -74,7 +75,6 @@ function hideTheory() {
 //gets elements according to the difficulty setting, by checking only importing elements associated with checked difficulty
 function getElementsByDifficulty() {
 
-    console.log("difficulty: " + getDifficulty())
     elementList = [];
 
     //uses getDifficulty from game-options.js to obtain checked difficulty 

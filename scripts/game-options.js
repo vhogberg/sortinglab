@@ -59,11 +59,13 @@ function handleGameMode() {
     // Numbers
     if (document.getElementById("number-mode").checked) {
         gameMode = "numbers";
+        console.log("new gamemode: " + gameMode)
     }
 
     // Letters
     if (document.getElementById("letter-mode").checked) {
         gameMode = "letters";
+        console.log("new gamemode: " + gameMode)
     }
 
 }
@@ -217,6 +219,7 @@ export function getDifficulty() {
 // ==================================================================
 
 export function getGameMode() {
+    console.log("getgamemode (i gameotpions) "+ gameMode)
     return gameMode;
 }
 

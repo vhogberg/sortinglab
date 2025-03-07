@@ -34,7 +34,6 @@ elementsToHide.forEach(elementsToHide => {
 });
 
 function startGame() {
-    parseValue(test)
 
     gameManager.setGame(
         {

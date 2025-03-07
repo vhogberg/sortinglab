@@ -1,6 +1,6 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
 
-import { didTimeRunOut, isLivesEnabled, isPointsDisabled, isTimeEnabled, resetCountdown, resetLives } from "./game-options.js";
+import { didTimeRunOut, getGameMode, isLivesEnabled, isPointsDisabled, isTimeEnabled, resetCountdown, resetLives } from "./game-options.js";
 import { getCorrectMoves, getIncorrectMoves, isScoreGood } from "./points.js";
 import { playGameOverFailSound, playGameOverSuccessSound } from "./sound.js";
 
@@ -136,11 +136,10 @@ function resetElementValues() {
         mergeSortList = null;
     }
     else {
-        console.log(list.length)
         for (let index = 0; index < list.length; index++) {
             list[index].innerHTML = index + 1;
         }
-        
+
     }
     list = null;
 }
@@ -167,11 +166,9 @@ export const gameManager = {
 
     setGame(gameMethods) {
         this.currentGame = gameMethods
-        console.log("gameManagerConstructor");
     },
 
     gameOver() {
-        console.log("current game: " + this.currentGame);
         if (this.currentGame && this.currentGame.gameOver) {
             this.currentGame.gameOver()
         }
@@ -181,11 +178,13 @@ export const gameManager = {
     }
 }
 
+// Custom parse function for values and numbers
 export function parseValue(value) {
     if (getGameMode() == "numbers") {
         console.log("numbers");
-        return parseInt(value);
-    }else {
+        return parseInt(value.textContent);
+    } else {
+        console.log("text");
         return value.textContent;
     }
 }
