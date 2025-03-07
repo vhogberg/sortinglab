@@ -32,6 +32,7 @@ let isGameOver = false;
 
 let index = 0;
 
+// By default, show 10 elements
 const elementsToHide = document.querySelectorAll(".game-element-hard");
 elementsToHide.forEach(elementsToHide => {
     elementsToHide.classList.add("hidden");
@@ -70,11 +71,13 @@ function hideTheory() {
     optionsContainer.classList.add("hidden");
 }
 
+//gets elements according to the difficulty setting, by checking only importing elements associated with checked difficulty
 function getElementsByDifficulty() {
 
     console.log("difficulty: " + getDifficulty())
     elementList = [];
 
+    //uses getDifficulty from game-options.js to obtain checked difficulty 
     if (getDifficulty() == "easy") {
         elementList = document.querySelectorAll(".game-element-easy");
     } else if (getDifficulty() == "normal") {

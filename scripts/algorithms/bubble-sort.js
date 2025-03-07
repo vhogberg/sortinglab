@@ -1,5 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { handleGameOptions, isLivesEnabled } from "../game-options.js";
+import { getDifficulty, handleGameOptions, isLivesEnabled } from "../game-options.js";
 import { gameManager, isSorted, showGameOverDialog } from "../game.js";
 import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
@@ -21,11 +21,17 @@ skipButton.classList.add("disabled");
 let moveExplanationText = document.getElementById("move-explanation");
 
 // Initial sorted list of all elements
-let elementList = document.querySelectorAll(".game-element");
+let elementList;
 
 // Global variables of the current two elements selected
 let element1;
 let element2;
+
+// By default, show 10 elements
+const elementsToHide = document.querySelectorAll(".game-element-hard");
+elementsToHide.forEach(elementsToHide => {
+    elementsToHide.classList.add("hidden");
+});
 
 function startGame() {
 
@@ -41,6 +47,7 @@ function startGame() {
     handleGameOptions();
     enableButtons();
     hideTheory();
+    getElementsByDifficulty();
     scrambleElements();
     gameLoop();
 }
@@ -55,6 +62,22 @@ function enableButtons() {
 function hideTheory() {
     theoryView.classList.add("hidden");
     optionsContainer.classList.add("hidden");
+}
+
+//gets elements according to the difficulty setting, by checking only importing elements associated with checked difficulty
+function getElementsByDifficulty() {
+
+    console.log("difficulty: " + getDifficulty())
+    elementList = [];
+
+    //uses getDifficulty from game-options.js to obtain checked difficulty 
+    if (getDifficulty() == "easy") {
+        elementList = document.querySelectorAll(".game-element-easy");
+    } else if (getDifficulty() == "normal") {
+        elementList = document.querySelectorAll(".game-element-easy, .game-element-normal");
+    } else if (getDifficulty() == "hard") {
+        elementList = document.querySelectorAll(".game-element-easy, .game-element-normal, .game-element-hard");
+    }
 }
 
 // Function to scramble the elements so they are unsorted
@@ -138,7 +161,7 @@ function swapElements() {
     parentElement.insertBefore(element2, element1);
 
     //since the index of the elements gets shuffled around by swapping them, we reassign all elements to the nodeList to ensure they are in the correct order.
-    elementList = document.querySelectorAll(".game-element");
+    getElementsByDifficulty();
 }
 
 // skip function
@@ -165,7 +188,7 @@ function skip() {
 
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
-    if (isSorted("bubble")) {
+    if (isSorted(elementList)) {
         gameOver()
     }
     else {
@@ -194,7 +217,7 @@ function gameOver() {
     moveExplanationText.textContent = "";
 
     // reset the indexes in list
-    elementList = document.querySelectorAll(".game-element");
+    getElementsByDifficulty();
 
     // remove highlighted class after game is over and reset ordering on theoryview
     for (let index = 0; index < elementList.length; index++) {

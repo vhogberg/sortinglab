@@ -1,5 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { handleGameOptions, isLivesEnabled } from "../game-options.js";
+import { getDifficulty, handleGameOptions, isLivesEnabled } from "../game-options.js";
 import { gameManager, isSorted, showGameOverDialog } from "../game.js";
 import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
@@ -37,6 +37,12 @@ let index = 0;
 let allowedMoveMade = false;
 let isGameOver = false;
 
+// By default, show 10 elements
+const elementsToHide = document.querySelectorAll(".game-element-hard");
+elementsToHide.forEach(elementsToHide => {
+    elementsToHide.classList.add("hidden");
+});
+
 // Function to start the game, hides theory and starts the loop.
 function startGame() {
 
@@ -53,6 +59,7 @@ function startGame() {
     handleGameOptions();
     enableButtons();
     hideTheory();
+    getElementsByDifficulty();
     scrambleElements();
     gameLoop();
 }
@@ -70,9 +77,24 @@ function hideTheory() {
     optionsContainer.classList.add("hidden");
 }
 
+//gets elements according to the difficulty setting, by checking only importing elements associated with checked difficulty
+function getElementsByDifficulty() {
+
+    console.log("difficulty: " + getDifficulty())
+    elementList = [];
+
+    //uses getDifficulty from game-options.js to obtain checked difficulty 
+    if (getDifficulty() == "easy") {
+        elementList = document.querySelectorAll(".game-element-easy");
+    } else if (getDifficulty() == "normal") {
+        elementList = document.querySelectorAll(".game-element-easy, .game-element-normal");
+    } else if (getDifficulty() == "hard") {
+        elementList = document.querySelectorAll(".game-element-easy, .game-element-normal, .game-element-hard");
+    }
+}
+
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
-    elementList = document.querySelectorAll(".game-element");
     for (const element of elementList) {
         element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
     }
@@ -182,7 +204,7 @@ function skip() {
     skipIndex++;
 
     // Ensure the element list is updated after possible swaps
-    elementList = document.querySelectorAll(".game-element");
+    getElementsByDifficulty();
 }
 
 //handles selection of an element
@@ -232,12 +254,12 @@ function swapElements() {
     parentElement.insertBefore(smallestElement, firstElement);
 
     //since the index of the elements gets shuffled around by swapping them, we reasign all elements to the nodeList to ensure they are in the correct order.
-    elementList = document.querySelectorAll(".game-element");
+    getElementsByDifficulty();
 }
 
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
-    if (isSorted("selection")) {
+    if (isSorted(elementList)) {
         gameOver()
     }
     else {

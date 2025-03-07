@@ -46,28 +46,121 @@
 
         <section id="game-view">
 
+            <!-- Custom options container for sandbox sort,
+            we hide most of these, but they should still be in
+            the code for functionality in game.js and game-options.js -->
+            <div id="game-options-container">
+                <h4 hidden>Options</h4>
+                <div id="game-preference-container" hidden>
+                    <p>Choose game preferences: </p>
+                    <input type="checkbox" name="game-preferences" id="lives-checkbox">
+                    <label for="lives-checkbox">Enable lives</label>
+                    <input type="checkbox" name="game-preferences" id="time-checkbox">
+                    <label for="time-checkbox">Enable time limit</label>
+                    <input type="checkbox" name="game-preferences" id="points-checkbox">
+                    <label for="points-checkbox">Disable points</label>
+                </div>
+
+                <div id="game-mode-container" hidden>
+                    <p>Choose game mode: </p>
+                    <input type="radio" checked name="game-mode" id="number-mode">
+                    <label for="number-mode">Number-mode (123...)</label>
+                    <input type="radio" name="game-mode" id="letter-mode">
+                    <label for="letter-mode">Letter-mode (ABC...)</label>
+                </div>
+
+                <div id="game-difficulty-container">
+                    <p>Choose the amount of elements: </p>
+                    <input type="radio" name="game-difficulty" id="easy-difficulty">
+                    <label for="easy-difficulty">5 elements</label>
+                    <input type="radio" checked name="game-difficulty" id="normal-difficulty">
+                    <label for="normal-difficulty">10 elements</label>
+                    <input type="radio" name="game-difficulty" id="hard-difficulty">
+                    <label for="hard-difficulty">15 elements</label>
+                </div>
+            </div>
+            <br>
+
+            <div id="time-container">
+                <p id="countdown">0:60</p>
+            </div>
+            <div id="lives-container">
+                <p>Lives:</p>
+                <p id="number-of-lives">❤️❤️❤️</p>
+            </div>
+            <br>
 
             <button id="start-button"><span>Start</span></button>
 
             <ul id="game-element-list">
-                <li draggable="true" class="can-be-grabbed"> <div class="game-element" ><span class="game-element-text">1</span></div> </li>
-                <li draggable="true" class="can-be-grabbed"> <div class="game-element" ><span class="game-element-text">2</span></div> </li>
-                <li draggable="true" class="can-be-grabbed"> <div class="game-element" ><span class="game-element-text">3</span></div> </li>
-                <li draggable="true" class="can-be-grabbed"> <div class="game-element" ><span class="game-element-text">4</span></div> </li>
-                <li draggable="true" class="can-be-grabbed"> <div class="game-element" ><span class="game-element-text">5</span></div> </li>
-                <li draggable="true" class="can-be-grabbed"> <div class="game-element" ><span class="game-element-text">6</span></div> </li>
-                <li draggable="true" class="can-be-grabbed"> <div class="game-element" ><span class="game-element-text">7</span></div> </li>
-                <li draggable="true" class="can-be-grabbed"> <div class="game-element" ><span class="game-element-text">8</span></div> </li>
-                <li draggable="true" class="can-be-grabbed"> <div class="game-element" ><span class="game-element-text">9</span></div> </li>
-                <li draggable="true" class="can-be-grabbed"> <div class="game-element" ><span class="game-element-text">10</span></div> </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-easy"><span class="game-element-text">1</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-easy"><span class="game-element-text">2</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-easy"><span class="game-element-text">3</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-easy"><span class="game-element-text">4</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-easy"><span class="game-element-text">5</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-normal"><span class="game-element-text">6</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-normal"><span class="game-element-text">7</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-normal"><span class="game-element-text">8</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-normal"><span class="game-element-text">9</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-normal"><span class="game-element-text">10</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-hard"><span class="game-element-text">11</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-hard"><span class="game-element-text">12</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-hard"><span class="game-element-text">13</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-hard"><span class="game-element-text">14</span></div>
+                </li>
+                <li draggable="true" class="can-be-grabbed">
+                    <div class="game-element game-element-hard"><span class="game-element-text">15</span></div>
+                </li>
             </ul>
-                
-            <button id="submit-button"><span>Submit</span></button>
+
+            <div id="game-control-buttons-container">
+                <button id="submit-button">
+                    <span>Submit</span>
+                </button>
+            </div>
+
             <p id="move-explanation"></p>
         </section>
+
+        <!-- Custom game over dialog for sandbox sort -->
+        <dialog id="game-over-dialog">
+            <h4 id="game-over-title" hidden>Game over!</h4>
+            <h4>Well done!</h4>
+            <p id="game-over-points" hidden></p>
+            <p>Try again with the button below or return to the menu</p>
+            <button id="try-again-button">Try again</button>
+            <button id="return-home-button">Return home</button>
+        </dialog>
     </main>
 
-    <script src="scripts/algorithms/sandbox-sort.js"></script>
+    <script src="scripts/algorithms/sandbox-sort.js" type="module"></script>
     <script src="scripts/base.js"></script>
 
 </body>

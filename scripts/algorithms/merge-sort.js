@@ -430,7 +430,7 @@ function checkIfSorted() {
         return;
     }
 
-    if (isSorted("merge")) {
+    if (isSorted(elementList)) {
         gameOver();
     }
     else {

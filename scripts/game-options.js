@@ -15,7 +15,7 @@ export function handleGameOptions() {
     handleGameDifficulty();
 }
 
-// Hide the different game preferences initially
+// Hide the different game preferences initially, with null check since sandbox sort does not have them
 document.getElementById("lives-container").classList.add("hidden");
 document.getElementById("time-container").classList.add("hidden");
 
