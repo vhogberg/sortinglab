@@ -304,7 +304,6 @@ function gameOver() {
         elementList[index].classList.remove("game-element-highlighted");
         elementList[index].classList.remove("smallest-element");
         elementList[index].classList.remove("sorted-element");
-        elementList[index].innerHTML = index + 1;
     }
     elementList = null;
 }

@@ -51,7 +51,6 @@ function enableButtons() {
     submitButton.classList.remove("disabled");
     startButton.classList.add("hidden");
     theoryView.classList.add("hidden");
-
 }
 
 function hideTheory() {

@@ -89,6 +89,7 @@ function scrambleElements() {
 
 // Game loop
 async function gameLoop() {
+    //ensures that rowIndex is 1 after game has been "cancelled" when user runs out of lives/time
     rowIndex = 1;
 
     while (rowIndex < 4) {
@@ -129,20 +130,27 @@ async function gameLoop() {
         while (elementList !== null && elementIndex < 8) {
             allowedMoveMade = false;
 
+            
             addMarkingForNextRow();
+            //adds marking to left/right elements of first row, since the row is eight elements long marked-left will always be on even element
             if (rowIndex === 1) {
+                //if elementIndex is even it means left are on even element, so add left to current element and right to element after
                 if (elementIndex % 2 === 0) {
+                    //uses parentElement since we are putting the colors on container around the element, not the element itself
                     elementList[elementIndex].parentElement.classList.add("marked-left");
                     elementList[elementIndex + 1].parentElement.classList.add("marked-right");
 
                 }
+                //if elementIndex is uneven it means left are on uneven element, so add marked-left to element before and right to current after
                 else {
                     elementList[elementIndex - 1].parentElement.classList.add("marked-left");
                     elementList[elementIndex].parentElement.classList.add("marked-right");
                 }
             }
 
+            //sets index for subarray depending on current row and elementIndex
             if (rowIndex === 1) {
+                //divided by two since elementIndex goes up to eight while there are four subarrays for row 1
                 subArrayIndex = Math.floor(elementIndex / 2)
             }
             else if (rowIndex === 2) {
@@ -164,9 +172,9 @@ async function gameLoop() {
             leftButton.addEventListener("click", handleLeftClick);
             rightButton.addEventListener("click", handleRightClick);
             await waitForValidMove();
-            console.log("await lil bit");
 
-            if (rowIndex === 1 && !isGameOver) {
+            //removes markings from nextRow
+            if (rowIndex === 1) {
                 removeMarkingForNextRow(2);
                 leftElement.parentElement.classList.remove("marked-left");
                 rightElement.parentElement.classList.remove("marked-right");
@@ -292,6 +300,7 @@ function removeMarking(index) {
 }
 
 function addMarkingForNextRow() {
+    //gets next row, one above current rowIndex
     nextRowElements = document.querySelectorAll(`.game-element-row-${rowIndex + 1}`);
     nextRowElements[elementIndex].parentElement.classList.add("next-row-marked");
 }
@@ -476,12 +485,6 @@ function gameOver() {
         allElements[index].parentElement.classList.remove("marked-right");
         allElements[index].parentElement.classList.remove("next-row-marked");
         allElements[index].innerHTML = "";
-    }
-
-    // reset ordering on theoryview
-    elementList = document.querySelectorAll(".game-element-row-1");
-    for (let index = 0; index < elementList.length; index++) {
-        elementList[index].innerHTML = index + 1;
     }
     elementList = null;
 }

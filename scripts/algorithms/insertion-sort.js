@@ -281,8 +281,7 @@ function gameOver() {
     // remove highlighted class after game is over and reset ordering on theoryview
     for (let index = 0; index < elementList.length; index++) {
         elementList[index].classList.remove("game-element-highlighted");
-        elementList[index].innerHTML = index + 1;
     }
-    //forceValidMove();
+    forceValidMove();
     elementList = null;
 }

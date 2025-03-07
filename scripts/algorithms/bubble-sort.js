@@ -176,7 +176,7 @@ function skip() {
         increaseCorrectMoves();
     } else if (element1Value === element2Value) {
         moveExplanationText.textContent = "Correct! " + element1Value + " is equal to " + element2Value + " so they should not be swapped!";
-        increaseIncorrectMoves();
+        increaseCorrectMoves();
         checkLives();
     }
     else {
@@ -222,6 +222,5 @@ function gameOver() {
     // remove highlighted class after game is over and reset ordering on theoryview
     for (let index = 0; index < elementList.length; index++) {
         elementList[index].classList.remove("game-element-highlighted");
-        elementList[index].innerHTML = index + 1;
     }
 }

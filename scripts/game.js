@@ -2,6 +2,7 @@
 
 import { didTimeRunOut, isLivesEnabled, isPointsDisabled, isTimeEnabled, resetCountdown, resetLives } from "./game-options.js";
 import { getCorrectMoves, getIncorrectMoves, isScoreGood } from "./points.js";
+import { playGameOverFailSound, playGameOverSuccessSound } from "./sound.js";
 
 const gameOverDialog = document.getElementById("game-over-dialog");
 
@@ -48,28 +49,25 @@ export function showGameOverDialog() {
 
     document.getElementById("game-over-points").textContent = "";
 
-    // check for if user has enabled lives and lost them all
-    if (isTimeEnabled()) {
-        resetCountdown();
-    }
-
-    // Lives enabled and all 3 lives lost
+    // Lives enabled AND all 3 lives lost
     if (isLivesEnabled() && getIncorrectMoves() === 3) {
         document.getElementById("game-over-title").textContent = "All lives lost\n!💔💔💔";
         if (!isPointsDisabled()) {
             document.getElementById("game-over-points").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
         }
+        playGameOverFailSound();
         gameOverDialog.showModal();
         return;
     }
 
-    // Lives enabled and time ran out
+    // Lives enabled AND time ran out
     if (isTimeEnabled() && didTimeRunOut()) {
         document.getElementById("game-over-title").textContent = "Time is up!";
         if (!isPointsDisabled) {
             document.getElementById("game-over-points").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
         }
-        resetCountdown();
+        playGameOverFailSound();
+        // resetCountdown();
         gameOverDialog.showModal();
         return;
     }
@@ -81,6 +79,7 @@ export function showGameOverDialog() {
         if (!isPointsDisabled()) {
             document.getElementById("game-over-points").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
         }
+        playGameOverSuccessSound();
         gameOverDialog.showModal();
         return;
     } // Game completed without hindarance and score is bad!
@@ -88,6 +87,7 @@ export function showGameOverDialog() {
         // not good score
         document.getElementById("game-over-title").textContent = "Game over!";
         if (!isPointsDisabled()) {
+            playGameOverFailSound(); // only play "bad" sound if user has points enabled
             document.getElementById("game-over-points").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!";
         }
         gameOverDialog.showModal();
@@ -95,12 +95,17 @@ export function showGameOverDialog() {
     }
 }
 
+// try again button in dialog
 document.getElementById("try-again-button").addEventListener("click", () => {
-    gameOverDialog.close();
-    handleHidingElements();
-    if (isLivesEnabled()) {
+    gameOverDialog.close(); // close dialog
+    handleHidingElements(); // hide elements
+    if (isLivesEnabled()) { // reset lives
         resetLives();
     }
+    if (isTimeEnabled()) { // reset time / countdown
+        resetCountdown();
+    }
+    resetElementValues(); // reset values so that they are in order
 })
 
 
@@ -110,9 +115,35 @@ document.getElementById("return-home-button").addEventListener("click", () => {
     if (isLivesEnabled()) {
         resetLives();
     }
+    if (isTimeEnabled()) {
+        resetCountdown();
+    }
+    resetElementValues();
     //returns to index.html, ie the 'homescreen'
     window.location.href = "index.html";
 })
+
+// function to reset values so that they are in order
+function resetElementValues() {
+
+    let list = document.querySelectorAll(".game-element");
+
+    if (list.length > 15) {
+        let mergeSortList = document.querySelectorAll(".game-element-row-1");
+        for (let index = 0; index < mergeSortList.length; index++) {
+            mergeSortList[index].innerHTML = index + 1;
+        }
+        mergeSortList = null;
+    }
+    else {
+        console.log(list.length)
+        for (let index = 0; index < list.length; index++) {
+            list[index].innerHTML = index + 1;
+        }
+        
+    }
+    list = null;
+}
 
 // show theory view + game options after game is over. disable game control buttons (until game is started)
 function handleHidingElements() {
