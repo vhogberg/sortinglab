@@ -1,6 +1,6 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { handleGameOptions, isLivesEnabled } from "../game-options.js";
-import { gameManager, isSorted, showGameOverDialog } from "../game.js";
+import { getGameMode, handleGameOptions, isLivesEnabled } from "../game-options.js";
+import { gameManager, isSorted, parseValue, showGameOverDialog } from "../game.js";
 import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
 const startButton = document.getElementById("start-button");
@@ -82,8 +82,18 @@ function hideTheory() {
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
     elementList = document.querySelectorAll(".game-element-row-1");
-    for (const element of elementList) {
-        element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+    // for letter mode, the ASCII values for uppercase letters range from 65 to 90
+    const uppercaseAsciiStart = 65;
+    if (getGameMode() === "numbers") {
+        for (const element of elementList) {
+            element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+        }
+    }
+    else if (getGameMode() === "letters") {
+        for (const element of elementList) {
+            let letterIndex = Math.floor(Math.random() * 26);
+            element.innerHTML = String.fromCharCode(uppercaseAsciiStart + letterIndex);
+        }
     }
 }
 
@@ -130,7 +140,7 @@ async function gameLoop() {
         while (elementList !== null && elementIndex < 8) {
             allowedMoveMade = false;
 
-            
+
             addMarkingForNextRow();
             //adds marking to left/right elements of first row, since the row is eight elements long marked-left will always be on even element
             if (rowIndex === 1) {
@@ -314,13 +324,20 @@ function removeMarkingForNextRow(index) {
 
 // Function to get the value of a certain element
 function getValue(elementToGetValue) {
-    return parseInt(elementToGetValue.textContent);
+    return parseValue(elementToGetValue.textContent);
 }
 
 // Function to get the smallest value of an array of elements
 function getSmallestValue(rowArray) {
-    let allValues = rowArray.flat(Infinity).map(div => getValue(div));
-    return Math.min(...allValues);
+    if (getGameMode() === "numbers") {
+        let allValues = rowArray.flat(Infinity).map(div => getValue(div));
+        return Math.min(...allValues);
+    }
+    else if (getGameMode() === "letters") {
+        let allValues = rowArray.flat(Infinity).map(div => getValue(div));
+        return allValues.reduce((min, val) => val < min ? val : min);
+    }
+
 }
 
 // Function that handles a move, takes in a direction "left" or "right" and calls the move method.
@@ -405,7 +422,7 @@ function moveDownElement(elementToMove) {
         }
 
         nextRowElements = document.querySelectorAll(`.game-element-row-${rowIndex + 1}`);
-        nextRowElements[elementIndex].textContent = parseInt(elementToMove.textContent);
+        nextRowElements[elementIndex].textContent = parseValue(elementToMove.textContent);
     }
     // give points
     increaseCorrectMoves();
@@ -449,7 +466,6 @@ function checkIfSorted() {
 
 // Method that ends the game if user is playing with lives and is out of lives
 function checkLives() {
-    console.log("merge sort all lives lost " + getIncorrectMoves());
     if (isLivesEnabled() && getIncorrectMoves() === 3) {
         forceValidMove();
         isGameOver = true;

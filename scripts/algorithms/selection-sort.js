@@ -1,6 +1,6 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { getDifficulty, handleGameOptions, isLivesEnabled } from "../game-options.js";
-import { gameManager, isSorted, showGameOverDialog } from "../game.js";
+import { getDifficulty, getGameMode, handleGameOptions, isLivesEnabled } from "../game-options.js";
+import { gameManager, isSorted, parseValue, showGameOverDialog } from "../game.js";
 import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
 const startButton = document.getElementById("start-button");
@@ -95,8 +95,18 @@ function getElementsByDifficulty() {
 
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
-    for (const element of elementList) {
-        element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+    // for letter mode, the ASCII values for uppercase letters range from 65 to 90
+    const uppercaseAsciiStart = 65;
+    if (getGameMode() === "numbers") {
+        for (const element of elementList) {
+            element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+        }
+    }
+    else if (getGameMode() === "letters") {
+        for (const element of elementList) {
+            let letterIndex = Math.floor(Math.random() * 26);
+            element.innerHTML = String.fromCharCode(uppercaseAsciiStart + letterIndex);
+        }
     }
 }
 
@@ -176,7 +186,7 @@ function forceValidMove() {
 // Function that skips over a selected element and looks for more elements
 function skip() {
     // Control so that user does not skip over a value they should not (would break the algorithm)
-    if (parseInt(selectedElement.textContent) < parseInt(smallestElement.textContent)) {
+    if (parseValue(selectedElement.textContent) < parseValue(smallestElement.textContent)) {
         moveExplanationText.textContent = "Wrong! " + selectedElement.textContent + " is smaller than " + smallestElement.textContent + " so it should become the new minimum value!";
         increaseIncorrectMoves();
         checkLives();
@@ -210,7 +220,7 @@ function skip() {
 //handles selection of an element
 function selectSmallestElement() {
     //if element user has selected is smaller than current smallest element
-    if (parseInt(selectedElement.textContent) < parseInt(smallestElement.textContent)) {
+    if (parseValue(selectedElement.textContent) < parseValue(smallestElement.textContent)) {
         moveExplanationText.textContent = "Correct! " + selectedElement.textContent + " is smaller than " + smallestElement.textContent + " so it should become the new minimum value!";
         smallestElement.classList.remove("smallest-game-element");
 
@@ -222,7 +232,7 @@ function selectSmallestElement() {
     } else if (selectedElement == smallestElement) {
         moveExplanationText.textContent = "This element is already selected!";
         //if it is another element with the same value
-    } else if (parseInt(selectedElement.textContent) == parseInt(smallestElement.textContent)) {
+    } else if (parseValue(selectedElement.textContent) == parseValue(smallestElement.textContent)) {
         moveExplanationText.textContent = "This element is the same size as the already selected value!";
         increaseIncorrectMoves();
         checkLives();

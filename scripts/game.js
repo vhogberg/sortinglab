@@ -164,6 +164,12 @@ function resetElementValues() {
 // show theory view + game options after game is over. disable game control buttons (until game is started)
 function handleHidingElements() {
     document.getElementById("game-options-container").classList.remove("hidden");
+
+    // These two are added here even if they should be unhidden by the statement below
+    // because merge sort needs it since it has custom options
+    document.getElementById("game-difficulty-container").classList.remove("hidden");
+    document.getElementById("game-mode-container").classList.remove("hidden");
+
     document.getElementById("start-button").classList.remove("hidden");
     document.getElementById("theory-view").classList.remove("hidden");
 
@@ -200,7 +206,6 @@ export function parseValue(value) {
     if (getGameMode() == "numbers") {
         return parseInt(value);
     } else {
-        console.log("text");
         return value;
     }
 }

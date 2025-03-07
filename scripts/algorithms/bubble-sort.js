@@ -1,6 +1,6 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { getDifficulty, handleGameOptions, isLivesEnabled } from "../game-options.js";
-import { gameManager, isSorted, showGameOverDialog } from "../game.js";
+import { getDifficulty, getGameMode, handleGameOptions, isLivesEnabled } from "../game-options.js";
+import { gameManager, isSorted, parseValue, showGameOverDialog } from "../game.js";
 import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
 const startButton = document.getElementById("start-button");
@@ -82,8 +82,18 @@ function getElementsByDifficulty() {
 
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
-    for (const element of elementList) {
-        element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+    // for letter mode, the ASCII values for uppercase letters range from 65 to 90
+    const uppercaseAsciiStart = 65;
+    if (getGameMode() === "numbers") {
+        for (const element of elementList) {
+            element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+        }
+    }
+    else if (getGameMode() === "letters") {
+        for (const element of elementList) {
+            let letterIndex = Math.floor(Math.random() * 26);
+            element.innerHTML = String.fromCharCode(uppercaseAsciiStart + letterIndex);
+        }
     }
 }
 
@@ -137,8 +147,8 @@ async function waitForButtonPress() {
 //swaps the two marked elements
 function swapElements() {
 
-    let element1Value = parseInt(element1.textContent);
-    let element2Value = parseInt(element2.textContent);
+    let element1Value = parseValue(element1.textContent);
+    let element2Value = parseValue(element2.textContent);
 
     if (element1Value > element2Value) {
         moveExplanationText.textContent = "Correct! " + element1Value + " is bigger than " + element2Value + " so they should be swapped!";
@@ -167,8 +177,8 @@ function swapElements() {
 // skip function
 function skip() {
 
-    let element1Value = parseInt(element1.textContent);
-    let element2Value = parseInt(element2.textContent);
+    let element1Value = parseValue(element1.textContent);
+    let element2Value = parseValue(element2.textContent);
 
     // check if move is correct (i.e whether user should've skipped)
     if (element1Value < element2Value) {

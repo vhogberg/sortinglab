@@ -1,5 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { getDifficulty, handleGameOptions } from "../game-options.js";
+import { getDifficulty, getGameMode, handleGameOptions } from "../game-options.js";
 import { gameManager, isSorted, showGameOverDialog } from "../game.js";
 
 
@@ -56,6 +56,7 @@ function enableButtons() {
 function hideTheory() {
     theoryView.classList.add("hidden");
     document.getElementById("game-difficulty-container").classList.add("hidden");
+    document.getElementById("game-mode-container").classList.add("hidden");
 }
 
 //gets elements according to the difficulty setting, by checking only importing elements associated with checked difficulty
@@ -76,11 +77,20 @@ function getElementsByDifficulty() {
 
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
-    for (const element of elementList) {
-        element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+    // for letter mode, the ASCII values for uppercase letters range from 65 to 90
+    const uppercaseAsciiStart = 65;
+    if (getGameMode() === "numbers") {
+        for (const element of elementList) {
+            element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+        }
+    }
+    else if (getGameMode() === "letters") {
+        for (const element of elementList) {
+            let letterIndex = Math.floor(Math.random() * 26);
+            element.innerHTML = String.fromCharCode(uppercaseAsciiStart + letterIndex);
+        }
     }
 }
-
 var dragging = null;
 
 gameElementList.addEventListener("dragstart", (event) => {
@@ -128,10 +138,5 @@ function gameOver() {
 
     moveExplanationText.textContent = "";
 
-    // reset ordering on theoryview
-    for (let index = 0; index < elementList.length; index++) {
-        elementList[index].innerHTML = index;
-    }
     elementList = null;
-    document.getElementById("game-difficulty-container").classList.remove("hidden");
 }

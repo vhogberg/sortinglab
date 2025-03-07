@@ -219,7 +219,7 @@ export function getDifficulty() {
 // ==================================================================
 
 export function getGameMode() {
-    console.log("getgamemode (i gameotpions) "+ gameMode)
+    console.log("getgamemode (i gameotpions) " + gameMode)
     return gameMode;
 }
 
@@ -229,21 +229,40 @@ const numberModeCheckBox = document.getElementById("number-mode");
 const letterModeCheckBox = document.getElementById("letter-mode");
 
 numberModeCheckBox.addEventListener("change", function () {
+    let elementList = document.querySelectorAll(".game-element");
     if (this.checked) {
-        let elementList = document.querySelectorAll(".game-element");
-        for (let index = 0; index < elementList.length; index++) {
-            elementList[index].innerHTML = index + 1;
+
+        if (elementList.length > 15) {
+            let mergeSortList = document.querySelectorAll(".game-element-row-1");
+            for (let index = 0; index < mergeSortList.length; index++) {
+                elementList[index].innerHTML = index + 1;
+            }
+            mergeSortList = null;
+        }
+        else {
+            for (let index = 0; index < elementList.length; index++) {
+                elementList[index].innerHTML = index + 1;
+            }
         }
     }
 });
 
 letterModeCheckBox.addEventListener("change", function () {
+    let elementList = document.querySelectorAll(".game-element");
     let charArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"]
     if (this.checked) {
-        let elementList = document.querySelectorAll(".game-element");
 
-        for (let index = 0; index < elementList.length; index++) {
-            elementList[index].innerHTML = charArray[index];
+        if (elementList.length > 15) {
+            let mergeSortList = document.querySelectorAll(".game-element-row-1");
+            for (let index = 0; index < mergeSortList.length; index++) {
+                elementList[index].innerHTML = charArray[index];
+            }
+            mergeSortList = null;
+        }
+        else {
+            for (let index = 0; index < elementList.length; index++) {
+                elementList[index].innerHTML = charArray[index];
+            }
         }
     }
 });
