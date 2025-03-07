@@ -59,8 +59,8 @@
 #game-element-container {
     display: grid;
     /* 10 columns, 1 item per column*/
-    grid-template-columns: repeat(10, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(15, 1fr);
+    gap: 0.5rem;
 
     margin: 2rem 0 2rem 0;
 }

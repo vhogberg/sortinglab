@@ -6,22 +6,12 @@ import { getCorrectMoves, getIncorrectMoves, isScoreGood } from "./points.js";
 const gameOverDialog = document.getElementById("game-over-dialog");
 
 // function that checks whether the elements are sorted, either numbers or characters
-export function isSorted(algorithmName) {
-
-    let elementList;
-
-    // merge sort needs to only take the fourth row of elements into consideration
-    if (algorithmName == "merge") {
-        elementList = document.querySelectorAll(".game-element-row-4");
-    } else {
-        // all others can just grab all game elements
-        elementList = document.querySelectorAll(".game-element");
-    }
+export function isSorted(list) {
 
     // new array of the values, instead of elementList which is a nodelist
     const valueArray = [];
-    for (let index = 0; index < elementList.length; index++) {
-        valueArray[index] = elementList[index].textContent;
+    for (let index = 0; index < list.length; index++) {
+        valueArray[index] = list[index].textContent;
     }
 
     // check if we are comparing numbers or characters
@@ -140,7 +130,7 @@ function handleHidingElements() {
     })
 }
 
-
+// Gamemanager used to call gameover in a more generalised way, setting the game mode in each games
 export const gameManager = {
     currentGame: null,
 
@@ -155,7 +145,7 @@ export const gameManager = {
             this.currentGame.gameOver()
         }
         else {
-            console.log("trasig")
+            console.log("Game manager is broken")
         }
     }
 }

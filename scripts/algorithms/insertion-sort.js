@@ -1,5 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { handleGameOptions, isLivesEnabled } from "../game-options.js";
+import { getDifficulty, handleGameOptions, isLivesEnabled } from "../game-options.js";
 import { gameManager, isSorted, showGameOverDialog } from "../game.js";
 import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
@@ -32,6 +32,11 @@ let isGameOver = false;
 
 let index = 0;
 
+const elementsToHide = document.querySelectorAll(".game-element-hard");
+elementsToHide.forEach(elementsToHide => {
+    elementsToHide.classList.add("hidden");
+});
+
 // Function to start the game, hides theory and starts the loop.
 function startGame() {
 
@@ -48,6 +53,7 @@ function startGame() {
     handleGameOptions();
     enableButtons();
     hideTheory();
+    getElementsByDifficulty();
     scrambleElements();
     gameLoop();
 }
@@ -64,9 +70,22 @@ function hideTheory() {
     optionsContainer.classList.add("hidden");
 }
 
+function getElementsByDifficulty() {
+
+    console.log("difficulty: " + getDifficulty())
+    elementList = [];
+
+    if (getDifficulty() == "easy") {
+        elementList = document.querySelectorAll(".game-element-easy");
+    } else if (getDifficulty() == "normal") {
+        elementList = document.querySelectorAll(".game-element-easy, .game-element-normal");
+    } else if (getDifficulty() == "hard") {
+        elementList = document.querySelectorAll(".game-element-easy, .game-element-normal, .game-element-hard");
+    }
+}
+
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
-    elementList = document.querySelectorAll(".game-element");
     for (const element of elementList) {
         element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
     }
@@ -85,7 +104,7 @@ async function gameLoop() {
         leftButton.addEventListener("click", swapElements);
         // add visualisation for selected element
         selectedElement.classList.add("game-element-highlighted");
-        
+
         skipButton.addEventListener("click", skip);
 
         await waitForValidMove();
@@ -132,8 +151,11 @@ function skip() {
     let selectedValue = parseInt(selectedElement.textContent);
     let element2Value = element2 ? parseInt(element2.textContent) : undefined;
 
+    console.log("selectedvalue: " + selectedValue)
+    console.log("element2Value: " + element2Value)
+
     // Ensure the element list is updated after possible swaps
-    elementList = document.querySelectorAll(".game-element");
+    getElementsByDifficulty();
 
     if (!element2) {
         moveExplanationText.textContent = "Correct! You should always skip when the selected element is furthest to the left!";
@@ -202,7 +224,7 @@ function swapElements() {
     parentElement.insertBefore(selectedElement, element2);
 
     //since the index of the elements gets shuffled around by swapping them, we reasign all elements to the nodeList to ensure they are in the correct order.
-    elementList = document.querySelectorAll(".game-element");
+    getElementsByDifficulty();
 
     //convert nodeList to array in order to be able to run indexOf
     let elementArray = Array.from(elementList);
@@ -216,12 +238,12 @@ function swapElements() {
     if (element2 !== undefined && parseInt(element2.textContent) > parseInt(selectedElement.textContent)) {
         allowedMoveMade = false;
     }
-    elementList = document.querySelectorAll(".game-element");
+    getElementsByDifficulty();
 }
 
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
-    if (isSorted("insertion")) {
+    if (isSorted(elementList)) {
         gameOver()
     }
     else {
@@ -246,6 +268,7 @@ function gameOver() {
     // reset the indexes in list
     selectedElement = undefined;
     element2 = undefined;
+    allowedMoveMade = false;
     index = 0;
     // Reset points for next round
     resetScore();
@@ -257,5 +280,6 @@ function gameOver() {
         elementList[index].classList.remove("game-element-highlighted");
         elementList[index].innerHTML = index + 1;
     }
+    //forceValidMove();
     elementList = null;
 }

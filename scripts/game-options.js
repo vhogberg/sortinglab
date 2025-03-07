@@ -7,6 +7,8 @@ let livesEnabled = false;
 let timeEnabled = false;
 let pointsEnabled = false;
 
+let difficulty = "";
+
 export function handleGameOptions() {
     handleGamePreferences();
     handleGameMode();
@@ -64,26 +66,37 @@ function handleGameMode() {
 }
 
 function handleGameDifficulty() {
+
+    const allElements = document.querySelectorAll(".game-element-normal, .game-element-hard");
+    allElements.forEach(element => {
+        element.classList.remove("hidden");
+    });
+
+    // Easy
     if (document.getElementById("easy-difficulty").checked) {
 
-    } else {
+        difficulty = "easy";
 
+        const elementsToHide = document.querySelectorAll(".game-element-normal, .game-element-hard");
+        elementsToHide.forEach(elementsToHide => {
+            elementsToHide.classList.add("hidden");
+        });
     }
 
-    // Letters
+    // Normal
     if (document.getElementById("normal-difficulty").checked) {
+        difficulty = "normal";
 
-    } else {
-
+        const elementsToHide = document.querySelectorAll(".game-element-hard");
+        elementsToHide.forEach(elementsToHide => {
+            elementsToHide.classList.add("hidden");
+        });
     }
 
-    // Letters
+    // Hard
     if (document.getElementById("hard-difficulty").checked) {
-
-    } else {
-
+        difficulty = "hard";
     }
-
 }
 
 // ==================================================================
@@ -128,7 +141,7 @@ let timeRanOut;
 export function handleTime() {
     let startTime = 60;
     const currentTime = document.getElementById("countdown");
-    document.getElementById("countdown").textContent = "0:"+startTime;
+    document.getElementById("countdown").textContent = "0:" + startTime;
 
     interval = setInterval(function () {
         startTime--;
@@ -174,4 +187,10 @@ export function isPointsDisabled() {
     return pointsEnabled;
 }
 
+// ==================================================================
+// ========================= DIFFICULTY =============================
+// ==================================================================
 
+export function getDifficulty() {
+    return difficulty;
+}
