@@ -10,6 +10,7 @@ import { playTickingSound } from "./sound.js";
 let livesEnabled = false;
 let timeEnabled = false;
 let pointsEnabled = false;
+let gameMode = "";
 let difficulty = "";
 
 // ran in each games start method to handle selected game options
@@ -57,16 +58,12 @@ function handleGamePreferences() {
 function handleGameMode() {
     // Numbers
     if (document.getElementById("number-mode").checked) {
-
-    } else {
-
+        gameMode = "numbers";
     }
 
     // Letters
     if (document.getElementById("letter-mode").checked) {
-
-    } else {
-
+        gameMode = "letters";
     }
 
 }
@@ -214,3 +211,36 @@ export function isPointsDisabled() {
 export function getDifficulty() {
     return difficulty;
 }
+
+// ==================================================================
+// ========================= GAME MODE ==============================
+// ==================================================================
+
+export function getGameMode() {
+    return gameMode;
+}
+
+
+// Handle UI change for switching between number and letter mode
+const numberModeCheckBox = document.getElementById("number-mode");
+const letterModeCheckBox = document.getElementById("letter-mode");
+
+numberModeCheckBox.addEventListener("change", function () {
+    if (this.checked) {
+        let elementList = document.querySelectorAll(".game-element");
+        for (let index = 0; index < elementList.length; index++) {
+            elementList[index].innerHTML = index + 1;
+        }
+    }
+});
+
+letterModeCheckBox.addEventListener("change", function () {
+    let charArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"]
+    if (this.checked) {
+        let elementList = document.querySelectorAll(".game-element");
+
+        for (let index = 0; index < elementList.length; index++) {
+            elementList[index].innerHTML = charArray[index];
+        }
+    }
+});

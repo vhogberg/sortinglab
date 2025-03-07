@@ -180,3 +180,12 @@ export const gameManager = {
         }
     }
 }
+
+export function parseValue(value) {
+    if (getGameMode() == "numbers") {
+        console.log("numbers");
+        return parseInt(value);
+    }else {
+        return value.textContent;
+    }
+}
