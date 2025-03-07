@@ -1,5 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-import { getDifficulty, handleGameOptions, isLivesEnabled } from "../game-options.js";
+import { getDifficulty, getGameMode, handleGameOptions, isLivesEnabled } from "../game-options.js";
 import { gameManager, isSorted, parseValue, showGameOverDialog } from "../game.js";
 import { getIncorrectMoves, increaseCorrectMoves, increaseIncorrectMoves, resetScore } from "../points.js";
 
@@ -57,7 +57,6 @@ function startGame() {
     getElementsByDifficulty();
     scrambleElements();
     gameLoop();
-    parseValue(123);
 }
 
 function enableButtons() {
@@ -89,8 +88,18 @@ function getElementsByDifficulty() {
 
 // Function to scramble the elements so they are unsorted
 function scrambleElements() {
-    for (const element of elementList) {
-        element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+    // for letter mode, the ASCII values for uppercase letters range from 65 to 90
+    const uppercaseAsciiStart = 65;
+    if (getGameMode() === "numbers") {
+        for (const element of elementList) {
+            element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+        }
+    }
+    else if (getGameMode() === "letters") {
+        for (const element of elementList) {
+            let letterIndex = Math.floor(Math.random() * 26);
+            element.innerHTML = String.fromCharCode(uppercaseAsciiStart + letterIndex);
+        }
     }
 }
 
@@ -151,8 +160,8 @@ function forceValidMove() {
 }
 
 function skip() {
-    let selectedValue = parseInt(selectedElement.textContent);
-    let element2Value = element2 ? parseInt(element2.textContent) : undefined;
+    let selectedValue = parseValue(selectedElement.textContent);
+    let element2Value = element2 ? parseValue(element2.textContent) : undefined;
 
     console.log("selectedvalue: " + selectedValue)
     console.log("element2Value: " + element2Value)
@@ -187,10 +196,10 @@ function skip() {
 // Swaps the SELECTED element with element to the left of selected element
 function swapElements() {
 
-    let selectedValue = parseInt(selectedElement.textContent);
+    let selectedValue = parseValue(selectedElement.textContent);
 
     // Check if element2 exists before accessing its textContent
-    let element2Value = element2 ? parseInt(element2.textContent) : undefined;
+    let element2Value = element2 ? parseValue(element2.textContent) : undefined;
 
     if (element2 === undefined) {
         moveExplanationText.textContent = "Wrong! You can't move this further to the left!";
@@ -238,7 +247,7 @@ function swapElements() {
     element2 = elementList[selectedElementIndex - 1];
 
     // If element2 is bigger
-    if (element2 !== undefined && parseInt(element2.textContent) > parseInt(selectedElement.textContent)) {
+    if (element2 !== undefined && parseValue(element2.textContent) > parseValue(selectedElement.textContent)) {
         allowedMoveMade = false;
     }
     getElementsByDifficulty();

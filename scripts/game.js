@@ -128,19 +128,36 @@ function resetElementValues() {
 
     let list = document.querySelectorAll(".game-element");
 
-    if (list.length > 15) {
-        let mergeSortList = document.querySelectorAll(".game-element-row-1");
-        for (let index = 0; index < mergeSortList.length; index++) {
-            mergeSortList[index].innerHTML = index + 1;
+    if (getGameMode() === "numbers") {
+        if (list.length > 15) {
+            let mergeSortList = document.querySelectorAll(".game-element-row-1");
+            for (let index = 0; index < mergeSortList.length; index++) {
+                mergeSortList[index].innerHTML = index + 1;
+            }
+            mergeSortList = null;
         }
-        mergeSortList = null;
+        else {
+            for (let index = 0; index < list.length; index++) {
+                list[index].innerHTML = index + 1;
+            }
+        }
     }
-    else {
-        for (let index = 0; index < list.length; index++) {
-            list[index].innerHTML = index + 1;
+    else if (getGameMode() === "letters") {
+        let charArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"];
+        if (list.length > 15) {
+            let mergeSortList = document.querySelectorAll(".game-element-row-1");
+            for (let index = 0; index < mergeSortList.length; index++) {
+                list[index].innerHTML = charArray[index];
+            }
+            mergeSortList = null;
         }
+        else {
+            for (let index = 0; index < list.length; index++) {
+                list[index].innerHTML = charArray[index];
+            }
+        }
+    }
 
-    }
     list = null;
 }
 
@@ -181,10 +198,9 @@ export const gameManager = {
 // Custom parse function for values and numbers
 export function parseValue(value) {
     if (getGameMode() == "numbers") {
-        console.log("numbers");
-        return parseInt(value.textContent);
+        return parseInt(value);
     } else {
         console.log("text");
-        return value.textContent;
+        return value;
     }
 }
