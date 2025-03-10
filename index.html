@@ -38,8 +38,9 @@
     <main>
 
         <div id="landing-description">
-            <h2>Sorting algorithms Made Fun! 🎮🧩</h2>
-            <p>Welcome to SortingLab, the interactive game that turns sorting algorithms into an exciting challenge!</p>
+            <h2>Sorting algorithms made fun! 🎮🧩</h2>
+            <p>Welcome to SortingLab, the interactive learning game that turns sorting algorithms into an exciting
+                challenge!</p>
             <p>Learn, play, and master sorting techniques from Bubble Sort to Merge Sort! All while competing against
                 time, earning points, and leveling up your skills.</p>
             <p>Pick a sorting algorithm below to jump in and start sorting! 🚀</p>
@@ -123,9 +124,22 @@
 
         </div>
 
-
-
-
+        <div id="code-snippet-container">
+            <h3>How it works in code</h3>
+            <div id="code-snippet-buttons">
+                <input type="radio" name="code-snippet-button" id="code-snippet-button-javascript">
+                <label for="code-snippet-button-javascript">JavaScript</label>
+                <input type="radio" name="code-snippet-button" id="code-snippet-button-python">
+                <label for="code-snippet-button-python">Python</label>
+                <input type="radio" name="code-snippet-button" id="code-snippet-button-java">
+                <label for="code-snippet-button-java">Java</label>
+                <input type="radio" name="code-snippet-button" id="code-snippet-button-cpp">
+                <label for="code-snippet-button-cpp">C++</label>
+            </div>
+            <div id="code-snippet">
+                <pre id="code-snippet-display"></pre>
+            </div>
+        </div>
 
         </div>
 
@@ -135,7 +149,8 @@
 
     </footer>
 
-    <script src="scripts/base.js" type="module"></script>
+    <script src="scripts/base.js"></script>
+    <script src="scripts/code-snippets.js"></script>
 </body>
 
 </html>

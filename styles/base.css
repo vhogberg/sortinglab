@@ -21,6 +21,7 @@
     --color-button-2-border: #1f1f27;
 
     --color-element-background: #eceaf2;
+    --color-element-2-background: #c7c5cc;
 }
 
 /* Dark-mode */
@@ -39,6 +40,7 @@
     --color-button-2-border: #b3b2b9;
 
     --color-element-background: #272430;
+    --color-element-2-background: #37333f;
 }
 
 * {
@@ -133,13 +135,22 @@ footer {
     margin-top: 3rem;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
+.hidden {
+    display: none;
 }
 
 
 
+ul {
+    list-style-type: none;
+    padding: 0;
+}
 
 /* SORTING THEORY */
 #hide-theory-container {
@@ -154,13 +165,29 @@ ul {
     margin-bottom: auto;
 }
 
-.disabled {
-    pointer-events: none;
-    cursor: default;
+#theory-view {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: left;
+    gap: 3.5rem;
 }
 
-.hidden {
-    display: none;
+/* sets divs inside theory view to have the same widths and heights*/
+#theory-view>div {
+    flex: 1;
+}
+
+#try-it-yourself-text {
+    text-align: center;
+}
+
+#game-options-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: left;
+    gap: 3.5rem;
 }
 
 /*  MENUS */
@@ -185,16 +212,6 @@ ul {
     width: 100%;
     border-radius: 20px;
 }
-
-/*
-Logo colors: 
-#ED6571 (red)
-#F69489(lighter red)
-#FFD086 (yellow)
-#4E9BB9 (dark blue)
-##91CBD7(light blue)
-
-*/
 
 #bubble-sort-item {
     background-color: #91CBD7;
@@ -241,9 +258,73 @@ Logo colors:
 }
 
 .link-button:hover {
-    background-color: var(--);
-    transform: scale(1.02)
+    transform: scale(2);
 }
+
+
+
+
+
+/* Code snippets */
+#code-snippet-container {
+    margin-top: 1rem;
+    width: 420px;
+    padding: 1rem;
+    background-color: var(--color-element-background);
+    border-radius: 8px;
+}
+
+#code-snippet {
+    padding-left: 0.4rem;
+    border-radius: 8px;
+    background-color: var(--color-background);
+}
+
+/* Hide the default radio buttons */
+#code-snippet-container input[type="radio"] {
+    display: none;
+}
+
+#code-snippet-container input[type="radio"]:checked+label {
+    background-color: var(--color-button-background);
+    color: var(--color-button-text);
+}
+
+#code-snippet-buttons {
+    display: flex;
+    margin-top: 0;
+    margin-bottom: -0.5rem;
+
+}
+
+#code-snippet-buttons label {
+    flex: 1;
+    text-align: center;
+    padding: 0.6rem 1.23rem;
+    background-color: var(--color-element-2-background);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#code-snippet-buttons label:hover,
+label:focus {
+    background-color: var(--color-button-background);
+    color: var(--color-button-text);
+}
+
+#code-snippet-display {
+    margin: 0;
+}
+
+
+
+/*  For smaller screens */
+@media screen and (max-width: 420px) {
+    #code-snipper-container {
+        width: fit-content;
+    }
+}
+
 
 /*  For smaller screens */
 @media screen and (max-width: 600px) {
@@ -257,6 +338,3 @@ Logo colors:
     }
 }
 
-#play-explanation-list {
-    list-style-type: none;
-}

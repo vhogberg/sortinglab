@@ -32,78 +32,102 @@
     </header>
     <main>
         <h2>Bubble sort</h2>
-
         <section id="theory-view">
-            <h3>How it works</h3>
-
-            <p>Bubble Sort works by repeatedly comparing and swapping adjacent elements if they are in the wrong order.
-                The largest elements "bubble up" to the end, just like bubbles rising in water!</p>
-            <ul>
-                <li>
-                    <p>🔹 Compare two elements → Swap if needed → Repeat until sorted.</p>
-                </li>
-                <li>
-                    <p>🔹 Best case: Already sorted? ✅ Only takes O(n) time!</p>
-                </li>
-                <li>
-                    <p>🔹 Worst case: Lots of swaps, runs in O(n²).</p>
-                </li>
-                <li>
-                    <p>🔹 Why learn it? It's simple and helps you understand swapping logic.</p>
-                </li>
-            </ul>
-            <p>👀 Think of it as: Sorting a deck of cards by repeatedly checking neighbors.</p>
-            <h3>How to play</h3>
-            <p><b>Goal: </b>Swap adjacent elements until the list is sorted.</p>
-            <p><b>Buttons: </b></p>
-            <ul>
-                <li>
-                    <p>Skip ⏭️ → Moves to the next pair without swapping.</p>
-                </li>
-                <li>
-                    <p>Swap 🔄 → Swaps the current two elements.</p>
-                </li>
-                <li>
-                    <p>Submit ✅ → Checks if the list is fully sorted.</p>
-                </li>
-            </ul>
-            <p>👀 Tip: Keep swapping until the largest elements "bubble up" to the end!</p>
-
-            <h3>Try it yourself below!</h3>
+            <div class="algorithm-description">
+                <h3>How it works</h3>
+                <p>Bubble Sort works by repeatedly comparing and swapping adjacent elements if they are in the wrong
+                    order.
+                    The largest elements "bubble up" to the end, just like bubbles rising in water!</p>
+                <ul>
+                    <li>
+                        <p>🔹 Compare two elements → Swap if needed → Repeat until sorted.</p>
+                    </li>
+                    <li>
+                        <p>🔹 Best case: Already sorted? ✅ Only takes O(n) time!</p>
+                    </li>
+                    <li>
+                        <p>🔹 Worst case: Lots of swaps, runs in O(n²).</p>
+                    </li>
+                    <li>
+                        <p>🔹 Why learn it? It's simple and helps you understand swapping logic.</p>
+                    </li>
+                </ul>
+                <p>👀 Think of it as: Sorting a deck of cards by repeatedly checking neighbors.</p>
+            </div>
+            <div class="game-description">
+                <h3>How it works in code</h3>
+                <div id="code-snippet-container">
+                    <div id="code-snippet-buttons">
+                        <input type="radio" name="code-snippet-button" id="code-snippet-button-javascript">
+                        <label for="code-snippet-button-javascript">JavaScript</label>
+                        <input type="radio" name="code-snippet-button" id="code-snippet-button-python">
+                        <label for="code-snippet-button-python">Python</label>
+                        <input type="radio" name="code-snippet-button" id="code-snippet-button-java">
+                        <label for="code-snippet-button-java">Java</label>
+                        <input type="radio" name="code-snippet-button" id="code-snippet-button-cpp">
+                        <label for="code-snippet-button-cpp">C++</label>
+                    </div>
+                    <div id="code-snippet">
+                        <pre id="code-snippet-display"></pre>
+                    </div>
+                </div>
+                
+            </div>
         </section>
+        <h3 id="try-it-yourself-text">Try it yourself below!</h3>
         <section id="game-view">
-
             <div id="game-options-container">
-                <h4>Options</h4>
-                <div id="game-preference-container">
-                    <p>Choose game preferences: </p>
-                    <input type="checkbox" name="game-preferences" id="lives-checkbox">
-                    <label for="lives-checkbox">Enable lives</label>
-                    <input type="checkbox" name="game-preferences" id="time-checkbox">
-                    <label for="time-checkbox">Enable time limit</label>
-                    <input type="checkbox" name="game-preferences" id="points-checkbox">
-                    <label for="points-checkbox">Disable points</label>
-                </div>
+                    <h4>Options</h4>
+                    <div id="game-preference-container">
+                        <p>Choose game preferences: </p>
+                        <input type="checkbox" name="game-preferences" id="lives-checkbox">
+                        <label for="lives-checkbox">Enable lives</label>
+                        <input type="checkbox" name="game-preferences" id="time-checkbox">
+                        <label for="time-checkbox">Enable time limit</label>
+                        <input type="checkbox" name="game-preferences" id="points-checkbox">
+                        <label for="points-checkbox">Disable points</label>
+                    </div>
 
-                <div id="game-mode-container">
-                    <p>Choose game mode: </p>
-                    <input type="radio" checked name="game-mode" id="number-mode">
-                    <label for="number-mode">Number-mode (123...)</label>
-                    <input type="radio" name="game-mode" id="letter-mode">
-                    <label for="letter-mode">Letter-mode (ABC...)</label>
-                </div>
+                    <div id="game-mode-container">
+                        <p>Choose game mode: </p>
+                        <input type="radio" checked name="game-mode" id="number-mode">
+                        <label for="number-mode">Number-mode (123...)</label>
+                        <input type="radio" name="game-mode" id="letter-mode">
+                        <label for="letter-mode">Letter-mode (ABC...)</label>
+                    </div>
 
 
-                <div id="game-difficulty-container">
-                    <p>Choose game difficulty: </p>
-                    <input type="radio" name="game-difficulty" id="easy-difficulty">
-                    <label for="easy-difficulty">Easy (5 elements)</label>
-                    <input type="radio" checked name="game-difficulty" id="normal-difficulty">
-                    <label for="normal-difficulty">Normal (10 elements)</label>
-                    <input type="radio" name="game-difficulty" id="hard-difficulty">
-                    <label for="hard-difficulty">Hard (15 elements)</label>
+                    <div id="game-difficulty-container">
+                        <p>Choose game difficulty: </p>
+                        <input type="radio" name="game-difficulty" id="easy-difficulty">
+                        <label for="easy-difficulty">Easy (5 elements)</label>
+                        <input type="radio" checked name="game-difficulty" id="normal-difficulty">
+                        <label for="normal-difficulty">Normal (10 elements)</label>
+                        <input type="radio" name="game-difficulty" id="hard-difficulty">
+                        <label for="hard-difficulty">Hard (15 elements)</label>
+                    </div>
+
+                <div class="game-description">
+                    <h3>How to play</h3>
+                    <p><b>Goal: </b>Swap adjacent elements until the list is sorted.</p>
+                    <p><b>Buttons: </b></p>
+                    <ul>
+                        <li>
+                            <p>Skip ⏭️ → Moves to the next pair without swapping.</p>
+                        </li>
+                        <li>
+                            <p>Swap 🔄 → Swaps the current two elements.</p>
+                        </li>
+                        <li>
+                            <p>Submit ✅ → Checks if the list is fully sorted.</p>
+                        </li>
+                    </ul>
+                    <p>👀 Tip: Keep swapping until the largest elements "bubble up" to the end!</p>
                 </div>
             </div>
+
+            
+
             <br>
 
             <div id="time-container">
@@ -113,6 +137,8 @@
                 <p>Lives:</p>
                 <p id="number-of-lives">❤️❤️❤️</p>
             </div>
+
+
 
             <button id="start-button"><span>Start</span></button>
 
@@ -160,6 +186,7 @@
 
     <script src="scripts/base.js"></script>
     <script src="scripts/algorithms/bubble-sort.js" type="module"></script>
+    <script src="scripts/code-snippets.js"></script>
 </body>
 
 </html>
