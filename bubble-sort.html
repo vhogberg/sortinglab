@@ -31,7 +31,7 @@
         </div>
     </header>
     <main>
-        <h2>Bubble sort</h2>
+        <h2 id="algorithm-title">Bubble sort</h2>
         <section id="theory-view">
             <div class="algorithm-description">
                 <h3>How it works</h3>
@@ -54,7 +54,7 @@
                 </ul>
                 <p>👀 Think of it as: Sorting a deck of cards by repeatedly checking neighbors.</p>
             </div>
-            <div class="game-description">
+            <div class="algorithm-description-code">
                 <h3>How it works in code</h3>
                 <div id="code-snippet-container">
                     <div id="code-snippet-buttons">
@@ -71,62 +71,86 @@
                         <pre id="code-snippet-display"></pre>
                     </div>
                 </div>
-                
             </div>
         </section>
-        <h3 id="try-it-yourself-text">Try it yourself below!</h3>
-        <section id="game-view">
-            <div id="game-options-container">
-                    <h4>Options</h4>
-                    <div id="game-preference-container">
-                        <p>Choose game preferences: </p>
-                        <input type="checkbox" name="game-preferences" id="lives-checkbox">
-                        <label for="lives-checkbox">Enable lives</label>
-                        <input type="checkbox" name="game-preferences" id="time-checkbox">
-                        <label for="time-checkbox">Enable time limit</label>
-                        <input type="checkbox" name="game-preferences" id="points-checkbox">
-                        <label for="points-checkbox">Disable points</label>
-                    </div>
 
-                    <div id="game-mode-container">
-                        <p>Choose game mode: </p>
-                        <input type="radio" checked name="game-mode" id="number-mode">
-                        <label for="number-mode">Number-mode (123...)</label>
-                        <input type="radio" name="game-mode" id="letter-mode">
-                        <label for="letter-mode">Letter-mode (ABC...)</label>
-                    </div>
-
-
-                    <div id="game-difficulty-container">
-                        <p>Choose game difficulty: </p>
-                        <input type="radio" name="game-difficulty" id="easy-difficulty">
-                        <label for="easy-difficulty">Easy (5 elements)</label>
-                        <input type="radio" checked name="game-difficulty" id="normal-difficulty">
-                        <label for="normal-difficulty">Normal (10 elements)</label>
-                        <input type="radio" name="game-difficulty" id="hard-difficulty">
-                        <label for="hard-difficulty">Hard (15 elements)</label>
-                    </div>
-
-                <div class="game-description">
-                    <h3>How to play</h3>
-                    <p><b>Goal: </b>Swap adjacent elements until the list is sorted.</p>
-                    <p><b>Buttons: </b></p>
-                    <ul>
-                        <li>
-                            <p>Skip ⏭️ → Moves to the next pair without swapping.</p>
-                        </li>
-                        <li>
-                            <p>Swap 🔄 → Swaps the current two elements.</p>
-                        </li>
-                        <li>
-                            <p>Submit ✅ → Checks if the list is fully sorted.</p>
-                        </li>
-                    </ul>
-                    <p>👀 Tip: Keep swapping until the largest elements "bubble up" to the end!</p>
+        <section id="game-options-and-instructions-container">
+            <div class="game-instruction">
+                <h3>How to play</h3>
+                <p><b>Goal: </b>Swap adjacent elements until the list is sorted.</p>
+                <p><b>Buttons: </b></p>
+                <ul>
+                    <li>
+                        <p>Skip ⏭️ → Moves to the next pair without swapping.</p>
+                    </li>
+                    <li>
+                        <p>Swap 🔄 → Swaps the current two elements.</p>
+                    </li>
+                    <li>
+                        <p>Submit ✅ → Checks if the list is fully sorted.</p>
+                    </li>
+                </ul>
+                <p>👀 Tip: Keep swapping until the largest elements "bubble up" to the end!</p>
+            </div>
+            <div class="game-options-container">
+                <h3>Game options</h3>
+                <p>Choose game preferences: </p>
+                <div id="game-preference-container" class="option-group">
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="lives-checkbox">
+                        <span class="checkmark"></span>
+                        Lives
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="time-checkbox">
+                        <span class="checkmark"></span>
+                        Time limit
+                    </label>
+                    <label class="custom-checkbox">
+                        <input type="checkbox" id="points-checkbox">
+                        <span class="checkmark"></span>
+                        Disable points
+                    </label>
                 </div>
+
+                <p>Choose game mode: </p>
+                <div id="game-mode-container" class="option-group">
+                    <label class="custom-radio">
+                        <input type="radio" name="game-mode" id="number-mode" checked>
+                        <span class="radiomark"></span>
+                        Number-mode (123...)
+                    </label>
+                    <label class="custom-radio">
+                        <input type="radio" name="game-mode" id="letter-mode">
+                        <span class="radiomark"></span>
+                        Letter-mode (ABC...)
+                    </label>
+                </div>
+
+                <p>Choose game difficulty (amount of elements): </p>
+                <div id="game-difficulty-container" class="option-group">
+                    <label class="custom-radio">
+                        <input type="radio" name="game-difficulty" id="easy-difficulty">
+                        <span class="radiomark"></span>
+                        Easy
+                    </label>
+                    <label class="custom-radio">
+                        <input type="radio" name="game-difficulty" id="normal-difficulty" checked>
+                        <span class="radiomark"></span>
+                        Normal
+                    </label>
+                    <label class="custom-radio">
+                        <input type="radio" name="game-difficulty" id="hard-difficulty">
+                        <span class="radiomark"></span>
+                        Hard
+                    </label>
+                </div>
+
             </div>
 
-            
+        </section>
+
+        <section id="game-view">
 
             <br>
 
