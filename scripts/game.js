@@ -163,7 +163,7 @@ function resetElementValues() {
 
 // show theory view + game options after game is over. disable game control buttons (until game is started)
 function handleHidingElements() {
-    document.getElementById("game-options-container").classList.remove("hidden");
+    document.getElementById("about-algorithm-container").classList.remove("hidden");
 
     // These two are added here even if they should be unhidden by the statement below
     // because merge sort needs it since it has custom options
