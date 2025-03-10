@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Viktor Högberg, Léo Tuomenoksa Texier">
+    <meta name="description"
+        content="A tool to help computer science students learn how sorting algorithms work practically 📶">
+    <meta name="generator" content="Visual Studio Code">
+    <meta name="keywords" content="Sorting algorithms, Learning, Game, Computer science">
+    <title>SortingLab - About</title>
+
+    <!-- Update numbers for caching err -->
+    <link rel="stylesheet" href="styles/base.css?rnd=12345">
+
+</head>
+
+<body>
+    <header>
+        <div id="header-container">
+            <div id="logo-container">
+                <h1>Sorting<span id="logo-span">Lab</span></h1>
+                <img src="assets/icons/neural.png" alt="" id="logo">
+            </div>
+            <div id="header-button-container">
+                <button><span>About</span></button>
+                <button id="theme-toggle-button"><span>Theme</span></button>
+                <input type="checkbox" name="sound-preference" id="sound-checkbox">
+                <label for="sound-checkbox">Audio</label>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h2>About SortingLab 🎮🔢</h2>
+        <p>Welcome to SortingLab, a game-based learning experience designed for computer science students who want to
+            master sorting algorithms in a fun and interactive way!</p>
+
+        <h3>What is a Sorting Algorithm?</h3>
+        <p>A sorting algorithm is a method used to arrange elements (like numbers or letters) into a specific order,
+            typically ascending or descending. Different sorting algorithms have unique strategies for organizing data
+            efficiently.</p>
+        <p>Sorting is a fundamental concept in computer science and is widely used in databases, search engines, and
+            even video games!</p>
+        <p>To describe the "speed" of an algorithm, we use something called Big O notation. Big O notation classifies
+            algorithms based on how their execution time changes with the input size, "n". For example, an algorithm
+            that runs in direct proportion to its input size is classified as O(n). Other algorithms can have different
+            execution times, such as:</p>
+        <ul>
+            <li>
+                <p>🔹 O(n²) = Grows rapidly as input increases, quickly becoming slower with larger datasets.</p>
+            </li>
+            <li>
+                <p>🔹 O(n log n) = Grows moderately as input increases, balancing efficiency and performance. The
+                    algorithm
+                    divides the problem into smaller parts (log n) and processes each part in linear fashion (n).</p>
+            </li>
+        </ul>
+
+        <h3>How to play</h3>
+        <ul>
+            <li>
+                <p>1️⃣ Select a sorting algorithm from the main menu.</p>
+            </li>
+            <li>
+                <p>2️⃣ Each game presents a list of unsorted elements that must be arranged according to the chosen
+                    algorithm.
+                </p>
+            </li>
+            <li>
+                <p>3️⃣ Use the provided buttons to apply the sorting technique step by step.</p>
+            </li>
+            <li>
+                <p>4️⃣ Press Submit ✅ when you think the list is correctly sorted.</p>
+            </li>
+        </ul>
+
+        <h3>Game Settings & Options 🎛️</h3>
+        <p><b>🔊 Audio Effects</b></p>
+        <p>
+            You can enable or disable sound effects at the top.
+        </p>
+        <p><b>⚙️ Game Modes & Options</b></p>
+        <p>Lives ❤️ → You start with three lives. Making a mistake costs a life!</p>
+        <p>Time Limit ⏳ → Try to finish sorting before time runs out!</p>
+        <p>Points ⭐ → Earn points based on speed and accuracy.</p>
+        <p>Number Mode 🔢 → Sort a list of numbers.</p>
+        <p>Letter Mode 🔡 → Sort a list of letters instead.</p>
+        <p>Game Difficulty 🎯:</p>
+        <p>Easy 🟢 → Sort 5 elements.</p>
+        <p>Normal 🟡 → Sort 10 elements.</p>
+        <p>Hard 🔴 → Sort 15 elements.</p>
+        <br>
+
+        <a href="index.html" class="link-button">Back to menu</a>
+
+    </main>
+
+    <footer>
+        <h3>Attributions:</h3>
+        <a href="https://www.flaticon.com/free-icons/machine-learning" title="machine learning icons">Icon from
+            Flaticon</a><br>
+        <a href="https://pixabay.com/sound-effects/tada-234709/" title="tada sound effect">Tada sound effect from
+            Pixabay</a><br>
+        <a href="https://pixabay.com/sound-effects/fail-234710/ " title="fail sound effect">Fail sound effect from
+            Pixabay</a><br>
+        <a href="https://pixabay.com/sound-effects/clock-ticking-sound-effect-240503/"
+            title="ticking sound effect">Ticking sound effect from
+            Pixabay</a><br>
+        <a href="https://pixabay.com/sound-effects/error-10-206498/ " title="error sound effect">Error sound effect from
+            Pixabay</a>
+    </footer>
+
+    <script src="scripts/base.js"></script>
+</body>
+
+</html>

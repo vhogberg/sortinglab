@@ -60,12 +60,14 @@ function updateMutedCheckbox() {
     soundCheckbox.checked = !isMuted;
 }
 
+// set a cookie with a name, value (true or false) and days it should be for
 function setCookie(name, value, days) {
     const expires = new Date();
-    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000)); // multiply to date format
     document.cookie = name + "=" + value + "; expires=" + expires.toUTCString() + ";path=/";
 }
 
+// get a cookie by its name
 function getCookie(name) {
     let cookieName = name + "=";
     let decodedCookie = decodeURIComponent(document.cookie);

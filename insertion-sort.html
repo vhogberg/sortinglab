@@ -35,14 +35,47 @@
         <h2>Insertion sort</h2>
 
         <section id="theory-view">
-            <div id="hide-theory-container">
-                <h3>How it works</h3>
-            </div>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos vero, quo voluptate ipsam aspernatur est
-                ea quis ut sunt exercitationem commodi rerum illum at? Repellat distinctio in quia architecto dicta.</p>
-            <h3>Video</h3>
-            <h2>Try it yourself</h2>
+            <!DOCTYPE html>
+            <html>
+
+            <body>
+                <h3>How it works</h3>
+                <p>Insertion Sort builds a sorted list one item at a time, like sorting playing cards in your hand! Each
+                    new card is placed in the correct position relative to the already sorted part.</p>
+                <ul>
+                    <li>
+                        <p>🔹 How it works: Take one element → Compare with sorted ones → Insert it in the right spot
+                            among the sorted elements → Repeat until sorted.</p>
+                    </li>
+                    <li>
+                        <p>🔹 Best case: Already sorted? ✅ Only takes O(n) time!</p>
+                    </li>
+                    <li>
+                        <p>🔹 Worst case: Needs to shift many elements, runs in O(n²).</p>
+                    </li>
+                    <li>
+                        <p>🔹 Why learn it? It's efficient for small lists and nearly sorted data.</p>
+                    </li>
+                </ul>
+                <p>👀 Think of it as: Organizing cards in a card game.</p>
+                <h3>How to play</h3>
+                <p><b>Goal: </b>Move each new element into the correct position.</p>
+                <p><b>Buttons: </b></p>
+                <ul>
+                    <li>
+                        <p>Skip ⏭️ → Moves to the next element in the list.</p>
+                    </li>
+                    <li>
+                        <p>Left ⬅️ → Moves the current element left one step at a time until it reaches its correct
+                            position.</p>
+                    </li>
+                    <li>
+                        <p>Submit ✅ → Checks if the list is fully sorted.</p>
+                    </li>
+                </ul>
+                <p>👀 Tip: Keep shifting left until the element is in its correct place!</p>
+                <h3>Try it yourself below!</h3>
         </section>
         <section id="game-view">
             <div id="game-options-container">
@@ -129,7 +162,7 @@
 
     </footer>
 
-    <script src="scripts/base.js" type="module"></script>
+    <script src="scripts/base.js"></script>
     <script src="scripts/algorithms/insertion-sort.js" type="module"></script>
 
 </body>

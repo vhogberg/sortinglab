@@ -36,14 +36,42 @@
         <h2>Merge sort</h2>
 
         <section id="theory-view">
-            <div id="hide-theory-container">
-                <h3>How it works</h3>
-            </div>
+            <!DOCTYPE html>
+            <html>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos vero, quo voluptate ipsam aspernatur est
-                ea quis ut sunt exercitationem commodi rerum illum at? Repellat distinctio in quia architecto dicta.</p>
-            <h3>Video</h3>
-            <h2>Try it yourself</h2>
+            <body>
+                <h3>How it works</h3>
+                <p>Merge Sort <b>divides the list into smaller parts</b>, sorts them, and then merges them back
+                    together. It's a powerful "divide and conquer" strategy!</p>
+                <ul>
+                    <li>
+                        <p>🔹 How it works: Split into halves → Sort each half → Merge them back in order.</p>
+                    </li>
+                    <li>
+                        <p>🔹 Best & worst case: Always runs in <b>O(n log n)</b> (much faster than O(n²)!).</p>
+                    </li>
+                    <li>
+                        <p>🔹 Why learn it? It's one of the most efficient sorting algorithms for large datasets.</p>
+                    </li>
+                </ul>
+                <p>👀 Think of it as: Splitting a puzzle into smaller pieces, solving them, then putting it back
+                    together.</p>
+                <h3>How to play</h3>
+                <p><b>Goal: </b>Merge sorted halves by picking the smallest element from either side.</p>
+                <p><b>Buttons: </b></p>
+                <ul>
+                    <li>
+                        <p>Left ⬅️ → Selects the smallest element from the left group.</p>
+                    </li>
+                    <li>
+                        <p>Right ➡️ → Selects the smallest element from the right group.</p>
+                    </li>
+                    <li>
+                        <p>Submit ✅ → Checks if all elements were merged correctly.</p>
+                    </li>
+                </ul>
+                <p>👀 Tip: Always pick the <b>smallest</b> available element when merging!</p>
+                <h3>Try it yourself below!</h3>
         </section>
         <section id="game-view">
             <div id="game-options-container">
@@ -186,7 +214,7 @@
 
     </footer>
 
-    <script src="scripts/base.js" type="module"></script>
+    <script src="scripts/base.js"></script>
     <script src="scripts/algorithms/merge-sort.js" type="module"></script>
 </body>
 

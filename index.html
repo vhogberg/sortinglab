@@ -25,10 +25,10 @@
                 <h1>Sorting<span id="logo-span">Lab</span></h1>
                 <img src="assets/icons/neural.png" alt="" id="logo">
             </div>
-            
+
             <div id="header-button-container">
-                <button><span>About</span></button>
-                <button id="theme-toggle-button"><span>Theme</span></button>
+                <a href="about.html" class="top-bar-button">About</a>
+                <button class="top-bar-button" id="theme-toggle-button"><span>Theme</span></button>
                 <input type="checkbox" name="sound-preference" id="sound-checkbox">
                 <label for="sound-preference">Audio</label>
             </div>
@@ -37,20 +37,102 @@
 
     <main>
 
-        <h2>Choose a sorting algorithm to learn below!</h2>
+        <div id="landing-description">
+            <h2>Sorting algorithms Made Fun! 🎮🧩</h2>
+            <p>Welcome to SortingLab, the interactive game that turns sorting algorithms into an exciting challenge!</p>
+            <p>Learn, play, and master sorting techniques from Bubble Sort to Merge Sort! All while competing against
+                time, earning points, and leveling up your skills.</p>
+            <p>Pick a sorting algorithm below to jump in and start sorting! 🚀</p>
+        </div>
 
-        <div id="menu-button-container">
-            <a href="bubble-sort.html" class="link-button">Bubble Sort</a>
-            <a href="insertion-sort.html" class="link-button">Insertion Sort</a>
-            <a href="selection-sort.html" class="link-button">Selection Sort</a>
-            <a href="merge-sort.html" class="link-button">Merge Sort</a>
-            <a href="sandbox-sort.html" class="link-button">Sandbox Sort</a>
+        <div id="menu-select-container">
+            <div class="menu-select-item" id="bubble-sort-item">
+                <div class="algorithm-title">
+                    <h2>Bubble Sort 🫧</h2>
+                    <p>Bubble Sort works by repeatedly comparing and swapping adjacent elements if they are in the wrong
+                        order.
+                        The largest elements "bubble up" to the end, just like bubbles rising in water!</p>
+                    <br>
+                    <a href="bubble-sort.html" class="link-button">Try it yourself</a>
+                </div>
+                <div class="algorithm-example">
+                    <img src="assets/images/500x500-dummy-image.jpg" alt="Bubble Sort Example"
+                        class="algorithm-example-gif">
+                </div>
+            </div>
+
+            <div class="menu-select-item" id="insertion-sort-item">
+                <div class="algorithm-title">
+                    <h2>Insertion Sort 🃏</h2>
+                    <p>Insertion Sort builds the sorted list one element at a time by taking an element and inserting it
+                        into its
+                        correct position, shifting larger elements to the right as needed.</p>
+                    <br>
+                    <a href="insertion-sort.html" class="link-button">Try it yourself</a>
+                </div>
+                <div class="algorithm-example">
+                    <img src="assets/images/500x500-dummy-image.jpg" alt="Insertion Sort Example"
+                        class="algorithm-example-gif">
+                </div>
+            </div>
+
+            <div class="menu-select-item" id="selection-sort-item">
+                <div class="algorithm-title">
+                    <h2>Selection Sort 🎯</h2>
+                    <p>Selection Sort repeatedly finds the smallest element from the unsorted part and moves it to the
+                        sorted part.
+                        It works by selecting the smallest item and swapping it into place.</p>
+                    <br>
+                    <a href="selection-sort.html" class="link-button">Try it yourself</a>
+                </div>
+                <div class="algorithm-example">
+                    <img src="assets/images/500x500-dummy-image.jpg" alt="Selection Sort Example"
+                        class="algorithm-example-gif">
+                </div>
+            </div>
+
+            <div class="menu-select-item" id="merge-sort-item">
+                <div class="algorithm-title">
+                    <h2>Merge Sort ✂️</h2>
+                    <p>Merge Sort is a divide-and-conquer algorithm that splits the array into halves, sorts each half
+                        recursively,
+                        and then merges the sorted halves back together.</p>
+                    <br>
+                    <a href="merge-sort.html" class="link-button">Try it yourself</a>
+                </div>
+                <div class="algorithm-example">
+                    <img src="assets/images/500x500-dummy-image.jpg" alt="Merge Sort Example"
+                        class="algorithm-example-gif">
+                </div>
+            </div>
+
+            <div class="menu-select-item" id="sandbox-sort-item">
+                <div class="algorithm-title">
+                    <h2>Sandbox Sort 🏖️</h2>
+                    <p>Here you can drag and drop elements as you wish, without needing to follow any specific
+                        algorithm. Practise sorting in your own way!</p>
+                    <br>
+                    <a href="sandbox-sort.html" class="link-button">Try it yourself</a>
+                </div>
+                <div class="algorithm-example">
+                    <img src="assets/images/500x500-dummy-image.jpg" alt="Merge Sort Example"
+                        class="algorithm-example-gif">
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+
         </div>
 
     </main>
 
     <footer>
-        <a href="https://www.flaticon.com/free-icons/machine-learning" title="machine learning icons">Icon from Flaticon</a>
+
     </footer>
 
     <script src="scripts/base.js" type="module"></script>
