@@ -57,28 +57,28 @@
 }
 
 #game-element-container {
-    display: grid;
-    /* 10 columns, 1 item per column*/
-    grid-template-columns: repeat(15, 1fr);
-    gap: 0.5rem;
-
-    margin: 2rem 0 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+    width: 100%;
 }
 
 .game-element {
     padding: 1rem;
-    margin: 0.2rem;
-    background-color: var(--color-element-background);
-
-    border-radius: 8px;
-    width: 20px;
-    height: 20px;
     text-align: center;
+    border-radius: 8px;
+    background-color: var(--color-element-background);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
-    cursor: grab;
+    min-width: 1rem;
+    min-height: 1rem;
 }
 
 .game-element:hover {
+    transform: translateY(-2px);
     background-color: var(--color-element-background-hover);
 }
 
@@ -91,5 +91,5 @@
 }
 
 #game-over-dialog {
-    background-color: thistle;
+    background-color: rgb(211, 193, 211);
 }
