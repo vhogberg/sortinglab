@@ -140,10 +140,27 @@ button {
     border-color: var(--color-button-2-border);
 
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    /*TODO */
 }
 
 button span {
     color: var(--color-button-2-text);
+}
+
+#start-button {
+    background-color: var(--color-logo-text);
+    border-color: #e09010;
+    font-size: 1.1rem;
+    padding: 0.7rem 2rem;
+}
+
+#start-button span {
+    color: var(--color-text);
+    font-weight: bold;
 }
 
 .link-button {
@@ -294,7 +311,8 @@ button span {
 
 #code-snippet-buttons {
     display: flex;
-    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    flex-wrap: wrap;
+    /* Allow buttons to wrap on smaller screens */
     margin-top: 0;
     margin-bottom: -0.5rem;
 
@@ -343,7 +361,8 @@ label:focus {
     cursor: pointer;
     font-size: 1rem;
     padding: 6px 0;
-    white-space: nowrap; /* Dont wrap text (makes the radio buttons flex weirldy) */
+    white-space: nowrap;
+    /* Dont wrap text (makes the radio buttons flex weirldy) */
 }
 
 /* Hide default input */
@@ -433,13 +452,16 @@ label:focus {
     #theory-view {
         display: block;
     }
+
     .algorithm-description-code {
         margin-top: 1rem;
-        
+
     }
+
     #game-options-and-instructions-container {
         display: block;
     }
+
     .game-options-container {
         margin-top: 1rem;
     }
@@ -463,7 +485,8 @@ label:focus {
     }
 
     #code-snippet {
-        font-size: 0.85rem; /* Code snippet label font size (i.e java, c++ etc.) */
+        font-size: 0.85rem;
+        /* Code snippet label font size (i.e java, c++ etc.) */
     }
 
 }
