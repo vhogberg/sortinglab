@@ -14,6 +14,7 @@ gameOverSuccessSound.volume = 0.15;
 gameOverFailSound.volume = 0.03;
 tickingSound.volume = 0.05;
 
+
 // play functions
 export function playErrorSound() {
     if (!isMuted) {
@@ -59,6 +60,8 @@ soundCheckbox.addEventListener("change", function() {
 function updateMutedCheckbox() {
     soundCheckbox.checked = !isMuted;
 }
+
+updateMutedCheckbox();
 
 // set a cookie with a name, value (true or false) and days it should be for
 function setCookie(name, value, days) {

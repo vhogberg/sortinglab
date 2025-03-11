@@ -22,7 +22,7 @@
                 <h1>Sorting<span id="logo-span">Lab</span></h1>
                 <img src="assets/icons/neural.png" alt="" id="logo">
             </div>
-            
+
             <div id="header-button-container">
                 <button id="theme-toggle-button" title="Toggle Theme"></button>
                 <div class="audio-toggle">
@@ -154,21 +154,21 @@
 
         </div>
 
+        <button id="start-button"><span>Start</span></button>
+
         <div id="game-view">
 
-            <br>
-
-            <div id="time-container">
-                <p id="countdown">0:60</p>
+            <div id="time-and-lives-container">
+                <div id="time-container">
+                    <p>Time:</p>
+                    <p id="countdown">0:60</p>
+                </div>
+                <div id="lives-container">
+                    <p>Lives:</p>
+                    <p id="number-of-lives">❤️❤️❤️</p>
+                </div>
             </div>
-            <div id="lives-container">
-                <p>Lives:</p>
-                <p id="number-of-lives">❤️❤️❤️</p>
-            </div>
 
-
-
-            <button id="start-button"><span>Start</span></button>
 
             <div id="game-element-container">
                 <div class="game-element game-element-easy"><span class="game-element-text">1</span></div>
@@ -190,20 +190,23 @@
 
 
             <div id="game-control-buttons-container">
-                <button id="skip-button"><span>Skip</span></button>
-                <button id="swap-button"><span>Swap</span></button>
-                <button id="submit-button"><span>Submit</span></button>
+                <div id="move-buttons-container">
+                    <button id="skip-button"><span>Skip ⏭️</span></button>
+                    <button id="swap-button"><span>Swap 🔄</span></button>
+                </div>
+                <button id="submit-button"><span>Submit ✅</span></button>
             </div>
             <p id="move-explanation"></p>
 
         </div>
 
         <dialog id="game-over-dialog">
-            <h4 id="game-over-title">Game over!</h4>
+            <p id="game-over-title">Game over!</p>
             <p id="game-over-points"></p>
-            <p>Try again with the button below or return to the menu</p>
-            <button id="try-again-button">Try again</button>
-            <button id="return-home-button">Return home</button>
+            <div id="game-over-buttons">
+                <button id="try-again-button">Try again</button>
+                <button id="return-home-button">Return home</button>
+            </div>
         </dialog>
 
     </main>

@@ -11,6 +11,8 @@
     --color-background: #f8f8fc;
     --color-text: #2c2b38;
     --color-logo-text: #ffac26;
+    --color-error-dialog-background: #F69489;
+    --color-error-dialog-border: #ff2626;
 
     --color-button-text: #ffffff;
     --color-button-background: #5e5479;
@@ -29,6 +31,7 @@
     --color-element-sorted: #77ad77;
     --color-element-sorted-hover: #6d9e6d;
 
+    --color-countdown-warning: rgb(85, 11, 11);
 }
 
 /* Dark-mode */
@@ -37,6 +40,8 @@
     --color-background: #18161f;
     --color-text: #e4e3e9;
     --color-logo-text: #ffb641;
+    --color-error-dialog-background: #b05c55;
+    --color-error-dialog-border: #ff4141;
 
     --color-button-text: #ffffff;
     --color-button-background: #6e658c;
@@ -54,6 +59,85 @@
     --color-element-smallest: #8d85ac;
     --color-element-sorted: #5d885d;
     --color-element-sorted-hover: #679667;
+
+    --color-countdown-warning: rgb(214, 18, 18);
+}
+
+/* game view contains game elements, lives, timelimit and control buttons */
+#game-view {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: fit-content;
+}
+
+#game-control-buttons-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#game-control-buttons-container button{
+    background-color: var(--color-button-background);
+    border-color: var(--color-button-border);
+}
+
+#game-control-buttons-container span{
+    color: var(--color-button-text);
+    margin-top: -10px;
+}
+
+
+#time-and-lives-container {
+    display: flex;
+    gap: 1rem;
+}
+
+#time-container, #lives-container {
+    background-color: var(--color-element-background);
+    border-radius: 12px;
+    padding: 0.6rem 1.2rem;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    min-width: 4rem;
+    width: fit-content;
+}
+
+#lives-container p, #time-container p {
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 0;
+}
+
+#number-of-lives, #countdown {
+    font-size: 1.6rem !important;
+    margin: 0.3rem 0 !important;
+}
+
+/* warning class for countdown */
+#countdown.warning {
+    color: var(--color-countdown-warning);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+/* losing life animation */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.2); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+#number-of-lives.losing-life {
+    animation: heartbeat 0.6s ease-in-out;
 }
 
 #game-element-container {
@@ -92,5 +176,39 @@
 }
 
 #game-over-dialog {
-    background-color: rgb(211, 193, 211);
+    background-color: var(--color-element-background);
+    width: calc(40%);
+    text-align: center;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(186,92,85,1) 0%, rgba(246,128,117,1) 100%); 
+    box-shadow: 0px 3px 6px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    border-width: 0rem;
+}
+
+@media (max-width: 500px) {
+    #game-over-dialog {
+        width: calc(100% - 4rem);
+    }
+}
+
+#game-over-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+#game-over-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    margin: 0 1.5rem 0;
+}
+
+#try-again-button, #return-home-button {
+    transition: transform 0.2s ease-in-out;
+
+}
+
+#try-again-button:hover, #return-home-button:hover {
+    transform: scale(1.25);
 }

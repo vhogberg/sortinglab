@@ -79,7 +79,7 @@ h3 {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 
@@ -133,6 +133,7 @@ header {
     width: 2.2rem;
     height: 2.2rem;
     background-color: var(--color-button-background);
+    border-color: var(--color-button-border);
     border-radius: 50%;
     font-size: 1.1rem;
     cursor: pointer;
@@ -229,15 +230,14 @@ header {
     }
 }
 
-
 button {
-    padding: 0.5rem;
+    padding: 0.5rem 0.7rem;
     background-color: var(--color-button-2-background);
     color: var(--color-button-2-text);
 
     border: solid;
     border-width: 1px;
-    border-radius: 8px;
+    border-radius: 12px;
     border-color: var(--color-button-2-border);
 
     cursor: pointer;
@@ -443,6 +443,7 @@ label:focus {
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .game-options-container {

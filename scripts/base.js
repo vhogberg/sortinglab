@@ -1,9 +1,11 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
 window.onload = initialise;
 
+//TODO fix because you can't use light mode if you have dark mode set in broswer
+
 //runs at the start of every document load and checks if dark mode and sound has been set by the user
 //and activates toggles them if they have been set
-function initialise() {
+function initialise() { //TODO improve dark mode implementation
     if (localStorage.getItem('theme') == "dark") {
         document.documentElement.classList.add("dark-mode");
         //no need to keep going since dark mode has already been set

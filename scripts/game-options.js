@@ -116,14 +116,30 @@ function handleGameDifficulty() {
 export function handleLives() {
     const numberOfLives = document.getElementById("number-of-lives");
 
+
     if (getIncorrectMoves() == 1) {
         numberOfLives.textContent = "❤️❤️💔";
+        // add animation class then remove after animation is done
+        numberOfLives.classList.add("losing-life");
+        setTimeout(() => {
+            numberOfLives.classList.remove('losing-life');
+        }, 600);
     }
     else if (getIncorrectMoves() == 2) {
         numberOfLives.textContent = "❤️💔💔";
+        // add animation class then remove after animation is done
+        numberOfLives.classList.add("losing-life");
+        setTimeout(() => {
+            numberOfLives.classList.remove('losing-life');
+        }, 600);
     }
     else if (getIncorrectMoves() == 3) {
         numberOfLives.textContent = "💔💔💔";
+        // add animation class then remove after animation is done
+        numberOfLives.classList.add("losing-life");
+        setTimeout(() => {
+            numberOfLives.classList.remove('losing-life');
+        }, 600);
         showGameOverDialog();
     }
     else {
@@ -164,6 +180,7 @@ export function handleTime() {
             currentTime.textContent = "0:" + startTime;
         }
         else if (startTime <= 9) {
+            currentTime.classList.add("warning");
             currentTime.textContent = "0:0" + startTime;
         }
         // Start counting down at 9 seconds so user panics
@@ -175,7 +192,7 @@ export function handleTime() {
             clearInterval(interval);
             timeIsUp();
         }
-    }, 100)
+    }, 1000)
 }
 
 // if time is up, call gameover via generalised gamemanager
@@ -191,6 +208,7 @@ export function didTimeRunOut() {
 
 // export function for resetting time
 export function resetCountdown() {
+    document.getElementById("countdown").classList.remove("warning");
     clearInterval(interval);
 }
 
