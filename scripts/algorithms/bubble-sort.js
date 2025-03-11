@@ -9,7 +9,7 @@ const skipButton = document.getElementById("skip-button");
 
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
-const optionsContainer = document.getElementById("about-algorithm-container");  // TODO fix from options container to this for other algorithms
+const aboutAlgorithmContainer = document.getElementById("about-algorithm-container");  // TODO fix from options container to this for other algorithms
 
 submitButton.addEventListener("click", checkIfSorted);
 startButton.addEventListener("click", startGame);
@@ -61,7 +61,7 @@ function enableButtons() {
 
 function hideTheory() {
     theoryView.classList.add("hidden");
-    optionsContainer.classList.add("hidden");
+    aboutAlgorithmContainer.classList.add("hidden");
 }
 
 //gets elements according to the difficulty setting, by checking only importing elements associated with checked difficulty
@@ -86,13 +86,13 @@ function scrambleElements() {
     const uppercaseAsciiStart = 65;
     if (getGameMode() === "numbers") {
         for (const element of elementList) {
-            element.innerHTML = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
+            element.textContent = Math.floor(Math.random() * 11); // change this value to 10 or increase to 1000 to change how big the numbers are that should be sorted
         }
     }
     else if (getGameMode() === "letters") {
         for (const element of elementList) {
             let letterIndex = Math.floor(Math.random() * 26);
-            element.innerHTML = String.fromCharCode(uppercaseAsciiStart + letterIndex);
+            element.textContent = String.fromCharCode(uppercaseAsciiStart + letterIndex);
         }
     }
 }

@@ -35,94 +35,142 @@
         </div>
     </header>
     <main>
-        <h2>Insertion sort</h2>
+        <h2 id="algorithm-title">Insertion sort</h2>
+        <div id="about-algorithm-container">
+            <section id="theory-view">
+                <div class="algorithm-description">
+                    <h3>How it works</h3>
+                    <p>Insertion Sort builds a sorted list one item at a time, like sorting playing cards in your hand! Each
+                        new card is placed in the correct position relative to the already sorted part.</p>
+                    <ul>
+                        <li>
+                            <p>🔹 Take one element → Compare with sorted ones → Insert it in the right spot
+                                among the sorted elements → Repeat until sorted.</p>
+                        </li>
+                        <li>
+                            <p>🔹 Best case: Already sorted? ✅ Only takes O(n) time!</p>
+                        </li>
+                        <li>
+                            <p>🔹 Worst case: Needs to shift many elements, runs in O(n²).</p>
+                        </li>
+                        <li>
+                            <p>🔹 Why learn it? It's efficient for small lists and nearly sorted data.</p>
+                        </li>
+                    </ul>
+                    <p>👀 Think of it as: Organizing cards in a card game.</p>
+                </div>
+                <div class="algorithm-description-code">
+                    <h3>How it works in code</h3>
+                    <div id="code-snippet-container">
+                        <div id="code-snippet-buttons">
+                            <input type="radio" name="code-snippet-button" id="code-snippet-button-javascript">
+                            <label for="code-snippet-button-javascript">JavaScript</label>
+                            <input type="radio" name="code-snippet-button" id="code-snippet-button-python">
+                            <label for="code-snippet-button-python">Python</label>
+                            <input type="radio" name="code-snippet-button" id="code-snippet-button-java">
+                            <label for="code-snippet-button-java">Java</label>
+                            <input type="radio" name="code-snippet-button" id="code-snippet-button-cpp">
+                            <label for="code-snippet-button-cpp">C++</label>
+                        </div>
+                        <div id="code-snippet">
+                            <pre id="code-snippet-display"></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <section id="theory-view">
-
-            <!DOCTYPE html>
-            <html>
-
-            <body>
-                <h3>How it works</h3>
-                <p>Insertion Sort builds a sorted list one item at a time, like sorting playing cards in your hand! Each
-                    new card is placed in the correct position relative to the already sorted part.</p>
-                <ul>
-                    <li>
-                        <p>🔹 How it works: Take one element → Compare with sorted ones → Insert it in the right spot
-                            among the sorted elements → Repeat until sorted.</p>
-                    </li>
-                    <li>
-                        <p>🔹 Best case: Already sorted? ✅ Only takes O(n) time!</p>
-                    </li>
-                    <li>
-                        <p>🔹 Worst case: Needs to shift many elements, runs in O(n²).</p>
-                    </li>
-                    <li>
-                        <p>🔹 Why learn it? It's efficient for small lists and nearly sorted data.</p>
-                    </li>
-                </ul>
-                <p>👀 Think of it as: Organizing cards in a card game.</p>
-                <h3>How to play</h3>
-                <p><b>Goal: </b>Move each new element into the correct position.</p>
-                <p><b>Buttons: </b></p>
-                <ul>
-                    <li>
-                        <p>Skip ⏭️ → Moves to the next element in the list.</p>
-                    </li>
-                    <li>
-                        <p>Left ⬅️ → Moves the current element left one step at a time until it reaches its correct
-                            position.</p>
-                    </li>
-                    <li>
-                        <p>Submit ✅ → Checks if the list is fully sorted.</p>
-                    </li>
-                </ul>
-                <p>👀 Tip: Keep shifting left until the element is in its correct place!</p>
-                <h3>Try it yourself below!</h3>
-        </section>
-        <section id="game-view">
-            <div id="game-options-container">
-                <h4>Options</h4>
-                <div id="game-preference-container">
+            <section id="game-options-and-instructions-container">
+                <div class="game-instruction">
+                    <h3>How to play</h3>
+                    <p><b>Goal: </b>Move each new element into the correct position.</p>
+                    <p><b>Buttons: </b></p>
+                    <ul>
+                        <li>
+                            <p>Skip ⏭️ → Moves to the next element in the list.</p>
+                        </li>
+                        <li>
+                            <p>Left ⬅️ → Moves the current element left one step at a time until it reaches its correct
+                                position.</p>
+                        </li>
+                        <li>
+                            <p>Submit ✅ → Checks if the list is fully sorted.</p>
+                        </li>
+                    </ul>
+                    <p>👀 Tip: Keep shifting left until the element is in its correct place!</p>
+                </div>
+                <div class="game-options-container">
+                    <h3>Game options</h3>
                     <p>Choose game preferences: </p>
-                    <input type="checkbox" name="game-preferences" id="lives-checkbox">
-                    <label for="lives-checkbox">Enable lives</label>
-                    <input type="checkbox" name="game-preferences" id="time-checkbox">
-                    <label for="time-checkbox">Enable time limit</label>
-                    <input type="checkbox" name="game-preferences" id="points-checkbox">
-                    <label for="points-checkbox">Disable points</label>
-                </div>
+                    <div id="game-preference-container" class="option-group">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="lives-checkbox">
+                            <span class="checkmark"></span>
+                            Lives
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="time-checkbox">
+                            <span class="checkmark"></span>
+                            Time limit
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="points-checkbox">
+                            <span class="checkmark"></span>
+                            Disable points
+                        </label>
+                    </div>
 
-                <div id="game-mode-container">
                     <p>Choose game mode: </p>
-                    <input type="radio" checked name="game-mode" id="number-mode">
-                    <label for="number-mode">Number-mode (123...)</label>
-                    <input type="radio" name="game-mode" id="letter-mode">
-                    <label for="letter-mode">Letter-mode (ABC...)</label>
+                    <div id="game-mode-container" class="option-group">
+                        <label class="custom-radio">
+                            <input type="radio" name="game-mode" id="number-mode" checked>
+                            <span class="radiomark"></span>
+                            Number-mode (123...)
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="game-mode" id="letter-mode">
+                            <span class="radiomark"></span>
+                            Letter-mode (ABC...)
+                        </label>
+                    </div>
+
+                    <p>Choose game difficulty (amount of elements): </p>
+                    <div id="game-difficulty-container" class="option-group">
+                        <label class="custom-radio">
+                            <input type="radio" name="game-difficulty" id="easy-difficulty">
+                            <span class="radiomark"></span>
+                            Easy
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="game-difficulty" id="normal-difficulty" checked>
+                            <span class="radiomark"></span>
+                            Normal
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="game-difficulty" id="hard-difficulty">
+                            <span class="radiomark"></span>
+                            Hard
+                        </label>
+                    </div>
                 </div>
+            </section>
 
+        </div>
 
-                <div id="game-difficulty-container">
-                    <p>Choose game difficulty: </p>
-                    <input type="radio" name="game-difficulty" id="easy-difficulty">
-                    <label for="easy-difficulty">Easy (5 elements)</label>
-                    <input type="radio" checked name="game-difficulty" id="normal-difficulty">
-                    <label for="normal-difficulty">Normal (10 elements)</label>
-                    <input type="radio" name="game-difficulty" id="hard-difficulty">
-                    <label for="hard-difficulty">Hard (15 elements)</label>
+        <button id="start-button"><span>Start</span></button>
+
+        <div id="game-view">
+
+            <div id="time-and-lives-container">
+                <div id="time-container">
+                    <p>Time:</p>
+                    <p id="countdown">0:60</p>
+                </div>
+                <div id="lives-container">
+                    <p>Lives:</p>
+                    <p id="number-of-lives">❤️❤️❤️</p>
                 </div>
             </div>
-            <br>
 
-            <div id="time-container">
-                <p id="countdown">0:60</p>
-            </div>
-            <div id="lives-container">
-                <p>Lives:</p>
-                <p id="number-of-lives">❤️❤️❤️</p>
-            </div>
-
-            <button id="start-button"><span>Start</span></button>
 
             <div id="game-element-container">
                 <div class="game-element game-element-easy"><span class="game-element-text">1</span></div>
@@ -142,21 +190,25 @@
                 <div class="game-element game-element-hard"><span class="game-element-text">15</span></div>
             </div>
 
+
             <div id="game-control-buttons-container">
-                <button id="skip-button"><span>Skip</span></button>
-                <button id="left-button"><span>Left</span></button>
-                <button id="submit-button"><span>Submit</span></button>
+                <div id="move-buttons-container">
+                    <button id="skip-button"><span>Skip ⏭️</span></button>
+                    <button id="left-button"><span>Left ⬅️</span></button>
+                </div>
+                <button id="submit-button"><span>Submit ✅</span></button>
             </div>
             <p id="move-explanation"></p>
-
-        </section>
+        </div>
 
         <dialog id="game-over-dialog">
-            <h4 id="game-over-title">Game over!</h4>
+            <p id="game-over-title">Game over!</p>
+            <p id="game-over-lives-lost"></p>
             <p id="game-over-points"></p>
-            <p>Try again with the button below or return to the menu</p>
-            <button id="try-again-button">Try again</button>
-            <button id="return-home-button">Return home</button>
+            <div id="game-over-buttons">
+                <button id="try-again-button">Try again</button>
+                <button id="return-home-button">Return home</button>
+            </div>
         </dialog>
 
     </main>
@@ -167,6 +219,7 @@
 
     <script src="scripts/base.js"></script>
     <script src="scripts/algorithms/insertion-sort.js" type="module"></script>
+    <script src="scripts/code-snippets.js"></script>
 
 </body>
 

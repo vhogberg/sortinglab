@@ -140,6 +140,9 @@ export function handleLives() {
         setTimeout(() => {
             numberOfLives.classList.remove('losing-life');
         }, 600);
+        if (isTimeEnabled()) {
+            resetCountdown();
+        }
         showGameOverDialog();
     }
     else {
@@ -192,7 +195,7 @@ export function handleTime() {
             clearInterval(interval);
             timeIsUp();
         }
-    }, 1000)
+    }, 100)
 }
 
 // if time is up, call gameover via generalised gamemanager

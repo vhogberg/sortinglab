@@ -9,7 +9,7 @@ const rightButton = document.getElementById("right-button");
 
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
-const optionsContainer = document.getElementById("game-options-container");
+const aboutAlgorithmContainer = document.getElementById("about-algorithm-container");  // TODO fix from options container to this for other algorithms
 const difficultyContainer = document.getElementById("game-difficulty-container");
 
 submitButton.addEventListener("click", checkIfSorted);
@@ -75,7 +75,7 @@ function enableButtons() {
 
 function hideTheory() {
     theoryView.classList.add("hidden");
-    optionsContainer.classList.add("hidden");
+    aboutAlgorithmContainer.classList.add("hidden");
 }
 
 

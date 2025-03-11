@@ -257,6 +257,11 @@ button span {
     border-color: #e09010;
     font-size: 1.1rem;
     padding: 0.7rem 2rem;
+    transition: transform 0.2s ease;
+}
+
+#start-button:hover {
+    transform: scale(1.05);
 }
 
 #start-button span {
@@ -387,7 +392,7 @@ button span {
 /* Code snippets */
 #code-snippet-container {
     margin-top: 1rem;
-    width: 420px;
+    width: 450px;
     background-color: var(--color-element-background);
     border-radius: 8px;
     max-width: 100%;
@@ -398,6 +403,10 @@ button span {
     padding-left: 0.4rem;
     border-radius: 8px;
     background-color: var(--color-background);
+
+    /* scrolling right */
+    white-space: nowrap;
+    overflow-x: auto;
 }
 
 /* Hide the default radio buttons */
@@ -416,7 +425,6 @@ button span {
     /* Allow buttons to wrap on smaller screens */
     margin-top: 0;
     margin-bottom: -0.5rem;
-
 }
 
 #code-snippet-buttons label {

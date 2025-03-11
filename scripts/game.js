@@ -48,12 +48,16 @@ export function isSorted(list) {
 export function showGameOverDialog() {
 
     document.getElementById("game-over-points").textContent = "";
+    document.getElementById("game-over-lives-lost").textContent = "";
+    let gameOverPoints = document.getElementById("game-over-points");
 
     // Lives enabled AND all 3 lives lost
     if (isLivesEnabled() && getIncorrectMoves() === 3) {
-        document.getElementById("game-over-title").textContent = "All lives lost\n!💔💔💔";
+        document.getElementById("game-over-title").textContent = "All lives lost!" + "\n";
+        document.getElementById("game-over-lives-lost").textContent = "💔💔💔";
         if (!isPointsDisabled()) {
-            document.getElementById("game-over-points").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
+            gameOverPoints.textContent = "Correct moves: " + getCorrectMoves() + "\n";
+            gameOverPoints.textContent += "Wrong moves: " + getIncorrectMoves();
         }
         playGameOverFailSound();
         gameOverDialog.showModal();
@@ -63,8 +67,9 @@ export function showGameOverDialog() {
     // Lives enabled AND time ran out
     if (isTimeEnabled() && didTimeRunOut()) {
         document.getElementById("game-over-title").textContent = "Time is up!";
-        if (!isPointsDisabled) {
-            document.getElementById("game-over-points").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
+        if (!isPointsDisabled()) {
+            gameOverPoints.textContent = "Correct moves: " + getCorrectMoves() + "\n";
+            gameOverPoints.textContent += "Wrong moves: " + getIncorrectMoves();
         }
         playGameOverFailSound();
         // resetCountdown();
@@ -77,7 +82,8 @@ export function showGameOverDialog() {
         // good score
         document.getElementById("game-over-title").textContent = "Congrats!";
         if (!isPointsDisabled()) {
-            document.getElementById("game-over-points").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves();
+            gameOverPoints.textContent = "Correct moves: " + getCorrectMoves() + "\n";
+            gameOverPoints.textContent += "Wrong moves: " + getIncorrectMoves();
         }
         playGameOverSuccessSound();
         gameOverDialog.showModal();
@@ -88,8 +94,10 @@ export function showGameOverDialog() {
         document.getElementById("game-over-title").textContent = "Game over!";
         if (!isPointsDisabled()) {
             playGameOverFailSound(); // only play "bad" sound if user has points enabled
-            document.getElementById("game-over-points").textContent = "Correct moves: " + getCorrectMoves() + "\nWrong moves: " + getIncorrectMoves() + "\nTry again to improve your result!";
-        }
+            gameOverPoints.textContent = "Correct moves: " + getCorrectMoves() + "\n";
+            gameOverPoints.textContent += "Wrong moves: " + getIncorrectMoves(); + "\n";
+            gameOverPoints.textContent += "Try again to improve your result!";
+            }
         gameOverDialog.showModal();
         return;
     }

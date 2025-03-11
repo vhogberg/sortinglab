@@ -7,6 +7,7 @@ const startButton = document.getElementById("start-button");
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
 const gameElementList = document.getElementById("game-element-list");
+const optionAndInstructionContainer = document.getElementById("game-options-and-instructions-container");
 
 submitButton.addEventListener("click", checkIfSorted);
 startButton.addEventListener("click", startGame);
@@ -14,6 +15,8 @@ startButton.addEventListener("click", startGame);
 let moveExplanationText = document.getElementById("move-explanation");
 
 submitButton.classList.add("disabled");
+
+document.getElementById("game-preference-container").classList.add("hidden");
 
 // By default, show 10 elements
 const elementsToHide = document.querySelectorAll(".game-element-hard");
@@ -55,8 +58,7 @@ function enableButtons() {
 
 function hideTheory() {
     theoryView.classList.add("hidden");
-    document.getElementById("game-difficulty-container").classList.add("hidden");
-    document.getElementById("game-mode-container").classList.add("hidden");
+    optionAndInstructionContainer.classList.add("hidden");
 }
 
 //gets elements according to the difficulty setting, by checking only importing elements associated with checked difficulty

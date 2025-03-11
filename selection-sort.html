@@ -36,95 +36,138 @@
         </div>
     </header>
     <main>
-        <h2>Selection sort</h2>
-
-        <section id="theory-view">
-
-            <!DOCTYPE html>
-            <html>
-
-            <body>
-                <h3>How it works</h3>
-                <p>Selection Sort finds the <b>smallest element</b> in the list and moves it to the correct position,
-                    one step at a time, like selecting the best items from a messy shelf.</p>
-                <ul>
-                    <li>
-                        <p>🔹 How it works: Search through the list to find the smallest item → Swap it with the first
-                            unsorted position → Repeat until sorted.</p>
-                    </li>
-                    <li>
-                        <p>🔹 Best & worst case: Always <b>O(n²)</b> since it searches the entire list every time.</p>
-                    </li>
-                    <li>
-                        <p>🔹 Why learn it? It's easy to understand and doesn't need extra memory.</p>
-                    </li>
-                </ul>
-                <p>👀 Think of it as: Picking the shortest friend in a line and moving them to the front.</p>
-                <h3>How to play</h3>
-                <p><b>Goal: </b>Find and move the smallest element into the correct position.</p>
-                <p><b>Buttons: </b></p>
-                <ul>
-                    <li>
-                        <p>Next ⏭️ → Move through the list to find the smallest element.</p>
-                    </li>
-                    <li>
-                        <p>Select ✅ → Marks the smallest element found.</p>
-                    </li>
-                    <li>
-                        <p>Move 🔄 → Moves the selected element to the correct position on the left.</p>
-                    </li>
-                    <li>
-                        <p>Submit ✅ → Checks if the list is fully sorted.</p>
-                    </li>
-                </ul>
-                <p>👀 Tip: Once an element is sorted, it turns <b>green</b> and becomes part of the final list!</p>
-                <h3>Try it yourself below!</h3>
-        </section>
-        <section id="game-view">
-
-            <div id="game-options-container">
-                <h4>Options</h4>
-                <div id="game-preference-container">
+        <h2 id="algorithm-title">Selection Sort</h2>
+        <div id="about-algorithm-container">
+            <section id="theory-view">
+                <div class="algorithm-description">
+                    <h3>How it works</h3>
+                    <p>Selection Sort finds the <b>smallest element</b> in the list and moves it to the correct position,
+                        one step at a time, like selecting the best items from a messy shelf.</p>
+                    <ul>
+                        <li>
+                            <p>🔹 Search through the list to find the smallest item → Swap it with the first unsorted position → Repeat until sorted.</p>
+                        </li>
+                        <li>
+                            <p>🔹 Best & worst case: Always <b>O(n²)</b> since it searches the entire list every time.</p>
+                        </li>
+                        <li>
+                            <p>🔹 Why learn it? It's easy to understand and doesn't need extra memory.</p>
+                        </li>
+                    </ul>
+                    <p>👀 Think of it as: Picking the shortest friend in a line and moving them to the front.</p>
+                </div>
+                <div class="algorithm-description-code">
+                    <h3>How it works in code</h3>
+                    <div id="code-snippet-container">
+                        <div id="code-snippet-buttons">
+                            <input type="radio" name="code-snippet-button" id="code-snippet-button-javascript">
+                            <label for="code-snippet-button-javascript">JavaScript</label>
+                            <input type="radio" name="code-snippet-button" id="code-snippet-button-python">
+                            <label for="code-snippet-button-python">Python</label>
+                            <input type="radio" name="code-snippet-button" id="code-snippet-button-java">
+                            <label for="code-snippet-button-java">Java</label>
+                            <input type="radio" name="code-snippet-button" id="code-snippet-button-cpp">
+                            <label for="code-snippet-button-cpp">C++</label>
+                        </div>
+                        <div id="code-snippet">
+                            <pre id="code-snippet-display"></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+            <section id="game-options-and-instructions-container">
+                <div class="game-instruction">
+                    <h3>How to play</h3>
+                    <p><b>Goal: </b>Find and move the smallest element into the correct position.</p>
+                    <p><b>Buttons: </b></p>
+                    <ul>
+                        <li>
+                            <p>Next ⏭️ → Move through the list to find the smallest element.</p>
+                        </li>
+                        <li>
+                            <p>Select ✅ → Marks the smallest element found.</p>
+                        </li>
+                        <li>
+                            <p>Move 🔄 → Moves the selected element to the correct position on the left.</p>
+                        </li>
+                        <li>
+                            <p>Submit ✅ → Checks if the list is fully sorted.</p>
+                        </li>
+                    </ul>
+                    <p>👀 Tip: Once an element is sorted, it turns <b>green</b> and becomes part of the final list!</p>
+                </div>
+                <div class="game-options-container">
+                    <h3>Game options</h3>
                     <p>Choose game preferences: </p>
-                    <input type="checkbox" name="game-preferences" id="lives-checkbox">
-                    <label for="lives-checkbox">Enable lives</label>
-                    <input type="checkbox" name="game-preferences" id="time-checkbox">
-                    <label for="time-checkbox">Enable time limit</label>
-                    <input type="checkbox" name="game-preferences" id="points-checkbox">
-                    <label for="points-checkbox">Disable points</label>
-                </div>
-
-                <div id="game-mode-container">
+                    <div id="game-preference-container" class="option-group">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="lives-checkbox">
+                            <span class="checkmark"></span>
+                            Lives
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="time-checkbox">
+                            <span class="checkmark"></span>
+                            Time limit
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="points-checkbox">
+                            <span class="checkmark"></span>
+                            Disable points
+                        </label>
+                    </div>
+    
                     <p>Choose game mode: </p>
-                    <input type="radio" checked name="game-mode" id="number-mode">
-                    <label for="number-mode">Number-mode (123...)</label>
-                    <input type="radio" name="game-mode" id="letter-mode">
-                    <label for="letter-mode">Letter-mode (ABC...)</label>
+                    <div id="game-mode-container" class="option-group">
+                        <label class="custom-radio">
+                            <input type="radio" name="game-mode" id="number-mode" checked>
+                            <span class="radiomark"></span>
+                            Number-mode (123...)
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="game-mode" id="letter-mode">
+                            <span class="radiomark"></span>
+                            Letter-mode (ABC...)
+                        </label>
+                    </div>
+    
+                    <p>Choose game difficulty (amount of elements): </p>
+                    <div id="game-difficulty-container" class="option-group">
+                        <label class="custom-radio">
+                            <input type="radio" name="game-difficulty" id="easy-difficulty">
+                            <span class="radiomark"></span>
+                            Easy
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="game-difficulty" id="normal-difficulty" checked>
+                            <span class="radiomark"></span>
+                            Normal
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="game-difficulty" id="hard-difficulty">
+                            <span class="radiomark"></span>
+                            Hard
+                        </label>
+                    </div>
                 </div>
-
-
-                <div id="game-difficulty-container">
-                    <p>Choose game difficulty: </p>
-                    <input type="radio" name="game-difficulty" id="easy-difficulty">
-                    <label for="easy-difficulty">Easy (5 elements)</label>
-                    <input type="radio" checked name="game-difficulty" id="normal-difficulty">
-                    <label for="normal-difficulty">Normal (10 elements)</label>
-                    <input type="radio" name="game-difficulty" id="hard-difficulty">
-                    <label for="hard-difficulty">Hard (15 elements)</label>
+            </section>
+        </div>
+    
+        <button id="start-button"><span>Start</span></button>
+    
+        <div id="game-view">
+            <div id="time-and-lives-container">
+                <div id="time-container">
+                    <p>Time:</p>
+                    <p id="countdown">0:60</p>
+                </div>
+                <div id="lives-container">
+                    <p>Lives:</p>
+                    <p id="number-of-lives">❤️❤️❤️</p>
                 </div>
             </div>
-            <br>
-
-            <div id="time-container">
-                <p id="countdown">0:60</p>
-            </div>
-            <div id="lives-container">
-                <p>Lives:</p>
-                <p id="number-of-lives">❤️❤️❤️</p>
-            </div>
-
-            <button id="start-button"><span>Start</span></button>
-
+    
             <div id="game-element-container">
                 <div class="game-element game-element-easy"><span class="game-element-text">1</span></div>
                 <div class="game-element game-element-easy"><span class="game-element-text">2</span></div>
@@ -142,27 +185,29 @@
                 <div class="game-element game-element-hard"><span class="game-element-text">14</span></div>
                 <div class="game-element game-element-hard"><span class="game-element-text">15</span></div>
             </div>
-
+    
             <div id="game-control-buttons-container">
-                <button id="next-button"><span>Next</span></button>
-                <button id="move-button"><span>Move</span></button>
-                <button id="select-button"><span>Select</span></button>
-                <button id="submit-button"><span>Submit</span></button>
+                <div id="move-buttons-container">
+                    <button id="next-button"><span>Next ⏭️</span></button>
+                    <button id="select-button"><span>Select ✅</span></button>
+                    <button id="move-button"><span>Move 🔄</span></button>
+                </div>
+                <button id="submit-button"><span>Submit ✅</span></button>
             </div>
-
             <p id="move-explanation"></p>
-
-        </section>
-
+        </div>
+    
         <dialog id="game-over-dialog">
-            <h4 id="game-over-title">Game over!</h4>
+            <p id="game-over-title">Game over!</p>
+            <p id="game-over-lives-lost"></p>
             <p id="game-over-points"></p>
-            <p>Try again with the button below or return to the menu</p>
-            <button id="try-again-button">Try again</button>
-            <button id="return-home-button">Return home</button>
+            <div id="game-over-buttons">
+                <button id="try-again-button">Try again</button>
+                <button id="return-home-button">Return home</button>
+            </div>
         </dialog>
-
     </main>
+    
 
     <footer>
 
@@ -170,6 +215,8 @@
 
     <script src="scripts/base.js" type="module"></script>
     <script src="scripts/algorithms/selection-sort.js" type="module"></script>
+    <script src="scripts/code-snippets.js"></script>
+
 
 </body>
 

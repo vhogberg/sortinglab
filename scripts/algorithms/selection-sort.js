@@ -10,7 +10,7 @@ const moveButton = document.getElementById("move-button");
 
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
-const optionsContainer = document.getElementById("game-options-container");
+const aboutAlgorithmContainer = document.getElementById("about-algorithm-container");  // TODO fix from options container to this for other algorithms
 
 submitButton.addEventListener("click", checkIfSorted);
 startButton.addEventListener("click", startGame);
@@ -74,7 +74,7 @@ function enableButtons() {
 
 function hideTheory() {
     theoryView.classList.add("hidden");
-    optionsContainer.classList.add("hidden");
+    aboutAlgorithmContainer.classList.add("hidden");
 }
 
 //gets elements according to the difficulty setting, by checking only importing elements associated with checked difficulty

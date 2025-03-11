@@ -24,7 +24,7 @@
                 <h1>Sorting<span id="logo-span">Lab</span></h1>
                 <img src="assets/icons/neural.png" alt="" id="logo">
             </div>
-            
+
             <div id="header-button-container">
                 <button id="theme-toggle-button" title="Toggle Theme"></button>
                 <div class="audio-toggle">
@@ -37,56 +37,85 @@
     </header>
     <main>
 
-        <h2>Sandbox sort</h2>
-        <section id="theory-view">
+        <h2 id="algorithm-title">Sandbox sort</h2>
+        <div id="about-algorithm-container">
+            <section id="theory-view">
+                <div class="algorithm-description">
+                    <h3>How it works</h3>
+                    <p>Here elements can be dragged and dropped as you wish, without needing to follow any specific
+                        algorithm.
+                        Practice sorting in your own way!</p>
+                    <p>Feel free to test yourself by sorting the array using one of the techniques you’ve learned about,
+                        or
+                        using a completely different technique!</p>
+                </div>
 
+            </section>
 
-            <h3>How it works</h3>
-
-            <p>Here elements can be dragged and dropped as you wish, without needing to follow any specific algorithm.
-                Practise sorting in your own way!</p>
-            <p>Feel free to test yourself by sorting the array using one of the techniques you’ve learned about, or
-                using a completely different technique! </p>
-            <h3>Try it yourself</h3>
-        </section>
-
-        <section id="game-view">
-
-            <!-- Custom options container for sandbox sort,
+            <div id="game-options-and-instructions-container">
+                <div class="game-options-container">
+                    <h3>Game options</h3>
+                    <!-- Custom options container for sandbox sort,
             we hide most of these, but they should still be in
             the code for functionality in game.js and game-options.js -->
-            <div id="game-options-container">
-                <h4 hidden>Options</h4>
-                <div id="game-preference-container" hidden>
-                    <p>Choose game preferences: </p>
-                    <input type="checkbox" name="game-preferences" id="lives-checkbox">
-                    <label for="lives-checkbox">Enable lives</label>
-                    <input type="checkbox" name="game-preferences" id="time-checkbox">
-                    <label for="time-checkbox">Enable time limit</label>
-                    <input type="checkbox" name="game-preferences" id="points-checkbox">
-                    <label for="points-checkbox">Disable points</label>
-                </div>
+                    <div id="game-preference-container" class="option-group">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="lives-checkbox">
+                            <span class="checkmark"></span>
+                            Lives
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="time-checkbox">
+                            <span class="checkmark"></span>
+                            Time limit
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="points-checkbox">
+                            <span class="checkmark"></span>
+                            Disable points
+                        </label>
+                    </div>
 
-                <div id="game-mode-container">
                     <p>Choose game mode: </p>
-                    <input type="radio" checked name="game-mode" id="number-mode">
-                    <label for="number-mode">Number-mode (123...)</label>
-                    <input type="radio" name="game-mode" id="letter-mode">
-                    <label for="letter-mode">Letter-mode (ABC...)</label>
-                </div>
+                    <div id="game-mode-container" class="option-group">
+                        <label class="custom-radio">
+                            <input type="radio" name="game-mode" id="number-mode" checked>
+                            <span class="radiomark"></span>
+                            Number-mode (123...)
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="game-mode" id="letter-mode">
+                            <span class="radiomark"></span>
+                            Letter-mode (ABC...)
+                        </label>
+                    </div>
 
-                <div id="game-difficulty-container">
-                    <p>Choose the amount of elements: </p>
-                    <input type="radio" name="game-difficulty" id="easy-difficulty">
-                    <label for="easy-difficulty">5 elements</label>
-                    <input type="radio" checked name="game-difficulty" id="normal-difficulty">
-                    <label for="normal-difficulty">10 elements</label>
-                    <input type="radio" name="game-difficulty" id="hard-difficulty">
-                    <label for="hard-difficulty">15 elements</label>
+                    <p>Choose game difficulty (amount of elements): </p>
+                    <div id="game-difficulty-container" class="option-group">
+                        <label class="custom-radio">
+                            <input type="radio" name="game-difficulty" id="easy-difficulty">
+                            <span class="radiomark"></span>
+                            Easy
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="game-difficulty" id="normal-difficulty" checked>
+                            <span class="radiomark"></span>
+                            Normal
+                        </label>
+                        <label class="custom-radio">
+                            <input type="radio" name="game-difficulty" id="hard-difficulty">
+                            <span class="radiomark"></span>
+                            Hard
+                        </label>
+                    </div>
                 </div>
             </div>
-            <br>
+        </div>
+        <button id="start-button"><span>Start</span></button>
 
+        <div id="game-view">
+
+            <!-- These will be hidden, but remain in html -->
             <div id="time-container">
                 <p id="countdown">0:60</p>
             </div>
@@ -95,8 +124,6 @@
                 <p id="number-of-lives">❤️❤️❤️</p>
             </div>
             <br>
-
-            <button id="start-button"><span>Start</span></button>
 
             <ul id="game-element-list">
                 <li draggable="true" class="can-be-grabbed">
@@ -148,22 +175,26 @@
 
             <div id="game-control-buttons-container">
                 <button id="submit-button">
-                    <span>Submit</span>
+                    <span>Submit ✅</span>
                 </button>
             </div>
 
             <p id="move-explanation"></p>
-        </section>
+        </div>
 
         <!-- Custom game over dialog for sandbox sort -->
         <dialog id="game-over-dialog">
-            <h4 id="game-over-title" hidden>Game over!</h4>
+            <p id="game-over-title" hidden>Game over!</p>
             <h4>Well done!</h4>
+            <p id="game-over-lives-lost" hidden></p>
             <p id="game-over-points" hidden></p>
             <p>Try again with the button below or return to the menu</p>
-            <button id="try-again-button">Try again</button>
-            <button id="return-home-button">Return home</button>
+            <div id="game-over-buttons">
+                <button id="try-again-button">Try again 🔁</button>
+                <button id="return-home-button">Return home 🏠</button>
+            </div>
         </dialog>
+
     </main>
 
     <script src="scripts/algorithms/sandbox-sort.js" type="module"></script>
