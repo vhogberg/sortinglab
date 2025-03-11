@@ -10,15 +10,6 @@
     --color-element-marked-left: rgb(99, 180, 52);
 }
 
-#merge-sort-game-element-container {
-    margin: 1rem 0;
-    padding: 0.3rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    border: 2px solid black;
-}
-
 /* Top array of 8 elements */
 .game-element-container-merge-sort {
     display: flex;
@@ -46,11 +37,18 @@
 
 .game-element-container-4 {
     border: 2px solid var(--color-container-border-color);
-    
 }
 
 .game-element-container-8 {
     border: 2px solid var(--color-container-border-color);
+}
+
+.game-element-row-1, .game-element-row-2, .game-element-row-3, .game-element-row-4 {
+    margin: 0.3rem;
+}
+
+.game-element-row-1:hover, .game-element-row-2:hover, .game-element-row-3:hover, .game-element-row-4:hover {
+    transform: none;
 }
 
 .marked-left {
@@ -67,4 +65,20 @@
 
 .next-row-marked {
     border: 2px dotted red;
+}
+
+@media screen and (max-width: 550px) {
+    .game-element-row-1, .game-element-row-2, .game-element-row-3, .game-element-row-4 {
+        margin: 0.2rem;
+        padding: 0.5rem;
+        border-radius: 4px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .game-element-row-1, .game-element-row-2, .game-element-row-3, .game-element-row-4 {
+        margin: 0.1rem;
+        padding: 0.3rem;
+        border-radius: 4px;
+    }
 }

@@ -95,7 +95,7 @@ export function showGameOverDialog() {
         if (!isPointsDisabled()) {
             playGameOverFailSound(); // only play "bad" sound if user has points enabled
             gameOverPoints.textContent = "Correct moves: " + getCorrectMoves() + "\n";
-            gameOverPoints.textContent += "Wrong moves: " + getIncorrectMoves(); + "\n";
+            gameOverPoints.textContent += "Wrong moves: " + getIncorrectMoves() + "\n";
             gameOverPoints.textContent += "Try again to improve your result!";
             }
         gameOverDialog.showModal();

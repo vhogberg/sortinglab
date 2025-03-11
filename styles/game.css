@@ -265,5 +265,5 @@ dialog::backdrop {
 
 #try-again-button:hover,
 #return-home-button:hover {
-    transform: scale(1.15);
+    transform: scale(1.05);
 }
