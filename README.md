@@ -2,6 +2,9 @@
 
 An interactive game-based learning experience designed to help computer science students master sorting algorithms in a fun and engaging way.
 
+**Try play it here:** [https://people.dsv.su.se/~viho3970/sortinglab/](https://people.dsv.su.se/~viho3970/sortinglab/)
+
+
 ## Overview
 
 SortingLab transforms learning sorting algorithms from a theoretical exercise into an interactive challenge. Players can learn and practice different sorting techniques while competing against time, earning points, and developing their algorithm skills through practical application.
