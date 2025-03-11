@@ -1,3 +1,5 @@
+/* Viktor Högberg, Léo Tuomenoksa Texier */
+
 :root {
     --color-container-border-color: rgb(94, 94, 94) ;
     --color-element-marked-right: rgb(182, 86, 86);
@@ -60,7 +62,7 @@
 }
 
 .marked-disabled {
-    opacity: 0.5;
+    opacity: 0.5 !important;
 }
 
 .next-row-marked {

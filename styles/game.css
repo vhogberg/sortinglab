@@ -70,6 +70,10 @@
     max-width: fit-content;
 }
 
+#algorithm-title {
+    text-align: center;
+}
+
 #game-control-buttons-container {
     display: flex;
     justify-content: space-between;
@@ -85,6 +89,9 @@
     margin-top: -10px;
 }
 
+#move-explanation {
+    text-align: center;
+}
 
 #time-and-lives-container {
     display: flex;

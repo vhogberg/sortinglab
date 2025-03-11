@@ -1,3 +1,5 @@
+/* Viktor Högberg, Léo Tuomenoksa Texier */
+
 // CODE SNIPPETS
 
 const bubbleSortCodeSnippets = {

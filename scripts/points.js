@@ -1,4 +1,5 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
+
 import { handleLives, isLivesEnabled, isPointsDisabled } from "./game-options.js";
 import { playErrorSound } from "./sound.js";
 

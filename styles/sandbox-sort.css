@@ -1,3 +1,5 @@
+/* Viktor Högberg, Léo Tuomenoksa Texier */
+
 /* SANDBOX SORT */
 #game-element-container {
     border: none !important;
@@ -7,16 +9,15 @@
     border: none !important;
 }
 
-#game-element-list {
+#game-element-list-sandbox-sort {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     padding: 0;
     list-style: none;
     gap: 1rem;
     margin: 2rem 0 2rem 0;
-    
 }
-
 
 /*
 #game-element-list li {

@@ -202,7 +202,7 @@ function checkIfSorted() {
         gameOver()
     }
     else {
-        alert("Not sorted yet, continue!"); //when implementing own alert, pause timer if user clicks submit too early
+        moveExplanationText.textContent = "Not sorted yet, continue!";
     }
 }
 

@@ -6,7 +6,7 @@ import { gameManager, isSorted, showGameOverDialog } from "../game.js";
 const startButton = document.getElementById("start-button");
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
-const gameElementList = document.getElementById("game-element-list");
+const gameElementList = document.getElementById("game-element-list-sandbox-sort");
 const optionAndInstructionContainer = document.getElementById("game-options-and-instructions-container");
 
 submitButton.addEventListener("click", checkIfSorted);
@@ -93,18 +93,22 @@ function scrambleElements() {
         }
     }
 }
-var dragging = null;
+
+let  dragging = null;
 
 gameElementList.addEventListener("dragstart", (event) => {
     dragging = event.target.closest("li"); // just grab li's
-    event.dataTransfer.effectAllowed = "move";
-    event.dataTransfer.setData('text/plain', ""); // Needed for Firefox to allow dragging
+    if (dragging) {
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData('text/plain', ""); // Needed for Firefox to allow dragging
+    }
+    
 
 })
 
 gameElementList.addEventListener("dragover", (event) => {
     event.preventDefault();
-    var target = event.target.closest("li"); // just grab li's
+    let target = event.target.closest("li"); // just grab li's
     if (!target || target === dragging) return; // return if target does not exist or target is target (dont drop on itself)
     const bounding = target.getBoundingClientRect();
     const offset = event.clientX - bounding.left;

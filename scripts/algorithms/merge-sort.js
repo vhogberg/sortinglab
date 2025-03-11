@@ -434,7 +434,7 @@ function moveDownElement(elementToMove) {
 function checkIfSorted() {
 
     if (!isGameOver) {
-        alert("Not sorted yet 1, continue!"); // when implementing own alert, pause timer if user clicks submit too early
+        moveExplanationText.textContent = "Not done yet, continue!";
         return;
     }
 
@@ -452,7 +452,7 @@ function checkIfSorted() {
         }
     }
     if (listHasEmptyElements) {
-        alert("Not sorted yet 2, continue!");
+        moveExplanationText.textContent = "Not done yet, continue!";
         return;
     }
 
@@ -460,7 +460,7 @@ function checkIfSorted() {
         gameOver();
     }
     else {
-        alert("Not sorted yet 3, continue!");
+        moveExplanationText.textContent = "Not sorted yet, continue!";
     }
 }
 
@@ -487,6 +487,7 @@ function gameOver() {
 
     moveExplanationText.textContent = "";
 
+    //reset variables
     rowIndex = 1; //TODO check which are necessary
     rowArray = [];
     currentSubArray = [];
