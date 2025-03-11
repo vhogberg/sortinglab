@@ -195,7 +195,7 @@ export function handleTime() {
             clearInterval(interval);
             timeIsUp();
         }
-    }, 100)
+    }, 1000)
 }
 
 // if time is up, call gameover via generalised gamemanager
