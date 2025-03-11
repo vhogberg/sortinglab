@@ -1,5 +1,4 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
-
 window.onload = initialise;
 const videos = document.querySelectorAll('.algorithm-example-video');
 
@@ -10,6 +9,7 @@ const videos = document.querySelectorAll('.algorithm-example-video');
 function initialise() { //TODO improve dark mode implementation
     handleVideo();
     if (localStorage.getItem('theme') == "dark") {
+        console.log("switching to dark mode");
         document.documentElement.classList.add("dark-mode");
         //no need to keep going since dark mode has already been set
         return;
@@ -25,9 +25,11 @@ function initialise() { //TODO improve dark mode implementation
 document.getElementById("theme-toggle-button").addEventListener("click", () => {
     //if dark mode is active and user clicks theme button, remove dark mode and set current theme to light
     if (localStorage.getItem('theme') == "dark") {
+        console.log("switching to dark mode, inside if");
         localStorage.setItem('theme', 'light');
         document.documentElement.classList.remove("dark-mode");
     } else {
+        console.log("switching to light mode, inside if");
         localStorage.setItem('theme', 'dark');
         document.documentElement.classList.add("dark-mode");
     }
