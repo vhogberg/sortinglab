@@ -1,50 +1,48 @@
 /* Viktor Högberg, Léo Tuomenoksa Texier */
 
-window.onload = initialise;
-const videos = document.querySelectorAll('.algorithm-example-video');
-
-//TODO fix because you can't use light mode if you have dark mode set in broswer
-
+setDarkMode();
+window.onload = handleVideo;
 //runs at the start of every document load and checks if dark mode and sound has been set by the user
 //and activates toggles them if they have been set
-function initialise() { //TODO improve dark mode implementation
-    handleVideo();
-    if (localStorage.getItem('theme') == "dark") {
+function setDarkMode() {
+    if (localStorage.getItem('theme') === "dark") {
         document.documentElement.classList.add("dark-mode");
-        //no need to keep going since dark mode has already been set
+        //no need to keep going if theme is already dark
         return;
     }
 
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('theme') != "light") {
-        localStorage.setItem('theme', 'dark');
+    //asks if dark mode is active in browser, and activates it if it is and user has not set theme to light mode
+    if (localStorage.getItem('theme') != "light" && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.documentElement.classList.add("dark-mode");
+        //adds dark mode as active here to ensure event listener check works properly
+        localStorage.setItem('theme', 'dark');
     }
+
+    document.getElementById("theme-toggle-button").addEventListener("click", () => {
+        //if dark mode is active and user clicks theme button, remove dark mode and set current theme to light
+        if (localStorage.getItem('theme') == "dark") {
+            localStorage.setItem('theme', 'light');
+            document.documentElement.classList.remove("dark-mode");
+        } else {
+            localStorage.setItem('theme', 'dark');
+            document.documentElement.classList.add("dark-mode");
+        }
+    })
 }
-
-// Switches between light and dark mode
-document.getElementById("theme-toggle-button").addEventListener("click", () => {
-    //if dark mode is active and user clicks theme button, remove dark mode and set current theme to light
-    if (localStorage.getItem('theme') == "dark") {
-        localStorage.setItem('theme', 'light');
-        document.documentElement.classList.remove("dark-mode");
-    } else {
-        localStorage.setItem('theme', 'dark');
-        document.documentElement.classList.add("dark-mode");
-    }
-
-})
 
 // When clicking on the "SortingLab"  logo,
 document.getElementById("logo-container").addEventListener("click", () => {
     window.location.href = "index.html";
 })
 
+//adds eventlistener to each video on the home page, enabling them to play and pause as the mouse is moving over them.
 function handleVideo() {
+    const videos = document.querySelectorAll('.algorithm-example-video');
     videos.forEach(video => {
         video.addEventListener('mouseenter', () => {
             video.play();
         });
-            
+
         video.addEventListener('mouseleave', () => {
             video.pause();
             video.currentTime = 0;
