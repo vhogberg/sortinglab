@@ -7,8 +7,6 @@ window.onload = handleVideo;
 function setDarkMode() {
     if (localStorage.getItem('theme') === "dark") {
         document.documentElement.classList.add("dark-mode");
-        //no need to keep going if theme is already dark
-        return;
     }
 
     //asks if dark mode is active in browser, and activates it if it is and user has not set theme to light mode
