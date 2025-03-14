@@ -55,26 +55,6 @@
             <div id="game-options-and-instructions-container">
                 <div class="game-options-container">
                     <h3>Game options</h3>
-                    <!-- Custom options container for sandbox sort,
-            we hide most of these, but they should still be in
-            the code for functionality in game.js and game-options.js -->
-                    <div id="game-preference-container" class="option-group">
-                        <label class="custom-checkbox">
-                            <input type="checkbox" id="lives-checkbox">
-                            <span class="checkmark"></span>
-                            Lives
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" id="time-checkbox">
-                            <span class="checkmark"></span>
-                            Time limit
-                        </label>
-                        <label class="custom-checkbox">
-                            <input type="checkbox" id="points-checkbox">
-                            <span class="checkmark"></span>
-                            Disable points
-                        </label>
-                    </div>
 
                     <p>Choose game mode: </p>
                     <div id="game-mode-container" class="option-group">
@@ -187,6 +167,7 @@
             <h4>Well done!</h4>
             <p id="game-over-lives-lost" hidden></p>
             <p id="game-over-points" hidden></p>
+            <p id="game-over-text" hidden></p>
             <p>Try again with the button below or return to the menu</p>
             <div id="game-over-buttons">
                 <button id="try-again-button">Try again 🔁</button>

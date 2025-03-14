@@ -44,21 +44,35 @@ export function isSorted(list) {
     return true;
 }
 
+let gameOverPoints = document.getElementById("game-over-points");
+let gameOverText = document.getElementById("game-over-text");
+
+function showPoints() {
+    if (!isPointsDisabled()) {
+        gameOverPoints.textContent = "Correct moves: " + getCorrectMoves() + "\n";
+        gameOverPoints.textContent += "Wrong moves: " + getIncorrectMoves();
+    }
+    else {
+        gameOverText.textContent = "Play again with the button below or return to the menu"
+    }
+}
+
 //shows a dialog box for when game is over
 export function showGameOverDialog() {
-
-    document.getElementById("game-over-points").textContent = "";
+    gameOverPoints.textContent = "";
+    gameOverText.textContent = "";
     document.getElementById("game-over-lives-lost").textContent = "";
-    let gameOverPoints = document.getElementById("game-over-points");
+
+    // reset the timer when game is over so the "Time is up" dialog does not show over the standard dialog.
+    if (isTimeEnabled()) {
+        resetCountdown();
+    }
 
     // Lives enabled AND all 3 lives lost
     if (isLivesEnabled() && getIncorrectMoves() === 3) {
         document.getElementById("game-over-title").textContent = "All lives lost!" + "\n";
         document.getElementById("game-over-lives-lost").textContent = "💔💔💔";
-        if (!isPointsDisabled()) {
-            gameOverPoints.textContent = "Correct moves: " + getCorrectMoves() + "\n";
-            gameOverPoints.textContent += "Wrong moves: " + getIncorrectMoves();
-        }
+        showPoints();
         playGameOverFailSound();
         gameOverDialog.showModal();
         return;
@@ -67,12 +81,8 @@ export function showGameOverDialog() {
     // Lives enabled AND time ran out
     if (isTimeEnabled() && didTimeRunOut()) {
         document.getElementById("game-over-title").textContent = "Time is up!";
-        if (!isPointsDisabled()) {
-            gameOverPoints.textContent = "Correct moves: " + getCorrectMoves() + "\n";
-            gameOverPoints.textContent += "Wrong moves: " + getIncorrectMoves();
-        }
+        showPoints();
         playGameOverFailSound();
-        // resetCountdown();
         gameOverDialog.showModal();
         return;
     }
@@ -81,10 +91,7 @@ export function showGameOverDialog() {
     if (isScoreGood()) {
         // good score
         document.getElementById("game-over-title").textContent = "Congrats!";
-        if (!isPointsDisabled()) {
-            gameOverPoints.textContent = "Correct moves: " + getCorrectMoves() + "\n";
-            gameOverPoints.textContent += "Wrong moves: " + getIncorrectMoves();
-        }
+        showPoints();
         playGameOverSuccessSound();
         gameOverDialog.showModal();
         return;
@@ -96,8 +103,10 @@ export function showGameOverDialog() {
             playGameOverFailSound(); // only play "bad" sound if user has points enabled
             gameOverPoints.textContent = "Correct moves: " + getCorrectMoves() + "\n";
             gameOverPoints.textContent += "Wrong moves: " + getIncorrectMoves() + "\n";
-            gameOverPoints.textContent += "Try again to improve your result!";
-            }
+            gameOverText.textContent += "Try again to improve your result!";
+        } else {
+            gameOverText.textContent = "Play again with the button below or return to the menu"
+        }
         gameOverDialog.showModal();
         return;
     }
@@ -171,18 +180,17 @@ function resetElementValues() {
 
 // show theory view + game options after game is over. disable game control buttons (until game is started)
 function handleHidingElements() {
-    document.getElementById("about-algorithm-container").classList.remove("hidden");
 
+    document.getElementById("about-algorithm-container")?.classList.remove("hidden");
     // These two are added here even if they should be unhidden by the statement below
     // because merge sort needs it since it has custom options
-    document.getElementById("game-difficulty-container").classList.remove("hidden");
-    document.getElementById("game-mode-container").classList.remove("hidden");
+    document.getElementById("game-difficulty-container")?.classList.remove("hidden");
 
-    document.getElementById("start-button").classList.remove("hidden");
-    document.getElementById("theory-view").classList.remove("hidden");
+    document.getElementById("start-button")?.classList.remove("hidden");
+    document.getElementById("theory-view")?.classList.remove("hidden");
 
-    document.getElementById("lives-container").classList.add("hidden");
-    document.getElementById("time-container").classList.add("hidden");
+    document.getElementById("lives-container")?.classList.add("hidden");
+    document.getElementById("time-container")?.classList.add("hidden");
 
     // disable all control buttons on start
     const gameControlButtons = document.querySelectorAll("#game-control-buttons-container button");

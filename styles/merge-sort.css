@@ -28,6 +28,10 @@
     gap: 0.25rem;
     margin: 0.25rem;
 }
+/* padding from top of first row, */
+.div-container-merge-sort-first-row {
+    margin-top: 1rem;
+}
 
 .game-element-container-1, .game-element-container-2, .game-element-container-4, .game-element-container-8  {
     border: 0.125rem solid var(--color-container-border-color);

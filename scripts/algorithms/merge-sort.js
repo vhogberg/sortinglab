@@ -9,8 +9,7 @@ const rightButton = document.getElementById("right-button");
 
 const submitButton = document.getElementById("submit-button");
 const theoryView = document.getElementById("theory-view");
-const aboutAlgorithmContainer = document.getElementById("about-algorithm-container");  // TODO fix from options container to this for other algorithms
-const difficultyContainer = document.getElementById("game-difficulty-container");
+const aboutAlgorithmContainer = document.getElementById("about-algorithm-container");
 
 submitButton.addEventListener("click", checkIfSorted);
 startButton.addEventListener("click", startGame);
@@ -19,8 +18,6 @@ submitButton.classList.add("disabled");
 leftButton.classList.add("disabled");
 rightButton.classList.add("disabled");
 
-// Game difficulty is not an option on merge sort since it can only be visualised here with 8 elements
-difficultyContainer.classList.add("hidden");
 
 let moveExplanationText = document.getElementById("move-explanation");
 
@@ -140,7 +137,6 @@ async function gameLoop() {
         while (elementList !== null && elementIndex < 8) {
             allowedMoveMade = false;
 
-
             addMarkingForNextRow();
             //adds marking to left/right elements of first row, since the row is eight elements long marked-left will always be on even element
             if (rowIndex === 1) {
@@ -184,7 +180,7 @@ async function gameLoop() {
             await waitForValidMove();
 
             //removes markings from nextRow
-            if (rowIndex === 1) {
+            if (rowIndex === 1 && !isGameOver) {
                 removeMarkingForNextRow(2);
                 leftElement.parentElement.classList.remove("marked-left");
                 rightElement.parentElement.classList.remove("marked-right");
@@ -246,10 +242,12 @@ function waitForValidMove() {
 }
 
 // Forces a valid move, so that the wait method can be resolved with resolve()
+
 function forceValidMove() {
     allowedMoveMade = true;
     checkValidMove();
 }
+    
 
 // Function to get right and left arrays of elements for row 2
 function getElementsRow2() {
@@ -488,7 +486,7 @@ function gameOver() {
     moveExplanationText.textContent = "";
 
     //reset variables
-    rowIndex = 1; //TODO check which are necessary
+    rowIndex = 1; 
     rowArray = [];
     currentSubArray = [];
     subArrayIndex = 0;

@@ -27,7 +27,7 @@ document.getElementById("time-container").classList.add("hidden");
 // local handle method for preferences
 function handleGamePreferences() {
     // Lives
-    if (document.getElementById("lives-checkbox").checked) {
+    if (document.getElementById("lives-checkbox")?.checked) {
         livesEnabled = true;
         document.getElementById("lives-container").classList.remove("hidden");
         handleLives();
@@ -37,7 +37,7 @@ function handleGamePreferences() {
     }
 
     // Time
-    if (document.getElementById("time-checkbox").checked) {
+    if (document.getElementById("time-checkbox")?.checked) {
         timeEnabled = true;
         document.getElementById("time-container").classList.remove("hidden");
         handleTime();
@@ -47,7 +47,7 @@ function handleGamePreferences() {
     }
 
     // Points
-    if (document.getElementById("points-checkbox").checked) {
+    if (document.getElementById("points-checkbox")?.checked) {
         pointsEnabled = true;
     } else {
         pointsEnabled = false;
@@ -57,13 +57,13 @@ function handleGamePreferences() {
 // local handle method for mode
 function handleGameMode() {
     // Numbers
-    if (document.getElementById("number-mode").checked) {
+    if (document.getElementById("number-mode")?.checked) {
         gameMode = "numbers";
         console.log("new gamemode: " + gameMode)
     }
 
     // Letters
-    if (document.getElementById("letter-mode").checked) {
+    if (document.getElementById("letter-mode")?.checked) {
         gameMode = "letters";
         console.log("new gamemode: " + gameMode)
     }
@@ -80,7 +80,7 @@ function handleGameDifficulty() {
     });
 
     // Easy
-    if (document.getElementById("easy-difficulty").checked) {
+    if (document.getElementById("easy-difficulty")?.checked) {
         difficulty = "easy";
 
         // hide all non-easy elements
@@ -91,7 +91,7 @@ function handleGameDifficulty() {
     }
 
     // Normal
-    if (document.getElementById("normal-difficulty").checked) {
+    if (document.getElementById("normal-difficulty")?.checked) {
         difficulty = "normal";
 
         // hide all hard elements
@@ -102,7 +102,7 @@ function handleGameDifficulty() {
     }
 
     // Hard
-    if (document.getElementById("hard-difficulty").checked) {
+    if (document.getElementById("hard-difficulty")?.checked) {
         // all elements shown
         difficulty = "hard";
     }
