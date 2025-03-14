@@ -346,6 +346,10 @@ button span {
     margin-left: 1rem;
 }
 
+.algorithm-example {
+    margin-bottom: -0.2rem;
+}
+
 /*  ====================== SORTING THEORY ===================== */
 
 .algorithm-description,
