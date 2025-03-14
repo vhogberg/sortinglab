@@ -209,8 +209,6 @@ async function gameLoop() {
     isGameOver = true;
 }
 
-
-
 // Handles for buttons
 function handleLeftClick() {
     handleMove("left");
