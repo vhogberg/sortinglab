@@ -148,7 +148,9 @@ async function gameLoop() {
             smallestElement.classList.remove("smallest-game-element");
         }
     }
-    moveExplanationText.textContent = "No further elements to sort, click submit!";
+    if (!isGameOver) {
+        moveExplanationText.textContent = "No further elements to sort, click submit!";
+    }
 }
 
 

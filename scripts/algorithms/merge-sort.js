@@ -201,10 +201,12 @@ async function gameLoop() {
 
     }
     // Loop is done, user shall click submit!
-    moveExplanationText.textContent = "No further elements to sort, click submit!";
+    if (!isGameOver) {
+        moveExplanationText.textContent = "No further elements to sort, click submit!";
+    }
     removeMarking(3);
     removeMarkingForNextRow(4);
-    isGameOver = true; //replaced gameIsOver
+    isGameOver = true;
 }
 
 
@@ -247,7 +249,7 @@ function forceValidMove() {
     allowedMoveMade = true;
     checkValidMove();
 }
-    
+
 
 // Function to get right and left arrays of elements for row 2
 function getElementsRow2() {
@@ -486,7 +488,7 @@ function gameOver() {
     moveExplanationText.textContent = "";
 
     //reset variables
-    rowIndex = 1; 
+    rowIndex = 1;
     rowArray = [];
     currentSubArray = [];
     subArrayIndex = 0;

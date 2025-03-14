@@ -128,7 +128,9 @@ async function gameLoop() {
             index++;
         }
     }
-    moveExplanationText.textContent = "No further elements to sort, click submit!";
+    if (!isGameOver) {
+        moveExplanationText.textContent = "No further elements to sort, click submit!";
+    }
 }
 
 // Function that stops the loop, waiting for a button press
@@ -256,7 +258,7 @@ function swapElements() {
 // Function to check if a given set of elements is sorted correctly
 function checkIfSorted() {
     if (isSorted(elementList)) {
-        gameOver()
+        gameOver();
     }
     else {
         moveExplanationText.textContent = "Not sorted yet, continue!"
@@ -285,6 +287,7 @@ function gameOver() {
     // Reset points for next round
     resetScore();
 
+    document.getElementById("move-explanation").textContent = ""
     moveExplanationText.textContent = "";
 
     // remove highlighted class after game is over and reset ordering on theoryview
