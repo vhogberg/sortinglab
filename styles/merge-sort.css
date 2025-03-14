@@ -17,7 +17,7 @@
     display: flex;
     justify-content: center;
     flex-direction: row;
-    gap: 7.8px;
+    gap: 0.49rem;
 }
 
 /* Container containing the sets of arrays */
@@ -25,24 +25,12 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 4px;
-    margin: 4px;
+    gap: 0.25rem;
+    margin: 0.25rem;
 }
 
-.game-element-container-1 {
-    border: 2px solid var(--color-container-border-color);
-}
-
-.game-element-container-2 {
-    border: 2px solid var(--color-container-border-color);
-}
-
-.game-element-container-4 {
-    border: 2px solid var(--color-container-border-color);
-}
-
-.game-element-container-8 {
-    border: 2px solid var(--color-container-border-color);
+.game-element-container-1, .game-element-container-2, .game-element-container-4, .game-element-container-8  {
+    border: 0.125rem solid var(--color-container-border-color);
 }
 
 .game-element-row-1, .game-element-row-2, .game-element-row-3, .game-element-row-4 {
@@ -66,14 +54,14 @@
 }
 
 .next-row-marked {
-    border: 2px dotted red;
+    border: 0.125rem dotted red;
 }
 
 @media screen and (max-width: 550px) {
     .game-element-row-1, .game-element-row-2, .game-element-row-3, .game-element-row-4 {
         margin: 0.2rem;
         padding: 0.5rem;
-        border-radius: 4px;
+        border-radius: 0.25rem;
     }
 }
 
@@ -81,6 +69,6 @@
     .game-element-row-1, .game-element-row-2, .game-element-row-3, .game-element-row-4 {
         margin: 0.1rem;
         padding: 0.3rem;
-        border-radius: 4px;
+        border-radius: 0.25rem;
     }
 }
