@@ -2,7 +2,7 @@
 
 An interactive game-based learning experience designed to help computer science students master sorting algorithms in a fun and engaging way.
 
-**Try play it here:** [https://people.dsv.su.se/~viho3970/sortinglab/](https://people.dsv.su.se/~viho3970/sortinglab/)
+**Try play it here:** [https://sortinglab.vercel.app](https://sortinglab.vercel.app)
 
 
 ## Overview
